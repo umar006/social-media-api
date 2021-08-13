@@ -31,5 +31,11 @@ describe User do
         expect(@user_valid.save).to eq(true)
       end
     end
+
+    context 'with invalid object' do
+      it 'return false' do
+        expect(@user_invalid.save).to eq(false)
+      end
+    end
   end
 end
