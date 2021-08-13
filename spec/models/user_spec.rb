@@ -1,4 +1,4 @@
-require './config/env/development'
+require './config/env/test'
 require './app/models/user'
 
 describe User do
@@ -8,15 +8,27 @@ describe User do
   end
 
   describe '#valid?' do
-    context 'when valid' do
+    context 'with valid object' do
       it 'return true' do
         expect(@user_valid.valid?).to eq(true)
       end
     end
 
-    context 'when invalid' do
+    context 'with invalid object' do
       it 'return false' do
         expect(@user_invalid.valid?).to eq(false)
+      end
+    end
+  end
+
+  describe '#save' do
+    context 'with valid object' do
+      it 'save to database' do
+        mock = double
+        allow(Mysql2::Client).to receive(:new).and_return(mock)
+
+        expect(mock).to receive(:query).with("insert into users (username, email, biodata) values ('#{@user_valid.username}', '#{@user_valid.email}', '#{@user_valid.biodata}')")
+        expect(@user_valid.save).to eq(true)
       end
     end
   end
