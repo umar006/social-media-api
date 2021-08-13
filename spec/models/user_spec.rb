@@ -7,10 +7,16 @@ describe User do
     @user_invalid = User.new(nil, nil, 'invalid@gmail.com', nil)
   end
 
-  describe '#save' do
+  describe '#valid?' do
     context 'when valid' do
       it 'return true' do
         expect(@user_valid.valid?).to eq(true)
+      end
+    end
+
+    context 'when invalid' do
+      it 'return false' do
+        expect(@user_invalid.valid?).to eq(false)
       end
     end
   end
