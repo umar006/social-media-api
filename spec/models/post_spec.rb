@@ -6,6 +6,7 @@ describe Post do
     user = User.new(1, 'umar', 'umar@gmail.com', nil)
     @valid_post = Post.new(nil, 'aku seorang kapiten', nil, user)
     @invalid_post = Post.new(nil, nil, nil, user)
+    @invalid_post_2 = Post.new(nil, "test" * 300, nil, user)
   end
 
   describe '#save' do
@@ -22,6 +23,12 @@ describe Post do
     context 'with invalid object' do
       it 'return false' do
         expect(@invalid_post.save).to eq(false)
+      end
+    end
+
+    context 'post more than 1000 characters' do
+      it 'return false' do
+        expect(@invalid_post_2.save).to eq(false)
       end
     end
   end
