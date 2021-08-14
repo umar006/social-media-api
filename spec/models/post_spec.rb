@@ -18,5 +18,11 @@ describe Post do
         expect(@valid_post.save).to eq(true)
       end
     end
+
+    context 'with invalid object' do
+      it 'return false' do
+        expect(@invalid_post.save).to eq(false)
+      end
+    end
   end
 end
