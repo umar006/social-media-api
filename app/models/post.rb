@@ -21,7 +21,7 @@ class Post
   end
 
   def valid?
-    return false if @post.nil? || @user.nil?
+    return false if @post.nil? || @user.nil? || @post.size > 1000
 
     true
   end
