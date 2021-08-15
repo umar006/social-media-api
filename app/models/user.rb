@@ -1,10 +1,9 @@
 require './config/env/development'
 
 class User
-  attr_accessor :id, :username, :email, :biodata
+  attr_accessor :username, :email, :biodata
 
-  def initialize(id, username, email, biodata)
-    @id = id
+  def initialize(username, email, biodata=nil)
     @username = username
     @email = email
     @biodata = biodata
@@ -16,6 +15,8 @@ class User
     client = create_db_client
 
     client.query("insert into users (username, email, biodata) values ('#@username', '#@email', '#@biodata')")
+
+    true
   end
 
   def valid?
