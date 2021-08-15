@@ -3,10 +3,10 @@ require './app/models/user'
 
 describe Post do
   before(:each) do
-    user = User.new(1, 'umar', 'umar@gmail.com', nil)
-    @valid_post = Post.new(nil, 'aku seorang kapiten', nil, user)
-    @invalid_post = Post.new(nil, nil, nil, user)
-    @invalid_post_2 = Post.new(nil, "test" * 300, nil, user)
+    user = User.new('umar', 'umar@gmail.com', nil)
+    @valid_post = Post.new('aku seorang kapiten', nil, user)
+    @invalid_post = Post.new(nil, nil, user)
+    @invalid_post_2 = Post.new("test" * 300, nil, user)
   end
 
   describe '#save' do
@@ -15,7 +15,7 @@ describe Post do
         stub = double
         allow(Mysql2::Client).to receive(:new).and_return(stub)
 
-        expect(stub).to receive(:query).with("insert into posts (post, attachment, user_id) values ('#{@valid_post.post}', '#{@valid_post.attach}', '#{@valid_post.user.id}')")
+        expect(stub).to receive(:query).with("insert into posts (post, attachment, created_at, username) values ('#{@valid_post.post}', '#{@valid_post.attach}', str_to_date('#{@valid_post.created_at}', '%d-%m-%Y %H:%i:%s'), '#{@valid_post.user.username}')")
         expect(@valid_post.save).to eq(true)
       end
     end

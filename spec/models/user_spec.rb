@@ -3,8 +3,8 @@ require './app/models/user'
 
 describe User do
   before(:each) do
-    @user_valid = User.new(nil, 'umar', 'valid@gmail.com', nil)
-    @user_invalid = User.new(nil, nil, 'invalid@gmail.com', nil)
+    @user_valid = User.new('umar', 'valid@gmail.com', nil)
+    @user_invalid = User.new(nil, 'invalid@gmail.com', nil)
   end
 
   describe '#valid?' do
