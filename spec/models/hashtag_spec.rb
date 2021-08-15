@@ -14,5 +14,11 @@ describe Hashtag do
         expect(@valid_hashtag.save).to eq(true)
       end
     end
+
+    context 'invalid object with empty hashtags' do
+      it 'return false' do
+        expect(@invalid_hashtag.save).to eq(false)
+      end
+    end
   end
 end
