@@ -20,5 +20,11 @@ describe Hashtag do
         expect(@invalid_hashtag.save).to eq(false)
       end
     end
+
+    context 'invalid object with empty timestamp' do
+      it 'return false' do
+        expect(@invalid_timestamp.save).to eq(false)
+      end
+    end
   end
 end
