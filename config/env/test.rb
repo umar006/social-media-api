@@ -5,6 +5,6 @@ def create_db_client
     host: 'localhost',
     username: 'root',
     password: '',
-    database: 'social_media_api_test'
+    database: 'social_media_db_test'
   )
 end
