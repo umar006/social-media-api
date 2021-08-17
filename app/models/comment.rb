@@ -11,4 +11,10 @@ class Comment
     @attachment = attachment
     @created_at = created_at.strftime("%d-%m-%Y %H:%M:%S")
   end
+
+  def valid?
+    return false if username.nil? || comment.nil? || post_id.nil?
+
+    true
+  end
 end
