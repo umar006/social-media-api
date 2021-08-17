@@ -13,15 +13,19 @@ class Hashtag
     return false unless valid?
 
     client = create_db_client
-    post_hashtag = PostHashtag.new
 
     @hashtags.each do |hashtag|
       client.query("insert into hashtags (hashtag, created_at) values ('#{hashtag.downcase}', str_to_date('#@created_at', '%d-%m-%Y %H:%i:%s'))")
 
-      post_hashtag.save
+      save_to_hashtag
     end
 
     true
+  end
+
+  def save_to_hashtag
+    post_hashtag = PostHashtag.new
+    post_hashtag.save
   end
 
   def valid?
