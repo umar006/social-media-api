@@ -7,7 +7,7 @@ class PostHashtag
     post_id = last_insert_id('posts')
     hashtag_id = last_insert_id('hashtags')
 
-    client.query("insert into post_hashtag values ('#{post_id}', '#{hashtag_id}')")
+    client.query("insert into post_hashtags values ('#{post_id}', '#{hashtag_id}')")
   end
 
   def last_insert_id(table_name)
