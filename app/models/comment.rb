@@ -22,6 +22,8 @@ class Comment
         + "values ('#@username', '#@comment', '#@attachment', str_to_date('#@created_at', '%d-%m-%Y %H:%i:%s'))"
     client.query(sql)
 
+    save_to_post_comment
+
     unless @post.scan(/#\w+/).empty?
       save_to_hashtag
     end
