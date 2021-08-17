@@ -41,9 +41,9 @@ class Post
           "join posts on posts.id = post_hashtag.post_id " +
           "join hashtags on hashtags.id = post_hashtag.hashtag_id " +
           "where hashtags.hashtag = '#{hashtag.downcase}';"
-    raw_data = client.query(sql)
+    posts = client.query(sql)
 
-    convert_to_array(raw_data)
+    convert_to_array(posts)
   end
 
   def self.convert_to_array(raw_data)
