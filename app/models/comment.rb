@@ -12,6 +12,11 @@ class Comment
     @created_at = created_at.strftime("%d-%m-%Y %H:%M:%S")
   end
 
+  def save_to_hashtag
+    hashtags = Hashtag.new(@post.scan(/#\w+/), @created_at)
+    hashtags.save
+  end
+
   def valid?
     return false if username.nil? || comment.nil? || post_id.nil?
 
