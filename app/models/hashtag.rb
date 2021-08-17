@@ -34,6 +34,20 @@ class Hashtag
     true
   end
 
+  def self.find_top_5_past_24h
+    client = create_db_client
+    
+    sql = "select hashtag " \
+          + "from hashtags " \
+          + "where created_at > date_sub(curdate(), interval 1 day) " \
+          + "group by hashtag " \
+          + "order by count(hashtag) desc " \
+          + "limit 5;"
+    hashtags = client.query(sql)
+
+    convert_to_array(hashtags)
+  end
+
   def self.convert_to_array(raw_data)
     hashtags = []
     raw_data.each do |data|
