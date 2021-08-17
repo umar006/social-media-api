@@ -1,5 +1,6 @@
 require './config/env/development'
 require './app/models/hashtag'
+require './app/models/post_comment'
 require 'time'
 
 class Comment
@@ -31,6 +32,11 @@ class Comment
   def save_to_hashtag
     hashtags = Hashtag.new(@post.scan(/#\w+/), @created_at)
     hashtags.save
+  end
+
+  def save_to_post_comment
+    post_comment = PostComment.new
+    post_comment.save
   end
 
   def valid?
