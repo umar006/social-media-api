@@ -20,11 +20,15 @@ class Post
     client.query("insert into posts (post, attachment, created_at, username) values ('#@post', '#@attach', str_to_date('#@created_at', '%d-%m-%Y %H:%i:%s'), '#@username')")
 
     unless @post.scan(/#\w+/).empty?
-      hashtags = Hashtag.new(@post.scan(/#\w+/), @created_at)
-      hashtags.save
+      save_to_hashtag
     end
 
     true
+  end
+
+  def save_to_hashtag
+    hashtags = Hashtag.new(@post.scan(/#\w+/), @created_at)
+    hashtags.save
   end
 
   def valid?
@@ -37,7 +41,7 @@ class Post
     client = create_db_client
 
     sql = "select posts.username, posts.post, posts.attachment " +
-          "from post_hashtag " +
+          "from post_hashtags " +
           "join posts on posts.id = post_hashtag.post_id " +
           "join hashtags on hashtags.id = post_hashtag.hashtag_id " +
           "where hashtags.hashtag = '#{hashtag.downcase}';"
