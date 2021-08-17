@@ -32,4 +32,13 @@ class Post
 
     true
   end
+
+  def self.convert_to_array(raw_data)
+    posts = []
+    raw_data.each do |data|
+      post = Post.new(data['post'], data['username'], data['attachment'])
+      posts << post
+    end
+    posts
+  end
 end
