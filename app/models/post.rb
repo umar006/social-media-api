@@ -33,6 +33,19 @@ class Post
     true
   end
 
+  def self.find_by_hashtag(hashtag)
+    client = create_db_client
+
+    sql = "select posts.username, posts.post, posts.attachment " +
+          "from post_hashtag " +
+          "join posts on posts.id = post_hashtag.post_id " +
+          "join hashtags on hashtags.id = post_hashtag.hashtag_id " +
+          "where hashtags.hashtag = '#{hashtag.downcase}';"
+    raw_data = client.query(sql)
+
+    convert_to_array(raw_data)
+  end
+
   def self.convert_to_array(raw_data)
     posts = []
     raw_data.each do |data|
