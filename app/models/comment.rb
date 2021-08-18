@@ -1,6 +1,5 @@
 require './config/env/development'
 require './app/models/hashtag'
-require './app/models/post_comment'
 require 'time'
 
 class Comment
@@ -23,9 +22,7 @@ class Comment
         + "values ('#@post_id', '#@username', '#@comment', '#@attachment', str_to_date('#@created_at', '%d-%m-%Y %H:%i:%s'))"
     client.query(sql)
 
-    save_to_post_comment
-
-    unless @post.scan(/#\w+/).empty?
+    unless @comment.scan(/#\w+/).empty?
       save_to_hashtag
     end
 
@@ -33,7 +30,7 @@ class Comment
   end
 
   def save_to_hashtag
-    hashtags = Hashtag.new(@post.scan(/#\w+/), @created_at)
+    hashtags = Hashtag.new(@comment.scan(/#\w+/), @created_at, true)
     hashtags.save
   end
 
