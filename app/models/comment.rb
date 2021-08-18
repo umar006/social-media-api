@@ -36,11 +36,6 @@ class Comment
     hashtags.save
   end
 
-  def save_to_post_comment
-    post_comment = PostComment.new
-    post_comment.save
-  end
-
   def valid?
     return false if username.nil? || comment.nil? || post_id.nil?
 
