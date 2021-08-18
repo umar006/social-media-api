@@ -2,11 +2,12 @@ require './config/env/development'
 require './app/models/post_hashtag'
 
 class Hashtag
-  attr_accessor :hashtags, :created_at
+  attr_accessor :hashtags, :created_at, :comment
 
-  def initialize(hashtags, created_at=nil)
+  def initialize(hashtags, created_at=nil, comment=false)
     @hashtags = hashtags
     @created_at = created_at
+    @comment = comment
   end
 
   def save
@@ -17,7 +18,7 @@ class Hashtag
     @hashtags.each do |hashtag|
       client.query("insert into hashtags (hashtag, created_at) values ('#{hashtag.downcase}', str_to_date('#@created_at', '%d-%m-%Y %H:%i:%s'))")
 
-      save_to_post_hashtag
+      save_to_post_hashtag unless @comment
     end
 
     true
