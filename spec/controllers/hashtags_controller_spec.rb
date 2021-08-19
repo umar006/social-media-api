@@ -23,6 +23,10 @@ describe HashtagsController do
         expected_hashtag = Hashtag.find_top_5_past_24h
         expect(expected_hashtag).not_to be_nil
       end
+
+      it 'return true' do
+        expect(@hashtag.create(@params_valid)).to eq(true)
+      end
     end
   end
 end
