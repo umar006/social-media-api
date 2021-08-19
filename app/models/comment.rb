@@ -25,6 +25,23 @@ class Comment
     true
   end
 
+  def self.find_by_username(username)
+    client = create_db_client
+
+    comments = client.query("select * from comments where username='#{username}'")
+
+    convert_to_array(comments)
+  end
+
+  def self.convert_to_array(raw_data)
+    comments = []
+    raw_data.each do |data|
+      comment = Comment.new(data['post_id'], data['username'], data['comment'], data['attachment'])
+      comments << comment
+    end
+    comments
+  end
+  
   def valid?
     return false if username.nil? || comment.nil? || post_id.nil?
 
