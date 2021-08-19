@@ -1,7 +1,13 @@
 require './app/models/user'
 require './app/controllers/users_controller'
+require './config/env/test'
 
 describe UsersController do
+  before(:each) do
+    client = create_db_client
+    client.query("delete from users")
+  end
+  
   describe '#create' do
     context 'when given valid parameters' do
       it 'save user' do
