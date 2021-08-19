@@ -16,19 +16,10 @@ class Post
     return false unless valid?
 
     client = create_db_client
-
+    
     client.query("insert into posts (post, attachment, created_at, username) values ('#@post', '#@attach', str_to_date('#@created_at', '%d-%m-%Y %H:%i:%s'), '#@username')")
 
-    save_to_hashtag
-
     true
-  end
-
-  def save_to_hashtag
-    unless @post.scan(/#\w+/).empty?
-      hashtags = Hashtag.new(@post.scan(/#\w+/), @created_at)
-      hashtags.save
-    end
   end
 
   def valid?
