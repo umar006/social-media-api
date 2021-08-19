@@ -9,6 +9,11 @@ describe HashtagsController do
       'created_at' => '12-12-12 12:12:12',
       'comment' => false
     }
+    @params_invalid = {
+      'hashtags' => nil,
+      'created_at' => '12-12-12 12:12:12',
+      'comment' => false
+    }
     @hashtag = HashtagsController.new
 
     client = create_db_client
@@ -26,6 +31,12 @@ describe HashtagsController do
 
       it 'return true' do
         expect(@hashtag.create(@params_valid)).to eq(true)
+      end
+    end
+
+    context 'with invalid parameters' do
+      it 'return false' do
+        expect(@hashtag.create(@params_invalid)).to eq(false)
       end
     end
   end
