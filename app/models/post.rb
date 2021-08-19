@@ -19,22 +19,31 @@ class Post
 
     client.query("insert into posts (post, attachment, created_at, username) values ('#@post', '#@attach', str_to_date('#@created_at', '%d-%m-%Y %H:%i:%s'), '#@username')")
 
-    unless @post.scan(/#\w+/).empty?
-      save_to_hashtag
-    end
+    save_to_hashtag
 
     true
   end
 
   def save_to_hashtag
-    hashtags = Hashtag.new(@post.scan(/#\w+/), @created_at)
-    hashtags.save
+    unless @post.scan(/#\w+/).empty?
+      hashtags = Hashtag.new(@post.scan(/#\w+/), @created_at)
+      hashtags.save
+    end
   end
 
   def valid?
     return false if @post.nil? || @username.nil? || @post.size > 1000
 
     true
+  end
+
+  def self.find_by_username(username)
+    client = create_db_client
+
+    sql = "select * from posts where username='#{username}'"
+    posts = client.query(sql)
+
+    convert_to_array(posts)
   end
 
   def self.find_by_hashtag(hashtag)
