@@ -19,6 +19,12 @@ describe CommentsController do
       'comment' => 'good morning too',
       'attachment' => nil
     }
+    @invalid_params = {
+      'post_id' => nil,
+      'username' => nil,
+      'comment' => 'good morning too',
+      'attachment' => nil
+    }
     @comment = CommentsController.new
   end
 
@@ -33,6 +39,12 @@ describe CommentsController do
 
         expected_comment = Comment.find_by_username('umar2')
         expect(expected_comment).not_to be_nil
+      end
+    end
+
+    context 'with invalid parameters' do
+      it 'return false' do
+        expect(@comment.create(@invalid_params)).to eq(false)
       end
     end
   end
