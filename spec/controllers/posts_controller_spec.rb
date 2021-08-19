@@ -26,6 +26,10 @@ describe PostsController do
         expected_post = Post.find_by_username('umar2')
         expect(expected_post).not_to be_nil
       end
+
+      it 'return true' do
+        expect(@post.create(@params_valid)).to eq(true)
+      end
     end
   end
 end
