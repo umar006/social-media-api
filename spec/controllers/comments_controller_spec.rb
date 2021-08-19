@@ -24,6 +24,10 @@ describe CommentsController do
 
   describe '#create' do
     context 'with valid parameters' do
+      it 'return true' do
+        expect(@comment.create(@valid_params)).to eq(true)
+      end
+
       it 'save comment to database' do
         @comment.create(@valid_params)
 
