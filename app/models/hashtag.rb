@@ -17,16 +17,9 @@ class Hashtag
 
     @hashtags.each do |hashtag|
       client.query("insert into hashtags (hashtag, created_at) values ('#{hashtag.downcase}', str_to_date('#@created_at', '%d-%m-%Y %H:%i:%s'))")
-
-      save_to_post_hashtag unless @comment
     end
 
     true
-  end
-
-  def save_to_post_hashtag
-    post_hashtag = PostHashtag.new
-    post_hashtag.save
   end
 
   def valid?
