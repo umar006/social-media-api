@@ -23,7 +23,7 @@ class Hashtag
   end
 
   def valid?
-    return false if @hashtags.nil? || @hashtags.empty?
+    return false if @hashtags.nil? || @hashtags.empty? || @created_at.nil?
 
     true
   end
