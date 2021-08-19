@@ -31,5 +31,11 @@ describe PostsController do
         expect(@post.create(@params_valid)).to eq(true)
       end
     end
+
+    context 'given invalid parameters' do
+      it 'return false' do
+        expect(@post.create(@params_invalid)).to eq(false)
+      end
+    end
   end
 end
