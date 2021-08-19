@@ -22,16 +22,7 @@ class Comment
         + "values ('#@post_id', '#@username', '#@comment', '#@attachment', str_to_date('#@created_at', '%d-%m-%Y %H:%i:%s'))"
     client.query(sql)
 
-    unless @comment.scan(/#\w+/).empty?
-      save_to_hashtag
-    end
-
     true
-  end
-
-  def save_to_hashtag
-    hashtags = Hashtag.new(@comment.scan(/#\w+/), @created_at, true)
-    hashtags.save
   end
 
   def valid?
