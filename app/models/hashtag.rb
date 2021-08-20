@@ -7,7 +7,7 @@ class Hashtag
 
   def initialize(hashtags, created_at=Time.new)
     @hashtags = hashtags
-    @created_at = ccreated_at.strftime("%d-%m-%Y %H:%M:%S")
+    @created_at = created_at.strftime("%d-%m-%Y %H:%M:%S")
   end
 
   def save
