@@ -23,6 +23,14 @@ class Application < Sinatra::Base
     user = UsersController.new
     user.create(params)
     session[:username] = params['username']
-    redirect '/user'
+    redirect '/users'
+  end
+
+  get '/posts' do
+    erb :'posts/index'
+  end
+
+  get '/posts/new' do
+    erb :'posts/new'
   end
 end
