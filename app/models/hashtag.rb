@@ -1,13 +1,13 @@
 require './config/env/development'
 require './app/models/post_hashtag'
+require 'time'
 
 class Hashtag
   attr_accessor :hashtags, :created_at, :comment
 
-  def initialize(hashtags, created_at=nil, comment=false)
+  def initialize(hashtags, created_at=Time.new)
     @hashtags = hashtags
-    @created_at = created_at
-    @comment = comment
+    @created_at = ccreated_at.strftime("%d-%m-%Y %H:%M:%S")
   end
 
   def save
