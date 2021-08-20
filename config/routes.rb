@@ -33,4 +33,26 @@ class Application < Sinatra::Base
   get '/posts/new' do
     erb :'posts/new'
   end
+
+  post '/posts/create' do
+    param = {
+      'post' => params['post'],
+      'attachment' => params['attachment'],
+      'username' => session[:username]
+    }
+    post = PostsController.new
+    post.create(param)
+
+    unless params['post'].scan(/#\w+/).empty?
+      params = {
+        'hashtags' => params['post'].scan(/#\w+/),
+      }
+      hashtag = HashtagsController.new
+      hashtag.create(params)
+
+      post_hashtag = PostHashtagsController.new
+      post_hashtag.create
+    end
+    redirect '/posts'
+  end
 end
