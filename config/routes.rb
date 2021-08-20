@@ -26,6 +26,20 @@ class Application < Sinatra::Base
     redirect '/users'
   end
 
+  get '/users/login' do
+    erb :'users/login_form'
+  end
+
+  post '/users/login' do
+    user = UsersController.find_by_username(params['username'])
+
+    redirect '/users/new' if user.nil?
+    
+    session[:username] = user['username']
+
+    redirect '/posts'
+  end
+
   get '/posts' do
     erb :'posts/index'
   end
@@ -44,11 +58,11 @@ class Application < Sinatra::Base
     post.create(param)
 
     unless params['post'].scan(/#\w+/).empty?
-      params = {
+      param = {
         'hashtags' => params['post'].scan(/#\w+/),
       }
       hashtag = HashtagsController.new
-      hashtag.create(params)
+      hashtag.create(param)
 
       post_hashtag = PostHashtagsController.new
       post_hashtag.create
