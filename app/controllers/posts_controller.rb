@@ -2,13 +2,16 @@ require './app/models/post'
 
 class PostsController
   def create(params)
-    post = Post.new(params['post'], params['username'], params['attachment'])
-    post.save
+    unless params['attachment'].nil?
+      post = Post.new(params['post'], params['username'], params['attachment']['filename'])
 
-    filename = params[:file][:filename]
-    file = params[:file][:tempfile]
-    unless params['attachment'].nil? || params['attachment'].empty?
-      File.binwrite("./public/#{params['username']}_#{filename}", file.read)
+      filename = params['attachment']['filename']
+      file = params['attachment']['tempfile']
+      File.binwrite("./public/posts_file/#{params['username']}_#{filename}", file.read)
+    else
+      post = Post.new(params['post'], params['username'])
     end
+
+    post.save
   end
 end
