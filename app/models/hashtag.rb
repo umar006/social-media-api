@@ -26,6 +26,14 @@ class Hashtag
     true
   end
 
+  def self.find_all
+    client = create_db_client
+
+    hashtags = client.query("select * from hashtags")
+
+    convert_to_array(hashtags)
+  end
+
   def self.find_top_5_past_24h
     client = create_db_client
     
