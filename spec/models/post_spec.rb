@@ -1,3 +1,4 @@
+require 'test_helper'
 require './app/models/post'
 require './app/models/user'
 require './app/models/hashtag'

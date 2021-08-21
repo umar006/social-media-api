@@ -1,3 +1,4 @@
+require 'test_helper'
 require './config/env/test'
 require './app/models/hashtag'
 
