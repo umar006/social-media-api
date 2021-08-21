@@ -76,4 +76,10 @@ describe Post do
       expect(Post.find_all).not_to be_nil
     end
   end
+
+  describe '#find_by_username' do
+    it 'not nil' do
+      expect(Post.find_by_username('umar')).not_to be_nil
+    end
+  end
 end
