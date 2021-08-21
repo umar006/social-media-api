@@ -39,7 +39,7 @@ class Application < Sinatra::Base
 
     redirect '/users/new' if user.nil?
     
-    session[:username] = user['username']
+    session[:login_user] = user['username']
 
     redirect '/posts'
   end
@@ -49,20 +49,22 @@ class Application < Sinatra::Base
     erb :'posts/index'
   end
 
-  get '/posts/:id' do
-    @post = PostsController.find_by_id(params['id'])
-    erb :'posts/show'
-  end
-
   get '/posts/new' do
     erb :'posts/new'
+  end
+
+  get '/posts/:id' do
+    p PostsController.find_by_id(params['id'])
+    @post = PostsController.find_by_id(params['id'])
+    @comments = CommentsController.find_by_post_id(params['id'])
+    erb :'posts/show'
   end
 
   post '/posts/create' do
     param = {
       'post' => params['post'],
       'attachment' => params['attachment'],
-      'username' => session[:username]
+      'username' => session[:login_user]
     }
     post = PostsController.new
     post.create(param)
