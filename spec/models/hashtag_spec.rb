@@ -28,4 +28,12 @@ describe Hashtag do
       end
     end
   end
+
+  describe '#valid?' do
+    context 'with valid object' do
+      it 'return true' do
+        expect(@valid_hashtag.valid?).to eq(true)
+      end
+    end
+  end
 end
