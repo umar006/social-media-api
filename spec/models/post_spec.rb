@@ -15,6 +15,12 @@ describe Post do
         expect(@valid_post.username).to eq('umar')
       end
     end
+
+    context 'with invalid parameters' do
+      it 'return nil for post attribute' do
+        expect(@invalid_post.post).to be_nil
+      end
+    end
   end
 
   describe '#save' do
