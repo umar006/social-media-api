@@ -1,5 +1,6 @@
 require 'test_helper'
 require './app/models/post'
+require './app/models/user'
 require './app/controllers/posts_controller'
 require './config/env/test'
 
@@ -11,6 +12,9 @@ describe PostsController do
     client.query('delete from comments')
     client.query('delete from posts')
     client.query('delete from users')
+
+    user = User.new('umar2', 'umar2@gmail.com')
+    user.save
 
     @params_valid = {
       'post' => 'good morning',

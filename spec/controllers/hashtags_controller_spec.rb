@@ -18,7 +18,7 @@ describe HashtagsController do
       'comment' => false
     }
     @params_invalid = {
-      'hashtags' => nil,
+      'hashtags' => [],
       'created_at' => '12-12-12 12:12:12',
       'comment' => false
     }
