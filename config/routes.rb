@@ -49,6 +49,11 @@ class Application < Sinatra::Base
     erb :'posts/index'
   end
 
+  get '/posts/:id' do
+    @post = PostsController.find_by_id(params['id'])
+    erb :'posts/show'
+  end
+
   get '/posts/new' do
     erb :'posts/new'
   end
