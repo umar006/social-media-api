@@ -11,6 +11,10 @@ class Application < Sinatra::Base
     enable :sessions
   end
 
+  get '/' do
+    erb :home
+  end
+
   get '/users' do
     erb :'users/index'
   end
