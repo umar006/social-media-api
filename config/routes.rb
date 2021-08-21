@@ -45,6 +45,7 @@ class Application < Sinatra::Base
   end
 
   get '/posts' do
+    @posts = PostsController.find_all
     erb :'posts/index'
   end
 
