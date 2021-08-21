@@ -28,6 +28,14 @@ class Post
     true
   end
 
+  def self.find_all
+    client = create_db_client
+
+    posts = client.query('select * from posts')
+
+    convert_to_array(posts)
+  end
+
   def self.find_by_username(username)
     client = create_db_client
 

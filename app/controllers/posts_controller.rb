@@ -14,4 +14,8 @@ class PostsController
 
     post.save
   end
+
+  def self.find_all
+    Post.find_all
+  end
 end
