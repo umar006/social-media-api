@@ -81,4 +81,25 @@ class Application < Sinatra::Base
     end
     redirect '/posts'
   end
+
+  post '/posts/:id/comment' do
+    param = {
+      'comment' => params['comment'],
+      'attachment' => params['attachment'],
+      'username' => session[:login_user],
+      'post_id' => params['id']
+    }
+    comment = CommentsController.new
+    comment.create(param)
+
+    unless params['comment'].scan(/#\w+/).empty?
+      param = {
+        'hashtags' => params['comment'].scan(/#\w+/),
+      }
+      hashtag = HashtagsController.new
+      hashtag.create(param)
+    end
+
+    redirect '/posts'
+  end
 end
