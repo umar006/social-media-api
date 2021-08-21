@@ -1,9 +1,17 @@
+require 'test_helper'
 require './app/controllers/hashtags_controller'
 require './app/models/hashtag'
 require './config/env/test'
 
 describe HashtagsController do
   before(:each) do
+    client = create_db_client
+    client.query('delete from post_hashtags')
+    client.query('delete from hashtags')
+    client.query('delete from comments')
+    client.query('delete from posts')
+    client.query('delete from users')
+
     @params_valid = {
       'hashtags' => ['#generasigigih', '#yayasananakbangsa'],
       'created_at' => '12-12-12 12:12:12',
@@ -15,9 +23,15 @@ describe HashtagsController do
       'comment' => false
     }
     @hashtag = HashtagsController.new
+  end
 
+  after(:all) do
     client = create_db_client
+    client.query('delete from post_hashtags')
     client.query('delete from hashtags')
+    client.query('delete from comments')
+    client.query('delete from posts')
+    client.query('delete from users')
   end
 
   describe '#create' do

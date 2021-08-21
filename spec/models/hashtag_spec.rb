@@ -7,10 +7,22 @@ describe Hashtag do
     client = create_db_client
     client.query('delete from post_hashtags')
     client.query('delete from hashtags')
+    client.query('delete from comments')
+    client.query('delete from posts')
+    client.query('delete from users')
 
     @valid_hashtag = Hashtag.new(['#generasigigih', '#YayasanAnakBangsaBisa'])
     @valid_hashtag.save
     @invalid_hashtag = Hashtag.new([])
+  end
+
+  after(:all) do
+    client = create_db_client
+    client.query('delete from post_hashtags')
+    client.query('delete from hashtags')
+    client.query('delete from comments')
+    client.query('delete from posts')
+    client.query('delete from users')
   end
 
   describe '#initialize' do

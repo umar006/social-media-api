@@ -5,11 +5,23 @@ require './app/models/user'
 describe User do
   before(:each) do
     client = create_db_client
+    client.query('delete from post_hashtags')
+    client.query('delete from hashtags')
+    client.query('delete from comments')
+    client.query('delete from posts')
     client.query('delete from users')
 
     @valid_user = User.new('umar', 'umar@gmail.com')
     @valid_user.save
     @invalid_user = User.new(nil, 'umar@gmail.com')
+  end
+  after(:all) do
+    client = create_db_client
+    client.query('delete from post_hashtags')
+    client.query('delete from hashtags')
+    client.query('delete from comments')
+    client.query('delete from posts')
+    client.query('delete from users')
   end
 
   describe '#initialize' do

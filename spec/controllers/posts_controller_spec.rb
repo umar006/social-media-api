@@ -1,9 +1,17 @@
+require 'test_helper'
 require './app/models/post'
 require './app/controllers/posts_controller'
 require './config/env/test'
 
 describe PostsController do
   before(:each) do
+    client = create_db_client
+    client.query('delete from post_hashtags')
+    client.query('delete from hashtags')
+    client.query('delete from comments')
+    client.query('delete from posts')
+    client.query('delete from users')
+
     @params_valid = {
       'post' => 'good morning',
       'username' => 'umar2'
@@ -13,9 +21,15 @@ describe PostsController do
       'username' => 'umar2'
     }
     @post = PostsController.new
-    
+  end
+
+  after(:all) do
     client = create_db_client
-    client.query("delete from posts")
+    client.query('delete from post_hashtags')
+    client.query('delete from hashtags')
+    client.query('delete from comments')
+    client.query('delete from posts')
+    client.query('delete from users')
   end
   
   describe '#create' do

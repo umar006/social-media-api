@@ -9,9 +9,10 @@ describe Post do
   before(:each) do
     client = create_db_client
     client.query('delete from post_hashtags')
+    client.query('delete from hashtags')
+    client.query('delete from comments')
     client.query('delete from posts')
     client.query('delete from users')
-    client.query('delete from hashtags')
 
     user = User.new('umar', 'umar@gmail.com')
     user.save
@@ -27,6 +28,15 @@ describe Post do
 
     @invalid_post = Post.new(nil, "umar")
     @invalid_post_2 = Post.new("test" * 300, "umar")
+  end
+
+  after(:all) do
+    client = create_db_client
+    client.query('delete from post_hashtags')
+    client.query('delete from hashtags')
+    client.query('delete from comments')
+    client.query('delete from posts')
+    client.query('delete from users')
   end
 
   describe '#initialize' do

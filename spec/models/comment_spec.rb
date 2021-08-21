@@ -7,6 +7,8 @@ require './config/env/test'
 describe Comment do
   before(:each) do
     client = create_db_client
+    client.query('delete from post_hashtags')
+    client.query('delete from hashtags')
     client.query('delete from comments')
     client.query('delete from posts')
     client.query('delete from users')
@@ -22,6 +24,15 @@ describe Comment do
     @valid_comment.save
 
     @invalid_comment = Comment.new(nil, nil, 'mumet')
+  end
+
+  after(:all) do
+    client = create_db_client
+    client.query('delete from post_hashtags')
+    client.query('delete from hashtags')
+    client.query('delete from comments')
+    client.query('delete from posts')
+    client.query('delete from users')
   end
 
   describe '#initilize' do

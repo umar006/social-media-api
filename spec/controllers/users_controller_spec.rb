@@ -1,3 +1,4 @@
+require 'test_helper'
 require './app/models/user'
 require './app/controllers/users_controller'
 require './config/env/test'
@@ -5,7 +6,20 @@ require './config/env/test'
 describe UsersController do
   before(:each) do
     client = create_db_client
-    client.query("delete from users")
+    client.query('delete from post_hashtags')
+    client.query('delete from hashtags')
+    client.query('delete from comments')
+    client.query('delete from posts')
+    client.query('delete from users')
+  end
+
+  after(:all) do
+    client = create_db_client
+    client.query('delete from post_hashtags')
+    client.query('delete from hashtags')
+    client.query('delete from comments')
+    client.query('delete from posts')
+    client.query('delete from users')
   end
   
   describe '#create' do

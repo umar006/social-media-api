@@ -1,3 +1,4 @@
+require 'test_helper'
 require './app/models/post'
 require './app/models/comment'
 require './app/controllers/comments_controller'
@@ -6,8 +7,11 @@ require './config/env/test'
 describe CommentsController do
   before(:each) do
     client = create_db_client
+    client.query('delete from post_hashtags')
+    client.query('delete from hashtags')
     client.query('delete from comments')
     client.query('delete from posts')
+    client.query('delete from users')
 
     post = Post.new("good morning", "umar2")
     post.save
@@ -26,6 +30,15 @@ describe CommentsController do
       'attachment' => nil
     }
     @comment = CommentsController.new
+  end
+
+  after(:all) do
+    client = create_db_client
+    client.query('delete from post_hashtags')
+    client.query('delete from hashtags')
+    client.query('delete from comments')
+    client.query('delete from posts')
+    client.query('delete from users')
   end
 
   describe '#create' do
