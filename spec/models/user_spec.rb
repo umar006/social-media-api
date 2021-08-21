@@ -62,8 +62,12 @@ describe User do
   end
 
   describe '#find_by_username' do
-    it 'not nil' do
+    it 'not nil when username exist' do
       expect(User.find_by_username('umar')).not_to be_nil
+    end
+
+    it 'nil when when username does not exist' do
+      expect(User.find_by_username('umaru')).to be_nil
     end
   end
 end
