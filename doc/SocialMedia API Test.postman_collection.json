@@ -183,6 +183,17 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Get posts by hashtag",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
 		}
 	]
 }
