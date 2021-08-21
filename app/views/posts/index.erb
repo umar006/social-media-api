@@ -1,2 +1,7 @@
 <h1>Posts</h1>
 <a href='/posts/new'>Create post</a>
+<br>
+
+<% @posts.each.with_index(1) do |post, index|%>
+    <p><%= index %> <a href='/posts/<%= post.id %>'><%= post.post %></a></p>
+<% end %>
