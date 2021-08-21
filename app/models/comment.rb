@@ -1,5 +1,3 @@
-require './config/env/development'
-require './app/models/hashtag'
 require 'time'
 
 class Comment
