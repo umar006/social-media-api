@@ -40,4 +40,18 @@ describe Comment do
       end
     end
   end
+
+  describe '#save' do
+    context 'with valid parameters' do
+      it 'save to database' do
+        stub = double
+        allow(Mysql2::Client).to receive(:new).and_return(stub)
+
+        sql = "insert into comments (post_id, username, comment, attachment, created_at) " \
+            + "values ('1', 'umar', 'halo kapiten', '', str_to_date('#{@valid_comment.created_at}', '%d-%m-%Y %H:%i:%s'))"
+        expect(stub).to receive(:query).with(sql)
+        expect(@valid_comment.save).to eq(true)
+      end
+    end
+  end
 end
