@@ -63,5 +63,11 @@ describe Post do
         expect(@valid_post.valid?).to eq(true)
       end
     end
+    
+    context 'with invalid parameters' do
+      it 'return false' do
+        expect(@invalid_post.valid?).to eq(false)
+      end
+    end
   end
 end
