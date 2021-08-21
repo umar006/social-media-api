@@ -102,4 +102,10 @@ class Application < Sinatra::Base
 
     redirect '/posts'
   end
+
+  get '/hashtags/trending' do
+    @trending = HashtagsController.top_5_past_24h
+    
+    erb :'hashtags/index'
+  end
 end
