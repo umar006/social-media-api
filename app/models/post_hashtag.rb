@@ -1,5 +1,3 @@
-require './config/env/development'
-
 class PostHashtag
   def save
     client = create_db_client
