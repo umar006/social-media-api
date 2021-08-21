@@ -20,6 +20,15 @@ bundle install
 ```
 rake spec
 ```
+### Check coverage code
+Mac terminal
+```
+open coverage/index.html
+```
+Ubuntu terminal
+```
+xdg-open coverage/index.html
+```
 
 ### Running the server
 
