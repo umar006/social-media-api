@@ -54,7 +54,6 @@ class Application < Sinatra::Base
   end
 
   get '/posts/:id' do
-    p PostsController.find_by_id(params['id'])
     @post = PostsController.find_by_id(params['id'])
     @comments = CommentsController.find_by_post_id(params['id'])
     erb :'posts/show'
