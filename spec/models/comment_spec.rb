@@ -60,4 +60,12 @@ describe Comment do
       end
     end
   end
+
+  describe '#valid?' do
+    context 'with valid parameters' do
+      it 'return true' do
+        expect(@valid_comment.valid?).to eq(true)
+      end
+    end
+  end
 end
