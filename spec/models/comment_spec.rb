@@ -80,4 +80,10 @@ describe Comment do
       expect(Comment.find_by_post_id(1)).not_to be_nil
     end
   end
+
+  describe '#find_by_username' do
+    it 'not nil' do
+      expect(Comment.find_by_username('umar')).not_to be_nil
+    end
+  end
 end
