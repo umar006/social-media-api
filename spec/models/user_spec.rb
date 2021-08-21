@@ -1,9 +1,14 @@
+require 'test_helper'
 require './config/env/test'
 require './app/models/user'
 
 describe User do
   before(:each) do
+    client = create_db_client
+    client.query('delete from users')
+
     @valid_user = User.new('umar', 'umar@gmail.com')
+    @valid_user.save
     @invalid_user = User.new(nil, 'umar@gmail.com')
   end
 
@@ -40,10 +45,10 @@ describe User do
   describe '#save' do
     context 'with valid object' do
       it 'save to database' do
-        mock = double
-        allow(Mysql2::Client).to receive(:new).and_return(mock)
+        stub = double
+        allow(Mysql2::Client).to receive(:new).and_return(stub)
 
-        expect(mock).to receive(:query).with("insert into users (username, email, biodata) values ('#{@valid_user.username}', '#{@valid_user.email}', '#{@valid_user.biodata}')")
+        expect(stub).to receive(:query).with("insert into users (username, email, biodata) values ('#{@valid_user.username}', '#{@valid_user.email}', '#{@valid_user.biodata}')")
 
         expect(@valid_user.save).to eq(true)
       end
@@ -53,6 +58,12 @@ describe User do
       it 'return false' do
         expect(@invalid_user.save).to eq(false)
       end
+    end
+  end
+
+  describe '#find_by_username' do
+    it 'not nil' do
+      expect(User.find_by_username('umar')).not_to be_nil
     end
   end
 end

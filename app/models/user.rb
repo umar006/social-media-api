@@ -1,5 +1,3 @@
-require './config/env/development'
-
 class User
   attr_accessor :username, :email, :biodata, :id
 
