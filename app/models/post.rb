@@ -1,5 +1,3 @@
-require './config/env/development'
-require './app/models/hashtag'
 require 'time'
 
 class Post
@@ -59,8 +57,8 @@ class Post
 
     sql = "select posts.id, posts.username, posts.post, posts.attachment " +
           "from post_hashtags " +
-          "join posts on posts.id = post_hashtag.post_id " +
-          "join hashtags on hashtags.id = post_hashtag.hashtag_id " +
+          "join posts on posts.id = post_hashtags.post_id " +
+          "join hashtags on hashtags.id = post_hashtags.hashtag_id " +
           "where hashtags.hashtag = '#{hashtag.downcase}';"
     posts = client.query(sql)
 

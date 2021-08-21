@@ -1,18 +1,28 @@
 require './app/models/post'
 require './app/models/user'
+require './app/models/hashtag'
+require './app/models/post_hashtag'
 require './config/env/test'
 
 describe Post do
   before(:each) do
     client = create_db_client
+    client.query('delete from post_hashtags')
     client.query('delete from posts')
     client.query('delete from users')
+    client.query('delete from hashtags')
 
     user = User.new('umar', 'umar@gmail.com')
     user.save
 
-    @valid_post = Post.new('aku seorang kapiten', "umar")
+    @valid_post = Post.new('aku seorang kapiten #generasigigih', "umar")
     @valid_post.save
+
+    hashtags = Hashtag.new(['#generasigigih'])
+    hashtags.save
+
+    post_hashtag = PostHashtag.new
+    post_hashtag.save
 
     @invalid_post = Post.new(nil, "umar")
     @invalid_post_2 = Post.new("test" * 300, "umar")
@@ -21,7 +31,7 @@ describe Post do
   describe '#initialize' do
     context 'with valid parameters' do
       it 'return all mandatory atribute' do
-        expect(@valid_post.post).to eq('aku seorang kapiten')
+        expect(@valid_post.post).to eq('aku seorang kapiten #generasigigih')
         expect(@valid_post.username).to eq('umar')
       end
     end
@@ -80,6 +90,12 @@ describe Post do
   describe '#find_by_username' do
     it 'not nil' do
       expect(Post.find_by_username('umar')).not_to be_nil
+    end
+  end
+
+  describe '#find_by_hashtag' do
+    it 'not nil' do
+      expect(Post.find_by_hashtag('#generasigigih')).not_to be_nil
     end
   end
 end
