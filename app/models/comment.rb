@@ -25,6 +25,14 @@ class Comment
     true
   end
 
+  def self.find_by_post_id(post_id)
+    client = create_db_client
+
+    comments = client.query("select * from comments where post_id='#{post_id}'")
+
+    convert_to_array(comments)
+  end
+
   def self.find_by_username(username)
     client = create_db_client
 
