@@ -7,7 +7,7 @@ class PostsController
 
       filename = params['attachment']['filename']
       file = params['attachment']['tempfile']
-      File.binwrite("./public/posts_file/#{params['username']}_#{filename}", file.read)
+      File.binwrite("./public/posts/#{params['username']}_#{filename}", file.read)
     else
       post = Post.new(params['post'], params['username'])
     end
