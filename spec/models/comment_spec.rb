@@ -32,5 +32,12 @@ describe Comment do
         expect(@valid_comment.comment).to eq('halo kapiten')
       end
     end
+
+    context 'with invalid parameters' do
+      it 'return nil' do
+        expect(@invalid_comment.post_id).to be_nil
+        expect(@invalid_comment.username).to be_nil
+      end
+    end
   end
 end
