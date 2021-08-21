@@ -1,12 +1,13 @@
 require './config/env/development'
 
 class User
-  attr_accessor :username, :email, :biodata
+  attr_accessor :username, :email, :biodata, :id
 
-  def initialize(username, email, biodata=nil)
+  def initialize(username, email, biodata=nil, id=nil)
     @username = username
     @email = email
     @biodata = biodata
+    @id = id
   end
 
   def save

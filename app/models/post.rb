@@ -3,13 +3,14 @@ require './app/models/hashtag'
 require 'time'
 
 class Post
-  attr_accessor :post, :attachment, :username, :created_at
+  attr_accessor :post, :attachment, :username, :created_at, :id
 
-  def initialize(post, username, attachment=nil, created_at=Time.new)
+  def initialize(post, username, attachment=nil, id=nil, created_at=Time.new)
     @post = post
     @attachment = attachment
     @username = username
     @created_at = created_at.strftime("%d-%m-%Y %H:%M:%S")
+    @id = id
   end
 
   def save
@@ -56,7 +57,7 @@ class Post
   def self.find_by_hashtag(hashtag)
     client = create_db_client
 
-    sql = "select posts.username, posts.post, posts.attachment " +
+    sql = "select posts.id, posts.username, posts.post, posts.attachment " +
           "from post_hashtags " +
           "join posts on posts.id = post_hashtag.post_id " +
           "join hashtags on hashtags.id = post_hashtag.hashtag_id " +
@@ -69,7 +70,7 @@ class Post
   def self.convert_to_array(raw_data)
     posts = []
     raw_data.each do |data|
-      post = Post.new(data['post'], data['username'], data['attachment'])
+      post = Post.new(data['post'], data['username'], data['attachment'], data['id'])
       posts << post
     end
     posts
