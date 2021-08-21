@@ -74,4 +74,10 @@ describe Comment do
       end
     end
   end
+
+  describe '#find_by_post_id' do
+    it 'not nil' do
+      expect(Comment.find_by_post_id(1)).not_to be_nil
+    end
+  end
 end
