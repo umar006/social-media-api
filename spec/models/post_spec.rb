@@ -1,9 +1,19 @@
 require './app/models/post'
 require './app/models/user'
+require './config/env/test'
 
 describe Post do
   before(:each) do
+    client = create_db_client
+    client.query('delete from posts')
+    client.query('delete from users')
+
+    user = User.new('umar', 'umar@gmail.com')
+    user.save
+
     @valid_post = Post.new('aku seorang kapiten', "umar")
+    @valid_post.save
+
     @invalid_post = Post.new(nil, "umar")
     @invalid_post_2 = Post.new("test" * 300, "umar")
   end
@@ -43,6 +53,14 @@ describe Post do
     context 'post more than 1000 characters' do
       it 'return false' do
         expect(@invalid_post_2.save).to eq(false)
+      end
+    end
+  end
+
+  describe '#valid?' do
+    context 'with valid parameters' do
+      it 'return true' do
+        expect(@valid_post.valid?).to eq(true)
       end
     end
   end
