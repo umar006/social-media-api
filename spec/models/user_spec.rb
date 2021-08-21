@@ -14,6 +14,13 @@ describe User do
         expect(@valid_user.email).to eq('umar@gmail.com')
       end
     end
+
+    context 'with invalid parameters' do
+      it 'return nil and umar@gmail.com' do
+        expect(@invalid_user.username).to be_nil
+        expect(@invalid_user.email).to eq('umar@gmail.com')
+      end
+    end
   end
 
   describe '#valid?' do
