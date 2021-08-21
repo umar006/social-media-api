@@ -2,7 +2,15 @@ require './app/models/comment'
 
 class CommentsController
   def create(params)
-    comment = Comment.new(params['post_id'], params['username'], params['comment'], params['attachment'])
+    unless params['attachment'].nil?
+      comment = Comment.new(params['post_id'], params['username'], params['comment'], params['attachment']['filename'])
+
+      filename = params['attachment']['filename']
+      file = params['attachment']['tempfile']
+      File.binwrite("./public/comments/#{params['username']}_#{filename}", file.read)
+    else
+      comment = Comment.new(params['post_id'], params['username'], params['comment'])
+    end
     comment.save
   end
 
