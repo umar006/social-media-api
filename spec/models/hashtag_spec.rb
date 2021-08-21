@@ -3,7 +3,12 @@ require './app/models/hashtag'
 
 describe Hashtag do
   before(:each) do
+    client = create_db_client
+    client.query('delete from post_hashtags')
+    client.query('delete from hashtags')
+
     @valid_hashtag = Hashtag.new(['#generasigigih', '#YayasanAnakBangsaBisa'])
+    @valid_hashtag.save
     @invalid_hashtag = Hashtag.new([])
   end
 
@@ -40,6 +45,12 @@ describe Hashtag do
       it 'return false' do
         expect(@invalid_hashtag.valid?).to eq(false)
       end
+    end
+  end
+
+  describe '#find_top_5_past_24h' do
+    it 'not nil' do
+      expect(Hashtag.find_top_5_past_24h).not_to be_nil
     end
   end
 end
