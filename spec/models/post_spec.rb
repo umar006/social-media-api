@@ -70,4 +70,10 @@ describe Post do
       end
     end
   end
+
+  describe '#find_all' do
+    it 'not nil' do
+      expect(Post.find_all).not_to be_nil
+    end
+  end
 end
