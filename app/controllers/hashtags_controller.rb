@@ -5,4 +5,8 @@ class HashtagsController
     hashtag = Hashtag.new(params['hashtags'])
     hashtag.save
   end
+
+  def self.top_5_past_24h
+    Hashtag.find_top_5_past_24h
+  end
 end
