@@ -190,7 +190,22 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": ""
+					"raw": "http://localhost:{{port}}/hashtags/:hashtag",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{port}}",
+					"path": [
+						"hashtags",
+						":hashtag"
+					],
+					"variable": [
+						{
+							"key": "hashtag",
+							"value": "#generasigigih"
+						}
+					]
 				}
 			},
 			"response": []
