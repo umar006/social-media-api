@@ -53,5 +53,11 @@ describe Comment do
         expect(@valid_comment.save).to eq(true)
       end
     end
+
+    context 'with invalid parameters' do
+      it 'return false' do
+        expect(@invalid_comment.save).to eq(false)
+      end
+    end
   end
 end
