@@ -1,9 +1,7 @@
-require './config/env/development'
-require './app/models/post_hashtag'
 require 'time'
 
 class Hashtag
-  attr_accessor :hashtags, :created_at, :comment
+  attr_accessor :hashtags, :created_at
 
   def initialize(hashtags, created_at=Time.new)
     @hashtags = hashtags
@@ -23,7 +21,7 @@ class Hashtag
   end
 
   def valid?
-    return false if @hashtags.nil? || @hashtags.empty? || @created_at.nil?
+    return false if @hashtags.empty? || @created_at.nil?
 
     true
   end

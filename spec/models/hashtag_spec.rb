@@ -3,9 +3,16 @@ require './app/models/hashtag'
 
 describe Hashtag do
   before(:each) do
-    @valid_hashtag = Hashtag.new(['#generasigigih', '#YayasanAnakBangsaBisa'], '15-08-2021 18:55:45')
-    @invalid_hashtag = Hashtag.new([], '15-08-2021 18:55:45')
-    @invalid_timestamp = Hashtag.new(['#generasigigih'], nil)
+    @valid_hashtag = Hashtag.new(['#generasigigih', '#YayasanAnakBangsaBisa'])
+    @invalid_hashtag = Hashtag.new([])
+  end
+
+  describe '#initialize' do
+    context 'with valid parameters' do
+      it 'return mandatory attribute' do
+        expect(@valid_hashtag.hashtags).to eq(['#generasigigih', '#YayasanAnakBangsaBisa'])
+      end
+    end
   end
 
   describe '#save' do
@@ -18,12 +25,6 @@ describe Hashtag do
     context 'invalid object with empty hashtags' do
       it 'return false' do
         expect(@invalid_hashtag.save).to eq(false)
-      end
-    end
-
-    context 'invalid object with empty timestamp' do
-      it 'return false' do
-        expect(@invalid_timestamp.save).to eq(false)
       end
     end
   end
