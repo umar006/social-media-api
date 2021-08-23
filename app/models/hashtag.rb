@@ -3,8 +3,8 @@ require 'time'
 class Hashtag
   attr_reader :hashtags, :created_at, :id
 
-  def initialize(hashtags, id=nil, created_at=Time.new)
-    @hashtags = hashtags
+  def initialize(hashtag, id=nil, created_at=Time.new)
+    @hashtag = hashtag
     @created_at = created_at.strftime("%d-%m-%Y %H:%M:%S")
   end
 
@@ -13,15 +13,13 @@ class Hashtag
 
     client = create_db_client
 
-    @hashtags.each do |hashtag|
-      client.query("insert into hashtags (hashtag, created_at) values ('#{hashtag.downcase}', str_to_date('#@created_at', '%d-%m-%Y %H:%i:%s'))")
-    end
+    client.query("insert into hashtags (hashtag, created_at) values ('#{@hashtag.downcase}', str_to_date('#@created_at', '%d-%m-%Y %H:%i:%s'))")
 
     true
   end
 
   def valid?
-    return false if @hashtags.empty? || @created_at.nil?
+    return false if @hashtag.empty? || @created_at.nil?
 
     true
   end
@@ -37,10 +35,10 @@ class Hashtag
   def self.find_top_5_past_24h
     client = create_db_client
     
-    sql = "select * " \
+    sql = "select hashtag, id " \
         + "from hashtags " \
         + "where created_at > date_sub(curdate(), interval 1 day) " \
-        + "group by hashtag " \
+        + "group by hashtag, id " \
         + "order by count(hashtag) desc " \
         + "limit 5;"
     hashtags = client.query(sql)

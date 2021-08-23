@@ -12,16 +12,8 @@ describe HashtagsController do
     client.query('delete from posts')
     client.query('delete from users')
 
-    @params_valid = {
-      'hashtags' => ['#generasigigih', '#yayasananakbangsa'],
-      'created_at' => '12-12-12 12:12:12',
-      'comment' => false
-    }
-    @params_invalid = {
-      'hashtags' => [],
-      'created_at' => '12-12-12 12:12:12',
-      'comment' => false
-    }
+    @params_valid = '#generasigigih'
+    @params_invalid = ''
     @hashtag = HashtagsController.new
   end
 

@@ -1,9 +1,9 @@
 require './app/models/hashtag'
 
 class HashtagsController
-  def create(params)
-    hashtag = Hashtag.new(params['hashtags'])
-    hashtag.save
+  def create(hashtag)
+    new_hashtag = Hashtag.new(hashtag)
+    new_hashtag.save
   end
 
   def self.top_5_past_24h
