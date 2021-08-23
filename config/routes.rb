@@ -43,8 +43,6 @@ class Application < Sinatra::Base
   end
 
   get '/posts' do
-    redirect '/users/login' if session[:login_user].nil?
-
     @posts = PostsController.find_all
     erb :'posts/index'
   end
@@ -56,8 +54,6 @@ class Application < Sinatra::Base
   end
 
   get '/posts/:id' do
-    redirect '/users/login' if session[:login_user].nil?
-
     @post = PostsController.find_by_id(params['id'])
     @comments = CommentsController.find_by_post_id(params['id'])
     erb :'posts/show'
@@ -112,24 +108,18 @@ class Application < Sinatra::Base
   end
 
   get '/hashtags' do
-    redirect '/users/login' if session[:login_user].nil?
-
     @hashtags = HashtagsController.find_all
 
     erb :'hashtags/index'
   end
 
   get '/hashtags/trending' do
-    redirect '/users/login' if session[:login_user].nil?
-
     @trending = HashtagsController.top_5_past_24h
     
     erb :'hashtags/trending'
   end
 
   get '/hashtags/:hashtag' do
-    redirect '/users/login' if session[:login_user].nil?
-    
     @posts = Post.find_by_hashtag(params['hashtag'])
 
     erb :'hashtags/show'
