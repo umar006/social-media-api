@@ -1,9 +1,9 @@
 require 'time'
 
 class Comment
-  attr_reader :comment, :attachment, :created_at, :username, :post_id
+  attr_reader :comment, :attachment, :created_at, :username, :post_id, :id
 
-  def initialize(post_id, username, comment, attachment=nil, created_at=Time.new)
+  def initialize(post_id, username, comment, attachment=nil, id=nil, created_at=Time.new)
     @post_id = post_id
     @username = username
     @comment = comment
@@ -43,7 +43,7 @@ class Comment
   def self.convert_to_array(raw_data)
     comments = []
     raw_data.each do |data|
-      comment = Comment.new(data['post_id'], data['username'], data['comment'], data['attachment'])
+      comment = Comment.new(data['post_id'], data['username'], data['comment'], data['attachment'], data['id'])
       comments << comment
     end
     comments

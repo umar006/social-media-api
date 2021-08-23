@@ -1,9 +1,9 @@
 require 'time'
 
 class Hashtag
-  attr_reader :hashtags, :created_at
+  attr_reader :hashtags, :created_at, :id
 
-  def initialize(hashtags, created_at=Time.new)
+  def initialize(hashtags, id=nil, created_at=Time.new)
     @hashtags = hashtags
     @created_at = created_at.strftime("%d-%m-%Y %H:%M:%S")
   end
@@ -37,7 +37,7 @@ class Hashtag
   def self.find_top_5_past_24h
     client = create_db_client
     
-    sql = "select hashtag " \
+    sql = "select * " \
         + "from hashtags " \
         + "where created_at > date_sub(curdate(), interval 1 day) " \
         + "group by hashtag " \
@@ -51,7 +51,7 @@ class Hashtag
   def self.convert_to_array(raw_data)
     hashtags = []
     raw_data.each do |data|
-      hashtag = Hashtag.new(data['hashtag'])
+      hashtag = Hashtag.new(data['hashtag'], data['id'])
       hashtags << hashtag
     end
     hashtags
