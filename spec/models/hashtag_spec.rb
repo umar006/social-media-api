@@ -11,7 +11,7 @@ describe Hashtag do
     client.query('delete from posts')
     client.query('delete from users')
 
-    @valid_hashtag = Hashtag.new(['#generasigigih', '#YayasanAnakBangsaBisa'])
+    @valid_hashtag = Hashtag.new('#generasigigih')
     @valid_hashtag.save
     @invalid_hashtag = Hashtag.new([])
   end
@@ -28,7 +28,7 @@ describe Hashtag do
   describe '#initialize' do
     context 'with valid parameters' do
       it 'return mandatory attribute' do
-        expect(@valid_hashtag.hashtags).to eq(['#generasigigih', '#YayasanAnakBangsaBisa'])
+        expect(@valid_hashtag.hashtag).to eq('#generasigigih')
       end
     end
   end

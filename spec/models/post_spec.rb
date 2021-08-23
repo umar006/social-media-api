@@ -20,7 +20,7 @@ describe Post do
     @valid_post = Post.new('aku seorang kapiten #generasigigih', "umar")
     @valid_post.save
 
-    hashtags = Hashtag.new(['#generasigigih'])
+    hashtags = Hashtag.new('#generasigigih')
     hashtags.save
 
     post_hashtag = PostHashtag.new
