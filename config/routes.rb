@@ -15,10 +15,6 @@ class Application < Sinatra::Base
     erb :home
   end
 
-  get '/users' do
-    erb :'users/index'
-  end
-
   get '/users/new' do
     erb :'users/new'
   end
@@ -26,8 +22,10 @@ class Application < Sinatra::Base
   post '/users/create' do
     user = UsersController.new
     user.create(params)
-    session[:username] = params['username']
-    redirect '/users'
+
+    session[:login_user] = params['username']
+    
+    redirect '/posts'
   end
 
   get '/users/login' do
