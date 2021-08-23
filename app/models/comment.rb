@@ -1,7 +1,7 @@
 require 'time'
 
 class Comment
-  attr_accessor :comment, :attachment, :created_at, :username, :post_id
+  attr_reader :comment, :attachment, :created_at, :username, :post_id
 
   def initialize(post_id, username, comment, attachment=nil, created_at=Time.new)
     @post_id = post_id

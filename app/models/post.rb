@@ -1,7 +1,7 @@
 require 'time'
 
 class Post
-  attr_accessor :post, :attachment, :username, :created_at, :id
+  attr_reader :post, :attachment, :username, :created_at, :id
 
   def initialize(post, username, attachment=nil, id=nil, created_at=Time.new)
     @post = post

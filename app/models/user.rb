@@ -1,5 +1,5 @@
 class User
-  attr_accessor :username, :email, :biodata, :id
+  attr_reader :username, :email, :biodata, :id
 
   def initialize(username, email, biodata=nil, id=nil)
     @username = username
