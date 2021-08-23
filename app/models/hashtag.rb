@@ -1,7 +1,7 @@
 require 'time'
 
 class Hashtag
-  attr_reader :hashtags, :created_at, :id
+  attr_reader :hashtag, :created_at, :id
 
   def initialize(hashtag, id=nil, created_at=Time.new)
     @hashtag = hashtag
