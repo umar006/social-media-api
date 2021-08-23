@@ -71,11 +71,11 @@ class Application < Sinatra::Base
     post.create(post_params)
 
     unless params['post'].scan(/#\w+/).empty?
-      hashtag_params = {
-        'hashtags' => params['post'].scan(/#\w+/),
-      }
-      hashtag = HashtagsController.new
-      hashtag.create(hashtag_params)
+      hashtags = params['post'].scan(/#\w+/)
+      hashtags.each do |hashtag|
+        new_hashtag = HashtagsController.new
+        new_hashtag.create(hashtag)
+      end
 
       post_hashtag = PostHashtagsController.new
       post_hashtag.create
