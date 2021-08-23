@@ -38,11 +38,11 @@ class Hashtag
     client = create_db_client
     
     sql = "select hashtag " \
-          + "from hashtags " \
-          + "where created_at > date_sub(curdate(), interval 1 day) " \
-          + "group by hashtag " \
-          + "order by count(hashtag) desc " \
-          + "limit 5;"
+        + "from hashtags " \
+        + "where created_at > date_sub(curdate(), interval 1 day) " \
+        + "group by hashtag " \
+        + "order by count(hashtag) desc " \
+        + "limit 5;"
     hashtags = client.query(sql)
 
     convert_to_array(hashtags)

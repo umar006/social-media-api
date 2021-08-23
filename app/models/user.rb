@@ -13,7 +13,9 @@ class User
 
     client = create_db_client
 
-    client.query("insert into users (username, email, biodata) values ('#@username', '#@email', '#@biodata')")
+    sql = "insert into users (username, email, biodata) " \
+        + "values ('#@username', '#@email', '#@biodata')"
+    client.query(sql)
 
     true
   end

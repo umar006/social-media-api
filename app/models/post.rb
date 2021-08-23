@@ -16,7 +16,10 @@ class Post
 
     client = create_db_client
     
-    client.query("insert into posts (post, attachment, created_at, username) values ('#@post', '#@attachment', str_to_date('#@created_at', '%d-%m-%Y %H:%i:%s'), '#@username')")
+    sql = "insert into posts (post, attachment, created_at, username) " \
+        + "values ('#@post', '#@attachment', " \
+        + "str_to_date('#@created_at', '%d-%m-%Y %H:%i:%s'), '#@username')"
+    client.query(sql)
 
     true
   end

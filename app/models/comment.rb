@@ -17,7 +17,8 @@ class Comment
     client = create_db_client
 
     sql = "insert into comments (post_id, username, comment, attachment, created_at) " \
-        + "values ('#@post_id', '#@username', '#@comment', '#@attachment', str_to_date('#@created_at', '%d-%m-%Y %H:%i:%s'))"
+        + "values ('#@post_id', '#@username', '#@comment', '#@attachment', " \
+        + "str_to_date('#@created_at', '%d-%m-%Y %H:%i:%s'))"
     client.query(sql)
 
     true
