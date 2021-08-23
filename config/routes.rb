@@ -43,76 +43,93 @@ class Application < Sinatra::Base
   end
 
   get '/posts' do
+    redirect '/users/login' if session[:login_user].nil?
+
     @posts = PostsController.find_all
     erb :'posts/index'
   end
 
   get '/posts/new' do
+    redirect '/users/login' if session[:login_user].nil?
+
     erb :'posts/new'
   end
 
   get '/posts/:id' do
+    redirect '/users/login' if session[:login_user].nil?
+
     @post = PostsController.find_by_id(params['id'])
     @comments = CommentsController.find_by_post_id(params['id'])
     erb :'posts/show'
   end
 
   post '/posts/create' do
-    param = {
+    redirect '/users/login' if session[:login_user].nil?
+
+    post_params = {
       'post' => params['post'],
       'attachment' => params['attachment'],
       'username' => session[:login_user]
     }
     post = PostsController.new
-    post.create(param)
+    post.create(post_params)
 
     unless params['post'].scan(/#\w+/).empty?
-      param = {
+      hashtag_params = {
         'hashtags' => params['post'].scan(/#\w+/),
       }
       hashtag = HashtagsController.new
-      hashtag.create(param)
+      hashtag.create(hashtag_params)
 
       post_hashtag = PostHashtagsController.new
       post_hashtag.create
     end
+
     redirect '/posts'
   end
 
   post '/posts/:id/comment' do
-    param = {
+    redirect '/users/login' if session[:login_user].nil?
+
+    comment_params = {
       'comment' => params['comment'],
       'attachment' => params['attachment'],
       'username' => session[:login_user],
       'post_id' => params['id']
     }
     comment = CommentsController.new
-    comment.create(param)
+    comment.create(comment_params)
 
     unless params['comment'].scan(/#\w+/).empty?
-      param = {
+      hashtag_params = {
         'hashtags' => params['comment'].scan(/#\w+/),
       }
       hashtag = HashtagsController.new
-      hashtag.create(param)
+      hashtag.create(hashtag_params)
     end
 
     redirect '/posts'
   end
 
   get '/hashtags' do
+    redirect '/users/login' if session[:login_user].nil?
+
     @hashtags = HashtagsController.find_all
 
     erb :'hashtags/index'
   end
 
   get '/hashtags/trending' do
+    redirect '/users/login' if session[:login_user].nil?
+
     @trending = HashtagsController.top_5_past_24h
     
     erb :'hashtags/trending'
   end
 
   get '/hashtags/:hashtag' do
+    redirect '/users/login' if session[:login_user].nil?
+    
     @posts = Post.find_by_hashtag(params['hashtag'])
 
     erb :'hashtags/show'
