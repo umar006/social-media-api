@@ -64,5 +64,11 @@ describe PostHashtag do
         expect(@valid_post_hashtag.save).to eq(true)
       end
     end
+
+    context 'with invalid parameters' do
+      it 'return false' do
+        expect(@invalid_post_hashtag.save).to eq(false)
+      end
+    end
   end
 end
