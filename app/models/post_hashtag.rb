@@ -7,12 +7,13 @@ class PostHashtag
   end
   
   def save
+    return false unless valid?
+
     client = create_db_client
-    
-    post_id = last_insert_id('posts')
-    hashtag_id = last_insert_id('hashtags')
 
     client.query("insert into post_hashtags values ('#{post_id}', '#{hashtag_id}')")
+
+    true
   end
 
   def valid?
