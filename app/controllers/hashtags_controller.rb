@@ -11,8 +11,8 @@ class HashtagsController
     update_hashtag.update
   end
 
-  def self.exist?(hashtag)
-    Hashtag.exist?(hashtag)
+  def self.find_by_hashtag(hashtag)
+    Hashtag.find_by_hashtag(hashtag)
   end
 
   def self.top_5_past_24h

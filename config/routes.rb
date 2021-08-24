@@ -46,7 +46,7 @@ class Application < Sinatra::Base
     redirect '/users/login' if session[:login_user].nil?
 
     @posts = PostsController.find_all
-    
+
     erb :'posts/index'
   end
 
@@ -82,7 +82,7 @@ class Application < Sinatra::Base
       hashtags.each do |hashtag|
         new_hashtag = HashtagsController.new
 
-        if HashtagsController.exist?(hashtag)
+        unless HashtagsController.find_by_hashtag(hashtag).empty?
           new_hashtag.update(hashtag)
           next
         end
@@ -115,7 +115,7 @@ class Application < Sinatra::Base
       hashtags.each do |hashtag|
         new_hashtag = HashtagsController.new
 
-        if HashtagsController.exist?(hashtag)
+        unless HashtagsController.find_by_hashtag(hashtag).empty?
           new_hashtag.update(hashtag)
           next
         end

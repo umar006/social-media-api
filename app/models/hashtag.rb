@@ -45,11 +45,12 @@ class Hashtag
     convert_to_array(hashtags)
   end
 
-  def self.exist?(hashtag)
+  def self.find_by_hashtag(hashtag)
     client = create_db_client
 
     hashtag = client.query("select * from hashtags where hashtag='#{hashtag}'")
-    !convert_to_array(hashtag).empty?
+
+    convert_to_array(hashtag)
   end
 
   def self.find_top_5_past_24h
