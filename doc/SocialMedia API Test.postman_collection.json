@@ -8,6 +8,26 @@
 		{
 			"name": "Add user",
 			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{port}}/user/new",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{port}}",
+					"path": [
+						"user",
+						"new"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add user",
+			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
@@ -29,6 +49,26 @@
 					"path": [
 						"user",
 						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add post",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{port}}/posts/new",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{port}}",
+					"path": [
+						"posts",
+						"new"
 					]
 				}
 			},
@@ -93,12 +133,57 @@
 			"response": []
 		},
 		{
-			"name": "Get trending hashtags",
+			"name": "Get all posts",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:{{port}}/hashtags/trending",
+					"raw": "http://localhost:{{port}}/posts",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{port}}",
+					"path": [
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Detail post",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{port}}/posts/:id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{port}}",
+					"path": [
+						"posts",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get posts by hashtag",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{port}}/hashtags/:hashtag",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -106,7 +191,13 @@
 					"port": "{{port}}",
 					"path": [
 						"hashtags",
-						"trending"
+						":hashtag"
+					],
+					"variable": [
+						{
+							"key": "hashtag",
+							"value": "#generasigigih"
+						}
 					]
 				}
 			},
@@ -185,12 +276,31 @@
 			"response": []
 		},
 		{
-			"name": "Get posts by hashtag",
+			"name": "Get all hashtags",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:{{port}}/hashtags/:hashtag",
+					"raw": "http://localhost:{{port}}/hashtags",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{port}}",
+					"path": [
+						"hashtags"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get trending hashtags",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{port}}/hashtags/trending",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -198,13 +308,7 @@
 					"port": "{{port}}",
 					"path": [
 						"hashtags",
-						":hashtag"
-					],
-					"variable": [
-						{
-							"key": "hashtag",
-							"value": "#generasigigih"
-						}
+						"trending"
 					]
 				}
 			},
