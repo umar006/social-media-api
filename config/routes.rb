@@ -120,7 +120,7 @@ class Application < Sinatra::Base
   end
 
   get '/hashtags/trending' do
-    @trending = HashtagsController.top_5_past_24h
+    @hashtags = HashtagsController.top_5_past_24h
     
     erb :'hashtags/trending'
   end
