@@ -11,7 +11,7 @@ class PostHashtag
 
     client = create_db_client
 
-    client.query("insert into post_hashtags values ('#{post_id}', '#{hashtag_id}')")
+    client.query("insert into post_hashtags values ('#{@post_id}', '#{@hashtag_id}')")
 
     true
   end
