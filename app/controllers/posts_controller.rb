@@ -26,4 +26,8 @@ class PostsController
   def self.find_by_hashtag(hashtag)
     Post.find_by_hashtag(hashtag)
   end
+
+  def self.find_by_post(post)
+    Post.find_by_post(post)
+  end
 end

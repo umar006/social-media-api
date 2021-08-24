@@ -38,6 +38,14 @@ class Post
     convert_to_array(posts)
   end
 
+  def self.find_by_post(post)
+    client = create_db_client
+
+    post = client.query("select * from posts where post='#{post}' order by created_at desc")
+
+    convert_to_array(post).first
+  end
+
   def self.find_by_id(id)
     client = create_db_client
 
