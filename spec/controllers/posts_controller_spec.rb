@@ -19,11 +19,6 @@ describe PostsController do
     @post = PostsController.new
     @post.create(@params_valid)
   end
-
-  after(:all) do
-    clean_tables
-    reset_increment
-  end
   
   describe '#create' do
     context 'given valid parameters' do
