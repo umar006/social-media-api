@@ -6,6 +6,7 @@ describe Post do
   before(:each) do
     client = create_db_client
     client.query('delete from posts')
+    client.query('alter table posts auto_increment = 1')
     
     @valid_post = Post.new('aku seorang kapiten #generasigigih', "umar")
     @valid_post.save
@@ -81,7 +82,13 @@ describe Post do
 
   describe '#find_by_hashtag' do
     it 'not nil' do
-      expect(Post.find_by_hashtag('#generasigigih')).not_to be_nil
+      expect(Post.find_by_hashtag('generasigigih')).not_to be_nil
+    end
+  end
+
+  describe '#find_by_id' do
+    it 'not nil' do
+      expect(Post.find_by_id(1)).not_to be_nil
     end
   end
 end
