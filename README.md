@@ -18,9 +18,10 @@ cd social-media-api
 
 ### Migration database
 
-Create database with name 'social_media_api', then
+Create database with name 'social_media_db' and 'social_media_db_test', then
 ```
-mysql social_media_api < social_media_api.sql
+mysql social_media_db < social-media-db.sql
+mysql social_media_db_test < social-media-db.sql
 ```
 
 ### Install dependencies
