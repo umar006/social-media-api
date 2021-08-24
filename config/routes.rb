@@ -74,6 +74,12 @@ class Application < Sinatra::Base
       hashtags = params['post'].scan(/#\w+/)
       hashtags.each do |hashtag|
         new_hashtag = HashtagsController.new
+
+        if HashtagsController.exist?(hashtag)
+          new_hashtag.update(hashtag)
+          next
+        end
+        
         new_hashtag.create(hashtag)
       end
 
