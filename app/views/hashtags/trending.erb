@@ -2,6 +2,6 @@
 
 <% @hashtags.each do |hashtag| %>
     <p>
-        <a href='/hashtags/<%= hashtag.hashtag %>'><%= hashtag.hashtag %></a>
+        <a href='/hashtags/<%= hashtag.hashtag %>'>#<%= hashtag.hashtag %></a>
     </p>
 <% end %>
