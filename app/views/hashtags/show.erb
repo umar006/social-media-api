@@ -1,1 +1,8 @@
 <h1>Post by hashtag</h1>
+
+<% @posts.each do |post| %>
+    <p>Posted by: <%= post.username %></p>
+    <p>Post: <%= post.post %></p>
+    <p>File: <%= post.attachment %></p>
+    <p>Created at: <%= post.created_at %></p>
+<% end %>
