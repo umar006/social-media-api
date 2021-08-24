@@ -1,4 +1,11 @@
 class PostHashtag
+  attr_reader :post_id, :hashtag_id
+
+  def initialize(post_id, hashtag_id)
+    @post_id = post_id
+    @hashtag_id = hashtag_id
+  end
+  
   def save
     client = create_db_client
     
