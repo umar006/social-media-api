@@ -1,1 +1,7 @@
 <h1>Trending hashtags</h1>
+
+<% @hashtags.each do |hashtag| %>
+    <p>
+        <a href='/hashtags/<%= hashtag.hashtag %>'><%= hashtag.hashtag %></a>
+    </p>
+<% end %>
