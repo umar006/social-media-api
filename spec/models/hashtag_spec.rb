@@ -1,34 +1,21 @@
 require 'test_helper'
-require './config/env/test'
 require './app/models/hashtag'
+require './config/env/test'
 
 describe Hashtag do
   before(:each) do
     client = create_db_client
-    client.query('delete from post_hashtags')
     client.query('delete from hashtags')
-    client.query('delete from comments')
-    client.query('delete from posts')
-    client.query('delete from users')
 
-    @valid_hashtag = Hashtag.new('#generasigigih')
+    @valid_hashtag = Hashtag.new('generasigigih')
     @valid_hashtag.save
     @invalid_hashtag = Hashtag.new([])
-  end
-
-  after(:all) do
-    client = create_db_client
-    client.query('delete from post_hashtags')
-    client.query('delete from hashtags')
-    client.query('delete from comments')
-    client.query('delete from posts')
-    client.query('delete from users')
   end
 
   describe '#initialize' do
     context 'with valid parameters' do
       it 'return mandatory attribute' do
-        expect(@valid_hashtag.hashtag).to eq('#generasigigih')
+        expect(@valid_hashtag.hashtag).to eq('generasigigih')
       end
     end
   end

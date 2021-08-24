@@ -1,42 +1,17 @@
 require 'test_helper'
 require './app/models/post'
-require './app/models/user'
-require './app/models/hashtag'
-require './app/models/post_hashtag'
 require './config/env/test'
 
 describe Post do
   before(:each) do
     client = create_db_client
-    client.query('delete from post_hashtags')
-    client.query('delete from hashtags')
-    client.query('delete from comments')
     client.query('delete from posts')
-    client.query('delete from users')
-
-    user = User.new('umar', 'umar@gmail.com')
-    user.save
-
+    
     @valid_post = Post.new('aku seorang kapiten #generasigigih', "umar")
     @valid_post.save
-
-    hashtags = Hashtag.new('#generasigigih')
-    hashtags.save
-
-    post_hashtag = PostHashtag.new
-    post_hashtag.save
-
+    
     @invalid_post = Post.new(nil, "umar")
     @invalid_post_2 = Post.new("test" * 300, "umar")
-  end
-
-  after(:all) do
-    client = create_db_client
-    client.query('delete from post_hashtags')
-    client.query('delete from hashtags')
-    client.query('delete from comments')
-    client.query('delete from posts')
-    client.query('delete from users')
   end
 
   describe '#initialize' do
