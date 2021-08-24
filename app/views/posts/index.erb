@@ -1,9 +1,22 @@
-<h1>Posts</h1>
-<a href='/posts/new'>Create post</a>
-<a href='/hashtags'>Hashtags</a>
-<a href='/hashtags/trending'>Trending Hashtags</a>
-<br>
+<a href='/posts/new' style="text-decoration:none;">Create post</a> &nbsp
+<a href='/hashtags' style="text-decoration:none;">Hashtags</a> &nbsp
+<a href='/hashtags/trending' style="text-decoration:none;">Trending Hashtags</a>
+<br><br>
 
+<h3>Search</h3>
+<form id='form' method='GET' action='#'>
+    #<input id='hashtag' type='text' placeholder='hashtag'>
+    <input type='submit' value='Search' onclick="search();">
+</form>
+
+<script>
+    function search() {
+        var value = document.getElementById('hashtag').value
+        document.getElementById('form').action = '/hashtags/' + value
+    }
+</script>
+
+<h1>Posts</h1>
 <% @posts.each.with_index(1) do |post, index|%>
     <p><%= index %> <a href='/posts/<%= post.id %>'><%= post.post %></a></p>
 <% end %>
