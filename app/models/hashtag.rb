@@ -50,7 +50,7 @@ class Hashtag
 
     hashtag = client.query("select * from hashtags where hashtag='#{hashtag}'")
 
-    convert_to_array(hashtag)
+    convert_to_array(hashtag).first
   end
 
   def self.find_top_5_past_24h
