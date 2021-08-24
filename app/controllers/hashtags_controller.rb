@@ -6,6 +6,11 @@ class HashtagsController
     new_hashtag.save
   end
 
+  def update(hashtag)
+    update_hashtag = Hashtag.new(hashtag)
+    update_hashtag.update
+  end
+
   def self.top_5_past_24h
     Hashtag.find_top_5_past_24h
   end

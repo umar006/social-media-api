@@ -18,6 +18,17 @@ class Hashtag
     true
   end
 
+  def update
+    return false if @hashtag.empty? || @created_at.nil?
+
+    client = create_db_client
+
+    sql = "update hashtags " \
+        + "set created_at=str_to_date('#@created_at', '%d-%m-%Y %H:%i:%s') " \
+        + "where hashtag=#@hashtag"
+    client.query("update hashtags")
+  end
+
   def valid?
     return false if @hashtag.empty? || @created_at.nil?
 
@@ -30,6 +41,13 @@ class Hashtag
     hashtags = client.query("select * from hashtags")
 
     convert_to_array(hashtags)
+  end
+
+  def self.exist?(hashtag)
+    client = create_db_client
+
+    hashtag = client.query("select * from hashtags where hashtag='#{hashtag}'")
+    !convert_to_array(hashtag).empty?
   end
 
   def self.find_top_5_past_24h
