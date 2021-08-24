@@ -32,7 +32,7 @@ bundle install
 ### Running the test
 
 ```
-rake spec
+rspec
 ```
 ### Check coverage code
 Mac terminal
