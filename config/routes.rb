@@ -78,20 +78,25 @@ class Application < Sinatra::Base
 
     regex = /(?:\s|^)(?:#(?!(?:\d+|\w+?_|_\w+?)(?:\s|$)))(\w+)(?=\s|$)/
     hashtags = params['post'].scan(regex).flatten
+
     unless hashtags.empty?
       hashtags.each do |hashtag|
         new_hashtag = HashtagsController.new
+        post_hashtag = PostHashtagsController.new
 
-        unless HashtagsController.find_by_hashtag(hashtag).empty?
+        unless HashtagsController.find_by_hashtag(hashtag).nil?
           new_hashtag.update(hashtag)
-          next
+        else
+          new_hashtag.create(hashtag)
         end
-        
-        new_hashtag.create(hashtag)
-      end
 
-      post_hashtag = PostHashtagsController.new
-      post_hashtag.create
+        post_hashtag_params = {
+          'post_id' => PostsController.find_by_post(params['post']).id,
+          'hashtag_id' => HashtagsController.find_by_hashtag(hashtag).id
+        }
+
+        post_hashtag.create(post_hashtag_params)
+      end
     end
 
     redirect '/posts'
