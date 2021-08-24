@@ -4,6 +4,7 @@ class Hashtag
   attr_reader :hashtag, :created_at, :id
 
   def initialize(hashtag, id=nil, created_at=Time.new)
+    @id = id
     @hashtag = hashtag
     @created_at = created_at.strftime("%d-%m-%Y %H:%M:%S")
   end
