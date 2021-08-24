@@ -15,6 +15,12 @@ class PostHashtag
     client.query("insert into post_hashtags values ('#{post_id}', '#{hashtag_id}')")
   end
 
+  def valid?
+    return false if @post_id.nil? || @hashtag_id.nil?
+
+    true
+  end
+
   def last_insert_id(table_name)
     client = create_db_client
 
