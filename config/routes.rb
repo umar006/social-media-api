@@ -126,7 +126,7 @@ class Application < Sinatra::Base
   end
 
   get '/hashtags/:hashtag' do
-    @posts = Post.find_by_hashtag(params['hashtag'])
+    @posts = PostsController.find_by_hashtag(params['hashtag'])
 
     erb :'hashtags/show'
   end
