@@ -14,6 +14,7 @@ describe PostHashtag do
     client.query('alter table posts auto_increment = 1')
     
     @valid_post_hashtag = PostHashtag.new(1, 1)
+    @invalid_post_hashtag = PostHashtag.new(nil, nil)
   end
 
   after(:all) do
@@ -29,6 +30,14 @@ describe PostHashtag do
     it 'post_id and hashtag_id return 1' do
       expect(@valid_post_hashtag.post_id).to eq(1)
       expect(@valid_post_hashtag.hashtag_id).to eq(1)
+    end
+  end
+
+  describe '#valid?' do
+    context 'with valid parameters' do
+      it 'return true' do
+        expect(@valid_post_hashtag.valid?).to eq(true)
+      end
     end
   end
 end
