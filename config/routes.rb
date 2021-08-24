@@ -70,8 +70,9 @@ class Application < Sinatra::Base
     post = PostsController.new
     post.create(post_params)
 
-    unless params['post'].scan(/#\w+/).empty?
-      hashtags = params['post'].scan(/#\w+/)
+    regex = /(?:\s|^)(?:#(?!(?:\d+|\w+?_|_\w+?)(?:\s|$)))(\w+)(?=\s|$)/
+    hashtags = params['post'].scan(regex).flatten
+    unless hashtags.empty?
       hashtags.each do |hashtag|
         new_hashtag = HashtagsController.new
 
@@ -102,12 +103,19 @@ class Application < Sinatra::Base
     comment = CommentsController.new
     comment.create(comment_params)
 
-    unless params['comment'].scan(/#\w+/).empty?
-      hashtag_params = {
-        'hashtags' => params['comment'].scan(/#\w+/),
-      }
-      hashtag = HashtagsController.new
-      hashtag.create(hashtag_params)
+    regex = /(?:\s|^)(?:#(?!(?:\d+|\w+?_|_\w+?)(?:\s|$)))(\w+)(?=\s|$)/
+    hashtags = params['comment'].scan(regex).flatten
+    unless hashtags.empty?
+      hashtags.each do |hashtag|
+        new_hashtag = HashtagsController.new
+
+        if HashtagsController.exist?(hashtag)
+          new_hashtag.update(hashtag)
+          next
+        end
+        
+        new_hashtag.create(hashtag)
+      end
     end
 
     redirect '/posts'
