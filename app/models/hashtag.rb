@@ -13,7 +13,9 @@ class Hashtag
 
     client = create_db_client
 
-    client.query("insert into hashtags (hashtag, created_at) values ('#{@hashtag.downcase}', str_to_date('#@created_at', '%d-%m-%Y %H:%i:%s'))")
+    sql = "insert into hashtags (hashtag, created_at) " \
+        + "values ('#{@hashtag.downcase}', str_to_date('#@created_at', '%d-%m-%Y %H:%i:%s'))"
+    client.query(sql)
 
     true
   end
@@ -25,8 +27,8 @@ class Hashtag
 
     sql = "update hashtags " \
         + "set created_at=str_to_date('#@created_at', '%d-%m-%Y %H:%i:%s') " \
-        + "where hashtag=#@hashtag"
-    client.query("update hashtags")
+        + "where hashtag='#@hashtag'"
+    client.query(sql)
   end
 
   def valid?
