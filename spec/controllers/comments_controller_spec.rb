@@ -12,13 +12,11 @@ describe CommentsController do
       'post_id' => 1,
       'username' => 'umar2',
       'comment' => 'good morning too',
-      'attachment' => nil
     }
     @invalid_params = {
       'post_id' => nil,
       'username' => nil,
       'comment' => 'good morning too',
-      'attachment' => nil
     }
     @comment = CommentsController.new
     @comment.create(@valid_params)
