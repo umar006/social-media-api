@@ -39,4 +39,10 @@ describe HashtagsController do
       expect(HashtagsController.top_5_past_24h.count).to eq(1)
     end
   end
+
+  describe '#find_by_hashtag' do
+    it 'hashtag equal to 1' do
+      expect(HashtagsController.find_by_hashtag('generasigigih')).to_not be_nil
+    end
+  end
 end
