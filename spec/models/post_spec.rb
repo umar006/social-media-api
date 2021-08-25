@@ -80,26 +80,32 @@ describe Post do
   end
 
   describe '#find_all' do
-    it 'not nil' do
+    it 'post equal to 1' do
       expect(Post.find_all.count).to eq(1)
     end
   end
 
   describe '#find_by_username' do
-    it 'not nil' do
+    it 'post equal to 1' do
       expect(Post.find_by_username('umar').count).to eq(1)
     end
   end
 
   describe '#find_by_hashtag' do
-    it 'not nil' do
+    it 'post equal to 1' do
       expect(Post.find_by_hashtag('generasigigih').count).to eq(1)
     end
   end
 
   describe '#find_by_id' do
-    it 'not nil' do
+    it 'post equal to 1' do
       expect(Post.find_by_id(1).count).to eq(1)
+    end
+  end
+
+  describe '#find_by_post' do
+    it 'post equal to 1' do
+      expect(Post.find_by_post('aku seorang kapiten #generasigigih').count).to eq(1)
     end
   end
 end
