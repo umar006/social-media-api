@@ -71,8 +71,8 @@ describe Comment do
   end
 
   describe '#find_by_username' do
-    it 'not nil' do
-      expect(Comment.find_by_username('umar')).not_to be_nil
+    it 'comment equal to 1' do
+      expect(Comment.find_by_username('umar').count).to eq(1)
     end
   end
 end
