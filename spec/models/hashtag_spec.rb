@@ -9,7 +9,7 @@ describe Hashtag do
 
     @valid_hashtag = Hashtag.new('generasigigih')
     @valid_hashtag.save
-    @invalid_hashtag = Hashtag.new([])
+    @invalid_hashtag = Hashtag.new('')
   end
 
   describe '#initialize' do
@@ -30,6 +30,14 @@ describe Hashtag do
     context 'invalid object with empty hashtags' do
       it 'return false' do
         expect(@invalid_hashtag.save).to eq(false)
+      end
+    end
+  end
+
+  describe '#update' do
+    context 'with valid object' do
+      it 'return true' do
+        expect(@valid_hashtag.update).to eq(true)
       end
     end
   end

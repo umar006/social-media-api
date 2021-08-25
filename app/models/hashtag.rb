@@ -30,6 +30,8 @@ class Hashtag
         + "set created_at=str_to_date('#@created_at', '%d-%m-%Y %H:%i:%s') " \
         + "where hashtag='#@hashtag'"
     client.query(sql)
+
+    true
   end
 
   def valid?
