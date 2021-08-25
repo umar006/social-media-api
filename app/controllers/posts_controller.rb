@@ -30,4 +30,8 @@ class PostsController
   def self.find_by_post(post)
     Post.find_by_post(post).first
   end
+
+  def self.find_by_username(username)
+    Post.find_by_username(username)
+  end
 end
