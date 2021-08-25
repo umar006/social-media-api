@@ -20,8 +20,8 @@ cd social-media-api
 
 Create database with name 'social_media_db' and 'social_media_db_test', then
 ```
-mysql social_media_db < social-media-db.sql
-mysql social_media_db_test < social-media-db.sql
+mysql social_media_db < migration/social-media-db.sql
+mysql social_media_db_test < migration/social-media-db.sql
 ```
 
 ### Install dependencies
@@ -48,5 +48,5 @@ xdg-open coverage/index.html
 ### Running the server
 
 ```
-rackup config.ru
+bundle exec rackup config.ru
 ```
