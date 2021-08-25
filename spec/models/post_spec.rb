@@ -1,15 +1,26 @@
 require 'test_helper'
 require './app/models/post'
+require './app/models/hashtag'
+require './app/models/post_hashtag'
 require './config/env/test'
 
 describe Post do
   before(:each) do
     client = create_db_client
     client.query('delete from posts')
+    client.query('delete from hashtags')
+    client.query('delete from post_hashtags')
     client.query('alter table posts auto_increment = 1')
+    client.query('alter table hashtags auto_increment = 1')
     
     @valid_post = Post.new('aku seorang kapiten #generasigigih', "umar")
     @valid_post.save
+
+    hashtag = Hashtag.new('generasigigih')
+    hashtag.save
+
+    post_hashtag = PostHashtag.new(1, 1)
+    post_hashtag.save
     
     @invalid_post = Post.new(nil, "umar")
     @invalid_post_2 = Post.new("test" * 300, "umar")
@@ -70,25 +81,25 @@ describe Post do
 
   describe '#find_all' do
     it 'not nil' do
-      expect(Post.find_all).not_to be_nil
+      expect(Post.find_all.count).to eq(1)
     end
   end
 
   describe '#find_by_username' do
     it 'not nil' do
-      expect(Post.find_by_username('umar')).not_to be_nil
+      expect(Post.find_by_username('umar').count).to eq(1)
     end
   end
 
   describe '#find_by_hashtag' do
     it 'not nil' do
-      expect(Post.find_by_hashtag('generasigigih')).not_to be_nil
+      expect(Post.find_by_hashtag('generasigigih').count).to eq(1)
     end
   end
 
   describe '#find_by_id' do
     it 'not nil' do
-      expect(Post.find_by_id(1)).not_to be_nil
+      expect(Post.find_by_id(1).count).to eq(1)
     end
   end
 end
