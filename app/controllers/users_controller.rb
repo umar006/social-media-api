@@ -7,6 +7,6 @@ class UsersController
   end
 
   def self.find_by_username(username)
-    User.find_by_username(username)
+    User.find_by_username(username).first
   end
 end

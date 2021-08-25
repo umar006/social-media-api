@@ -29,6 +29,6 @@ class User
   def self.find_by_username(username)
     client = create_db_client
     user = client.query("select * from users where username='#{username}'")
-    user.each.first
+    user.each
   end
 end
