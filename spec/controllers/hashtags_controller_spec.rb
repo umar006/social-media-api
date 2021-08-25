@@ -45,4 +45,10 @@ describe HashtagsController do
       expect(HashtagsController.find_by_hashtag('generasigigih')).to_not be_nil
     end
   end
+
+  describe '#find_all' do
+    it 'hashtag equal to 1' do
+      expect(HashtagsController.find_all.count).to eq(1)
+    end
+  end
 end
