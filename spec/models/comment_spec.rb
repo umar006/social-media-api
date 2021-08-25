@@ -65,8 +65,8 @@ describe Comment do
   end
 
   describe '#find_by_post_id' do
-    it 'not nil' do
-      expect(Comment.find_by_post_id(1)).not_to be_nil
+    it 'comment equal to 1' do
+      expect(Comment.find_by_post_id(1).count).to eq(1)
     end
   end
 
