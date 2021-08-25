@@ -33,4 +33,10 @@ describe HashtagsController do
       end
     end
   end
+
+  describe '#top_5_past_24h' do
+    it 'hashtag equal to 1' do
+      expect(HashtagsController.top_5_past_24h.count).to eq(1)
+    end
+  end
 end
