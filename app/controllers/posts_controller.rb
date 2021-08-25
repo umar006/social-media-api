@@ -20,7 +20,7 @@ class PostsController
   end
 
   def self.find_by_id(id)
-    Post.find_by_id(id)
+    Post.find_by_id(id).first
   end
 
   def self.find_by_hashtag(hashtag)
@@ -28,6 +28,6 @@ class PostsController
   end
 
   def self.find_by_post(post)
-    Post.find_by_post(post)
+    Post.find_by_post(post).first
   end
 end
