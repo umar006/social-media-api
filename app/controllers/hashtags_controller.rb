@@ -12,7 +12,7 @@ class HashtagsController
   end
 
   def self.find_by_hashtag(hashtag)
-    Hashtag.find_by_hashtag(hashtag)
+    Hashtag.find_by_hashtag(hashtag).first
   end
 
   def self.top_5_past_24h
