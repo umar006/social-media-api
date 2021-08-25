@@ -28,8 +28,12 @@ describe UsersController do
   end
 
   describe '#find_by_username' do
-    it 'not nil' do
+    it 'not nil when user exist' do
       expect(UsersController.find_by_username('umar2')).to_not be_nil
+    end
+
+    it 'nil when user does not exist' do
+      expect(UsersController.find_by_username('umaru')).to be_nil
     end
   end
 end
