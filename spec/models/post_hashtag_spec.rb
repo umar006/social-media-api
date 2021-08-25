@@ -15,6 +15,10 @@ describe PostHashtag do
       expect(@valid_post_hashtag.post_id).to eq(1)
       expect(@valid_post_hashtag.hashtag_id).to eq(1)
     end
+
+    it 'post_id return nil' do
+      expect(@invalid_post_hashtag.post_id).to be_nil
+    end
   end
 
   describe '#valid?' do
