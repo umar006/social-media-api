@@ -43,7 +43,7 @@ class Post
 
     post = client.query("select * from posts where post='#{post}' order by created_at desc")
 
-    convert_to_array(post).first
+    convert_to_array(post)
   end
 
   def self.find_by_id(id)
@@ -51,7 +51,7 @@ class Post
 
     post = client.query("select * from posts where id='#{id}'")
 
-    convert_to_array(post).first
+    convert_to_array(post)
   end
 
   def self.find_by_username(username)
