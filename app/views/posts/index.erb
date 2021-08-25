@@ -12,7 +12,11 @@
 <script>
     function search() {
         var value = document.getElementById('hashtag').value
-        document.getElementById('form').action = '/hashtags/' + value
+        if (value) {
+            document.getElementById('form').action = '/hashtags/' + value;
+        } else {
+            return false;
+        }
     }
 </script>
 
