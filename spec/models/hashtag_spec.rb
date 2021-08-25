@@ -73,4 +73,10 @@ describe Hashtag do
       expect(Hashtag.find_by_hashtag('generasigigih').count).to eq(1)
     end
   end
+
+  describe '#find_all' do
+    it 'hashtag equal to 1' do
+      expect(Hashtag.find_all.count).to eq(1)
+    end
+  end
 end
