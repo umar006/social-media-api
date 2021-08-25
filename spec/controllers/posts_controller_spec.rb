@@ -68,4 +68,10 @@ describe PostsController do
       expect(PostsController.find_by_hashtag('generasigigih').count).to eq(1)
     end
   end
+
+  describe '#find_by_id' do
+    it 'not nil' do
+      expect(PostsController.find_by_id(1)).to_not be_nil
+    end
+  end
 end
