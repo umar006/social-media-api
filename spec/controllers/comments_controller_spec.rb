@@ -42,4 +42,10 @@ describe CommentsController do
       end
     end
   end
+
+  describe '#find_by_post_id' do
+    it 'comment equal to 1' do
+      expect(CommentsController.find_by_post_id(1).count).to eq(1)
+    end
+  end
 end
