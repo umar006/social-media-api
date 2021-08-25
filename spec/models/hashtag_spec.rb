@@ -67,4 +67,10 @@ describe Hashtag do
       expect(Hashtag.find_top_5_past_24h).not_to be_nil
     end
   end
+
+  describe '#find_by_hashtag' do
+    it 'hashtag equal to 1' do
+      expect(Hashtag.find_by_hashtag('generasigigih').count).to eq(1)
+    end
+  end
 end
