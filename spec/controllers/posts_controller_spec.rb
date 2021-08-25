@@ -1,5 +1,7 @@
 require 'test_helper'
 require './app/models/post'
+require './app/models/hashtag'
+require './app/models/post_hashtag'
 require './app/controllers/posts_controller'
 require './config/env/test'
 
@@ -7,6 +9,16 @@ describe PostsController do
   before(:each) do
     client = create_db_client
     client.query('delete from posts')
+    client.query('delete from hashtags')
+    client.query('delete from post_hashtags')
+    client.query('alter table posts auto_increment = 1')
+    client.query('alter table hashtags auto_increment = 1')
+
+    hashtag = Hashtag.new('generasigigih')
+    hashtag.save
+
+    post_hashtag = PostHashtag.new(1, 1)
+    post_hashtag.save
 
     @params_valid = {
       'post' => 'good morning',
@@ -42,6 +54,12 @@ describe PostsController do
   describe '#find_all' do
     it 'post equal to 1' do
       expect(PostsController.find_all.count).to eq(1)
+    end
+  end
+
+  describe '#find_by_username' do
+    it 'post equal to 1' do
+      expect(PostsController.find_by_username('umar2').count).to eq(1)
     end
   end
 end
