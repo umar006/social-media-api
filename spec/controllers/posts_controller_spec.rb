@@ -38,4 +38,10 @@ describe PostsController do
       end
     end
   end
+
+  describe '#find_all' do
+    it 'post equal to 1' do
+      expect(PostsController.find_all.count).to eq(1)
+    end
+  end
 end
