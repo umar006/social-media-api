@@ -74,4 +74,10 @@ describe PostsController do
       expect(PostsController.find_by_id(1)).to_not be_nil
     end
   end
+
+  describe '#find_by_post' do
+    it 'not nil' do
+      expect(PostsController.find_by_post('good morning')).to_not be_nil
+    end
+  end
 end
