@@ -62,4 +62,10 @@ describe PostsController do
       expect(PostsController.find_by_username('umar2').count).to eq(1)
     end
   end
+
+  describe '#find_by_hashtag' do
+    it 'post equal to 1' do
+      expect(PostsController.find_by_hashtag('generasigigih').count).to eq(1)
+    end
+  end
 end
