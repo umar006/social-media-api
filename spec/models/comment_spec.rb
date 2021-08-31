@@ -69,10 +69,4 @@ describe Comment do
       expect(Comment.find_by_post_id(1).count).to eq(1)
     end
   end
-
-  describe '#find_by_username' do
-    it 'comment equal to 1' do
-      expect(Comment.find_by_username('umar').count).to eq(1)
-    end
-  end
 end

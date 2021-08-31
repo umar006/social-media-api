@@ -17,8 +17,4 @@ class CommentsController
   def self.find_by_post_id(post_id)
     Comment.find_by_post_id(post_id)
   end
-
-  def self.find_by_username(username)
-    Comment.find_by_username(username)
-  end
 end

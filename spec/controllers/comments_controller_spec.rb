@@ -27,11 +27,6 @@ describe CommentsController do
       it 'return true' do
         expect(@comment.create(@valid_params)).to eq(true)
       end
-
-      it 'save comment to database' do
-        expected_comment = Comment.find_by_username('umar2')
-        expect(expected_comment).not_to be_nil
-      end
     end
 
     context 'with invalid parameters' do
@@ -44,12 +39,6 @@ describe CommentsController do
   describe '#find_by_post_id' do
     it 'comment equal to 1' do
       expect(CommentsController.find_by_post_id(1).count).to eq(1)
-    end
-  end
-
-  describe '#find_by_username' do
-    it 'comment equal to 1' do
-      expect(CommentsController.find_by_username('umar2').count).to eq(1)
     end
   end
 end

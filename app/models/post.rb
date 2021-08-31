@@ -54,15 +54,6 @@ class Post
     convert_to_array(post)
   end
 
-  def self.find_by_username(username)
-    client = create_db_client
-
-    sql = "select * from posts where username='#{username}'"
-    posts = client.query(sql)
-
-    convert_to_array(posts)
-  end
-
   def self.find_by_hashtag(hashtag)
     client = create_db_client
 
