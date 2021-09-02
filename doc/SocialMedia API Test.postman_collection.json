@@ -8,31 +8,22 @@
 		{
 			"name": "Add user",
 			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:{{port}}/user/new",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "{{port}}",
-					"path": [
-						"user",
-						"new"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Add user",
-			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"username\":\"{{new_username}}\",\n    \"email\":\"{{new_email}}\",\n    \"biodata\":\"{{new_biodata}}\"\n}",
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "{{new_username}}",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "{{new_email}}",
+							"type": "text"
+						}
+					],
 					"options": {
 						"raw": {
 							"language": "json"
@@ -40,35 +31,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:{{port}}/user/create",
+					"raw": "http://localhost:{{port}}/users",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "{{port}}",
 					"path": [
-						"user",
-						"create"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Add post",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:{{port}}/posts/new",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "{{port}}",
-					"path": [
-						"posts",
-						"new"
+						"users"
 					]
 				}
 			},
@@ -80,8 +50,24 @@
 				"method": "POST",
 				"header": [],
 				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"post\":\"{{new_post}}\",\n    \"username\":\"{{new_username}}\"\n}",
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "post",
+							"value": "{{new_post}}",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "{{new_username}}",
+							"type": "text"
+						},
+						{
+							"key": "id",
+							"value": "{{new_post_id}}",
+							"type": "text"
+						}
+					],
 					"options": {
 						"raw": {
 							"language": "json"
@@ -89,15 +75,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:{{port}}/posts/create",
+					"raw": "http://localhost:{{port}}/posts",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "{{port}}",
 					"path": [
-						"posts",
-						"create"
+						"posts"
 					]
 				}
 			},
@@ -109,8 +94,24 @@
 				"method": "POST",
 				"header": [],
 				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"post\": \"{{new_post_with_hashtag}}\",\n    \"username\": \"{{new_username}}\"\n}",
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "post",
+							"value": "{{new_post_with_hashtag}}",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "{{new_username}}",
+							"type": "text"
+						},
+						{
+							"key": "id",
+							"value": "{{new_post_with_hashtag_id}}",
+							"type": "text"
+						}
+					],
 					"options": {
 						"raw": {
 							"language": "json"
@@ -157,7 +158,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:{{port}}/posts/:id",
+					"raw": "http://localhost:{{port}}/posts/{{new_post_id}}",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -165,13 +166,26 @@
 					"port": "{{port}}",
 					"path": [
 						"posts",
-						":id"
+						"{{new_post_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Detail post with hashtag",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{port}}/{{new_post_with_hashtag_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
 					],
-					"variable": [
-						{
-							"key": "id",
-							"value": "1"
-						}
+					"port": "{{port}}",
+					"path": [
+						"{{new_post_with_hashtag_id}}"
 					]
 				}
 			},
@@ -183,7 +197,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:{{port}}/hashtags/:hashtag",
+					"raw": "http://localhost:{{port}}/hashtags/{{hashtag_1}}",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -191,13 +205,7 @@
 					"port": "{{port}}",
 					"path": [
 						"hashtags",
-						":hashtag"
-					],
-					"variable": [
-						{
-							"key": "hashtag",
-							"value": "#generasigigih"
-						}
+						"{{hashtag_1}}"
 					]
 				}
 			},
@@ -209,8 +217,24 @@
 				"method": "POST",
 				"header": [],
 				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"post_id\":\"{{new_post_id}}\",\n    \"username\":\"{{new_username}}\",\n    \"comment\":\"{{new_comment}}\"\n}",
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "post_id",
+							"value": "{{new_post_id}}",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "{{new_username}}",
+							"type": "text"
+						},
+						{
+							"key": "comment",
+							"value": "{{new_comment}}",
+							"type": "text"
+						}
+					],
 					"options": {
 						"raw": {
 							"language": "json"
@@ -245,8 +269,24 @@
 				"method": "POST",
 				"header": [],
 				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"post_id\":\"{{new_post_id}}\",\n    \"username\":\"{{new_username}}\",\n    \"comment\":\"{{new_comment_with_hashtag}}\"\n}",
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "post_id",
+							"value": "{{new_post_id}}",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "{{new_username}}",
+							"type": "text"
+						},
+						{
+							"key": "comment",
+							"value": "{{new_comment_with_hashtag}}",
+							"type": "text"
+						}
+					],
 					"options": {
 						"raw": {
 							"language": "json"
