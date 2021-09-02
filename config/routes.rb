@@ -19,7 +19,7 @@ class Application < Sinatra::Base
     erb :'users/new'
   end
 
-  post '/users/create' do
+  post '/users' do
     user = UsersController.new
     user.create(params)
 
@@ -65,7 +65,7 @@ class Application < Sinatra::Base
     erb :'posts/show'
   end
 
-  post '/posts/create' do
+  post '/posts' do
     redirect '/users/login' if session[:login_user].nil?
 
     post_params = {
