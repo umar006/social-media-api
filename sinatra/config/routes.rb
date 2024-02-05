@@ -120,7 +120,7 @@ class Application < Sinatra::Base
       hashtags.each do |hashtag|
         new_hashtag = HashtagsController.new
 
-        unless HashtagsController.find_by_hashtag(hashtag).empty?
+        unless HashtagsController.find_by_hashtag(hashtag).nil?
           new_hashtag.update(hashtag)
           next
         end
