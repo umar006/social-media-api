@@ -2,7 +2,7 @@ import { FactoryProvider } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { PostgresJsDatabase, drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
-import databaseConfig from 'src/config/database.config';
+import databaseConfig from '../../config/database.config';
 
 export const DRIZZLE_PROVIDER = Symbol('DRIZZLE_PROVIDER');
 export type DrizzlePostgres = PostgresJsDatabase;

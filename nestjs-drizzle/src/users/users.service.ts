@@ -1,9 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common';
-import {
-  DRIZZLE_PROVIDER,
-  DrizzlePostgres,
-} from 'src/database/providers/drizzle.provider';
 import { User, users } from './user.schema';
+import {
+  DrizzlePostgres,
+  DRIZZLE_PROVIDER,
+} from '../database/providers/drizzle.provider';
 
 @Injectable()
 export class UsersService {
