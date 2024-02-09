@@ -8,3 +8,5 @@ export const users = pgTable('users', {
   displayName: varchar('display_name').notNull(),
   password: varchar('password').notNull(),
 });
+
+export type User = typeof users.$inferSelect;
