@@ -1,9 +1,10 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { User, users } from './user.schema';
+import { getTableColumns } from 'drizzle-orm';
 import {
-  DrizzlePostgres,
   DRIZZLE_PROVIDER,
+  DrizzlePostgres,
 } from '../database/providers/drizzle.provider';
+import { User, users } from './user.schema';
 
 @Injectable()
 export class UsersService {
@@ -13,7 +14,8 @@ export class UsersService {
   ) {}
 
   async getAllUsers(): Promise<User[]> {
-    const user = await this.db.select().from(users);
+    const { password, ...rest } = getTableColumns(users);
+    const user = await this.db.select({ ...rest }).from(users);
 
     return user;
   }

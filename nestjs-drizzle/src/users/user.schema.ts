@@ -9,4 +9,4 @@ export const users = pgTable('users', {
   password: varchar('password').notNull(),
 });
 
-export type User = typeof users.$inferSelect;
+export type User = Omit<typeof users.$inferSelect, 'password'>;
