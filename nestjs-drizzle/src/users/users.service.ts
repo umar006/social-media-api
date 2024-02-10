@@ -15,8 +15,9 @@ export class UsersService {
 
   async getAllUsers(): Promise<User[]> {
     const { password, ...rest } = getTableColumns(users);
-    const user = await this.db.select({ ...rest }).from(users);
+    const userList = await this.db.select({ ...rest }).from(users);
 
-    return user;
+    return userList;
+  }
   }
 }
