@@ -24,3 +24,5 @@ export const posts = pgTable('posts', {
     .references(() => users.id)
     .notNull(),
 });
+
+export type Post = typeof posts.$inferSelect;
