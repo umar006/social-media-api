@@ -5,6 +5,7 @@ import {
   DrizzlePostgres,
 } from '../database/providers/drizzle.provider';
 import { User, users } from './user.schema';
+import { CreateUserDto } from './dto/create-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -28,5 +29,9 @@ export class UsersService {
       .where(eq(users.id, userId));
 
     return user;
+  }
+
+  async createUser(body: CreateUserDto): Promise<void> {
+    await this.db.insert(users).values(body);
   }
 }
