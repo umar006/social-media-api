@@ -8,6 +8,13 @@
       "when": 1707318790031,
       "tag": "0000_chubby_omega_sentinel",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1707610622755,
+      "tag": "0001_tough_daredevil",
+      "breakpoints": true
     }
   ]
 }
