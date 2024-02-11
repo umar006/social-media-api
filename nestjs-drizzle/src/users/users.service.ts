@@ -1,11 +1,12 @@
 import { Inject, Injectable } from '@nestjs/common';
+import bcrypt from 'bcrypt';
 import { eq, getTableColumns } from 'drizzle-orm';
 import {
   DRIZZLE_PROVIDER,
   DrizzlePostgres,
 } from '../database/providers/drizzle.provider';
-import { User, users } from './user.schema';
 import { CreateUserDto } from './dto/create-user.dto';
+import { User, users } from './user.schema';
 
 @Injectable()
 export class UsersService {
@@ -32,6 +33,12 @@ export class UsersService {
   }
 
   async createUser(body: CreateUserDto): Promise<void> {
-    await this.db.insert(users).values(body);
+    const saltOrRounds = 10;
+    const hashedPassword = await bcrypt.hash(body.password, saltOrRounds);
+    const newUser = {
+      ...body,
+      password: hashedPassword,
+    };
+    await this.db.insert(users).values(newUser);
   }
 }
