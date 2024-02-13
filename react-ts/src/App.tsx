@@ -1,14 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import type { Post } from "./types/post";
+import { getAllPosts } from "./services/post";
 
 function App() {
   const { isPending, isError, data, error } = useQuery({
     queryKey: ["posts"],
-    queryFn: async () => {
-      const { data } = await axios.get<Post[]>("http://localhost:3000/posts");
-      return data;
-    },
+    queryFn: getAllPosts,
   });
 
   if (isPending) {
