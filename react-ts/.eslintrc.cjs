@@ -6,6 +6,7 @@ module.exports = {
     "plugin:@typescript-eslint/recommended-type-checked",
     "plugin:@typescript-eslint/stylistic-type-checked",
     "plugin:react-hooks/recommended",
+    "plugin:@tanstack/eslint-plugin-query/recommended",
     "plugin:prettier/recommended",
   ],
   ignorePatterns: ["dist", ".eslintrc.cjs"],
