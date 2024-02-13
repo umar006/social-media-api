@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { CreatePostDto } from './dto/create-post.dto';
 import { Post as PostSchema } from './post.schema';
 import { PostsService } from './posts.service';
@@ -15,5 +15,10 @@ export class PostsController {
   @Post()
   async createPost(@Body() newPost: CreatePostDto): Promise<void> {
     await this.postsService.createPost(newPost);
+  }
+
+  @Delete(':postId')
+  async deletePostById(@Param('postId') postId: string): Promise<void> {
+    await this.postsService.deletePostById(postId);
   }
 }

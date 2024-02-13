@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { eq } from 'drizzle-orm';
 import {
   DRIZZLE_PROVIDER,
   type DrizzlePostgres,
@@ -21,5 +22,9 @@ export class PostsService {
 
   async createPost(body: CreatePostDto): Promise<void> {
     await this.db.insert(posts).values(body);
+  }
+
+  async deletePostById(postId: string): Promise<void> {
+    await this.db.delete(posts).where(eq(posts.id, postId));
   }
 }
