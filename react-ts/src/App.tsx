@@ -1,14 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-
-interface Post {
-  id: string;
-  createdAt: Date;
-  updatedAt: Date;
-  content: string;
-  likes: number;
-  createdBy: number;
-}
+import type { Post } from "./types/post";
 
 function App() {
   const { isPending, isError, data, error } = useQuery({
