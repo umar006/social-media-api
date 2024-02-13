@@ -1,6 +1,10 @@
-import { Inject, Injectable } from '@nestjs/common';
+import {
+  Inject,
+  Injectable,
+  UnprocessableEntityException,
+} from '@nestjs/common';
 import bcrypt from 'bcrypt';
-import { eq, getTableColumns } from 'drizzle-orm';
+import { eq, exists, getTableColumns, sql } from 'drizzle-orm';
 import {
   DRIZZLE_PROVIDER,
   DrizzlePostgres,
@@ -33,6 +37,17 @@ export class UsersService {
   }
 
   async createUser(body: CreateUserDto): Promise<void> {
+    const getUserQuery = this.db
+      .select()
+      .from(users)
+      .where(eq(users.username, body.username));
+    const [username] = await this.db.execute<{ exists: boolean }>(
+      sql`SELECT EXISTS (${getUserQuery})`,
+    );
+    if (username.exists) {
+      throw new UnprocessableEntityException('Username already exists');
+    }
+
     const saltOrRounds = 10;
     const hashedPassword = await bcrypt.hash(body.password, saltOrRounds);
     const newUser = {
