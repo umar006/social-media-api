@@ -1,13 +1,22 @@
 import { useForm } from "@tanstack/react-form";
+import { useMutation } from "@tanstack/react-query";
 import { createPost } from "../../services/post";
+import { NewPost } from "../../types/post";
 
 function PostForm() {
+  const mutation = useMutation({
+    mutationFn: async (newPost: NewPost) => {
+      await createPost(newPost);
+    },
+  });
+
   const form = useForm({
     defaultValues: {
       content: "",
     },
-    onSubmit: async ({ value }) => {
-      await createPost(value);
+    onSubmit: ({ value, formApi }) => {
+      mutation.mutate(value);
+      formApi.reset();
     },
     validators: {
       onChange: ({ value }) => {
