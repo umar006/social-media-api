@@ -24,17 +24,29 @@ function PostForm() {
           <div>
             <form.Field
               name="content"
-              children={(field) => {
+              validators={{
+                onChange: ({ value }) => {
+                  return value.length <= 0
+                    ? "Content cannot be empty"
+                    : undefined;
+                },
+              }}
+            >
+              {(field) => {
                 return (
-                  <textarea
-                    name={field.name}
-                    value={field.state.value}
-                    onBlur={field.handleBlur}
-                    onChange={(e) => field.handleChange(e.target.value)}
-                  ></textarea>
+                  <>
+                    <textarea
+                      name={field.name}
+                      value={field.state.value}
+                      onChange={(e) => field.handleChange(e.target.value)}
+                    ></textarea>
+                    {field.state.meta.errors.length > 0 ? (
+                      <em>{field.state.meta.errors.join(", ")}</em>
+                    ) : null}
+                  </>
                 );
               }}
-            />
+            </form.Field>
           </div>
           <button type="submit">Add</button>
         </form>
