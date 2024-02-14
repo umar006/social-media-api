@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import { getAllPosts } from "./services/post";
+import PostForm from "./components/PostForm";
 import PostList from "./components/PostList";
+import { getAllPosts } from "./services/post";
 
 function App() {
   const { isPending, isError, data, error } = useQuery({
@@ -18,6 +19,8 @@ function App() {
 
   return (
     <>
+      <h2>Create post</h2>
+      <PostForm />
       <h2>Posts</h2>
       <PostList posts={data} />
     </>

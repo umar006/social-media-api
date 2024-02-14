@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { Post } from "../types/post";
+import type { NewPost, Post } from "../types/post";
 
 const baseUrl = "http://localhost:3000/posts";
 
@@ -8,4 +8,8 @@ const getAllPosts = async () => {
   return data;
 };
 
-export { getAllPosts };
+const createPost = async (body: NewPost) => {
+  await axios.post(baseUrl, body);
+};
+
+export { createPost, getAllPosts };

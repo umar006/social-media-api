@@ -6,3 +6,5 @@ export interface Post {
   likes: number;
   createdBy: number;
 }
+
+export type NewPost = Pick<Post, "content">;
