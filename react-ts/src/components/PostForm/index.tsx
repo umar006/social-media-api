@@ -9,6 +9,17 @@ function PostForm() {
     onSubmit: async ({ value }) => {
       await createPost(value);
     },
+    validators: {
+      onChange: ({ value }) => {
+        return value.content.length <= 0
+          ? "Content cannot be empty"
+          : undefined;
+      },
+    },
+  });
+
+  const formError = form.useStore((state) => {
+    return state.errors;
   });
 
   return (
@@ -22,16 +33,7 @@ function PostForm() {
           }}
         >
           <div>
-            <form.Field
-              name="content"
-              validators={{
-                onChange: ({ value }) => {
-                  return value.length <= 0
-                    ? "Content cannot be empty"
-                    : undefined;
-                },
-              }}
-            >
+            <form.Field name="content">
               {(field) => {
                 return (
                   <>
@@ -40,8 +42,8 @@ function PostForm() {
                       value={field.state.value}
                       onChange={(e) => field.handleChange(e.target.value)}
                     ></textarea>
-                    {field.state.meta.errors.length > 0 ? (
-                      <em>{field.state.meta.errors.join(", ")}</em>
+                    {formError.length > 0 ? (
+                      <em>{formError.join(", ")}</em>
                     ) : null}
                   </>
                 );
