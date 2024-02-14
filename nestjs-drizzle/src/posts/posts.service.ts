@@ -5,7 +5,7 @@ import {
   type DrizzlePostgres,
 } from '../database/providers/drizzle.provider';
 import { CreatePostDto } from './dto/create-post.dto';
-import { Post, posts } from './post.schema';
+import { NewPost, Post, posts } from './post.schema';
 
 @Injectable()
 export class PostsService {
@@ -21,7 +21,11 @@ export class PostsService {
   }
 
   async createPost(body: CreatePostDto): Promise<void> {
-    await this.db.insert(posts).values(body);
+    const newPost: NewPost = {
+      ...body,
+      createdBy: 1,
+    };
+    await this.db.insert(posts).values(newPost);
   }
 
   async deletePostById(postId: string): Promise<void> {
