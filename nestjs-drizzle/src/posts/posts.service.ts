@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { eq } from 'drizzle-orm';
+import { eq, sql } from 'drizzle-orm';
 import {
   DRIZZLE_PROVIDER,
   type DrizzlePostgres,
@@ -30,5 +30,12 @@ export class PostsService {
 
   async deletePostById(postId: string): Promise<void> {
     await this.db.delete(posts).where(eq(posts.id, postId));
+  }
+
+  async incrementPostLikesByOne(postId: string): Promise<void> {
+    await this.db
+      .update(posts)
+      .set({ likes: sql`${posts.likes} + 1` })
+      .where(eq(posts.id, postId));
   }
 }

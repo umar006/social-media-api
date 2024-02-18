@@ -1,4 +1,12 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { CreatePostDto } from './dto/create-post.dto';
 import { Post as PostSchema } from './post.schema';
 import { PostsService } from './posts.service';
@@ -20,5 +28,12 @@ export class PostsController {
   @Delete(':postId')
   async deletePostById(@Param('postId') postId: string): Promise<void> {
     await this.postsService.deletePostById(postId);
+  }
+
+  @Put(':postId/likes/increment')
+  async incrementPostLikesByOne(
+    @Param('postId') postId: string,
+  ): Promise<void> {
+    await this.postsService.incrementPostLikesByOne(postId);
   }
 }
