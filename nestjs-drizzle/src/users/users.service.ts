@@ -4,7 +4,7 @@ import {
   UnprocessableEntityException,
 } from '@nestjs/common';
 import bcrypt from 'bcrypt';
-import { eq, exists, getTableColumns, sql } from 'drizzle-orm';
+import { eq, getTableColumns, sql } from 'drizzle-orm';
 import {
   DRIZZLE_PROVIDER,
   DrizzlePostgres,
@@ -26,7 +26,7 @@ export class UsersService {
     return userList;
   }
 
-  async getUserById(userId: number): Promise<User> {
+  async getUserById(userId: string): Promise<User> {
     const { password, ...rest } = getTableColumns(users);
     const [user] = await this.db
       .select({ ...rest })

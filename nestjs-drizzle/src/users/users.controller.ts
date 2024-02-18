@@ -1,11 +1,4 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Param,
-  ParseIntPipe,
-  Post,
-} from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './user.schema';
 import { UsersService } from './users.service';
@@ -20,9 +13,7 @@ export class UsersController {
   }
 
   @Get(':userId')
-  async getUserById(
-    @Param('userId', ParseIntPipe) userId: number,
-  ): Promise<User> {
+  async getUserById(@Param('userId') userId: string): Promise<User> {
     return this.userService.getUserById(userId);
   }
 
