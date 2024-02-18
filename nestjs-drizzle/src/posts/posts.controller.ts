@@ -36,4 +36,11 @@ export class PostsController {
   ): Promise<void> {
     await this.postsService.incrementPostLikesByOne(postId);
   }
+
+  @Put(':postId/likes/decrement')
+  async decrementPostLikesByOne(
+    @Param('postId') postId: string,
+  ): Promise<void> {
+    await this.postsService.decrementPostLikesByOne(postId);
+  }
 }

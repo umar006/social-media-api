@@ -38,4 +38,11 @@ export class PostsService {
       .set({ likes: sql`${posts.likes} + 1` })
       .where(eq(posts.id, postId));
   }
+
+  async decrementPostLikesByOne(postId: string): Promise<void> {
+    await this.db
+      .update(posts)
+      .set({ likes: sql`${posts.likes} - 1` })
+      .where(eq(posts.id, postId));
+  }
 }
