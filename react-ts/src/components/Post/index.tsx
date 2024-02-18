@@ -9,7 +9,7 @@ function Post({ post }: Props) {
 
   return (
     <article>
-      <span>{post.createdBy}</span>
+      <span>{post.createdBy.username}</span>
       <p>{post.content}</p>
       <span>{post.likes}</span>
       <p>{dateToUTC}</p>
