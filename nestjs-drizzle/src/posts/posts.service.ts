@@ -1,11 +1,12 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { eq, sql } from 'drizzle-orm';
+import { and, eq, sql } from 'drizzle-orm';
 import {
   DRIZZLE_PROVIDER,
   type DrizzlePostgres,
 } from '../database/providers/drizzle.provider';
 import { CreatePostDto } from './dto/create-post.dto';
 import { NewPost, Post, posts } from './post.schema';
+import { postLikes } from './post-likes.schema';
 
 @Injectable()
 export class PostsService {
@@ -33,6 +34,10 @@ export class PostsService {
   }
 
   async incrementPostLikesByOne(postId: string): Promise<void> {
+    // TODO: update user id after user management completed
+    await this.db.insert(postLikes).values({ postId, userId: 1 });
+
+    // TODO: delete after api post likes completed
     await this.db
       .update(posts)
       .set({ likes: sql`${posts.likes} + 1` })
@@ -40,6 +45,12 @@ export class PostsService {
   }
 
   async decrementPostLikesByOne(postId: string): Promise<void> {
+    // TODO: update user id after user management completed
+    await this.db
+      .delete(postLikes)
+      .where(and(eq(postLikes.postId, postId), eq(postLikes.userId, 1)));
+
+    // TODO: delete after api post likes completed
     await this.db
       .update(posts)
       .set({ likes: sql`${posts.likes} - 1` })
