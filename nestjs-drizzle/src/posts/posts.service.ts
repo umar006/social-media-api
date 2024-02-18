@@ -24,7 +24,7 @@ export class PostsService {
   async createPost(body: CreatePostDto): Promise<void> {
     const newPost: NewPost = {
       ...body,
-      createdBy: 1,
+      createdBy: 'kT8JHmBC5RzpbthqWh5xm',
     };
     await this.db.insert(posts).values(newPost);
   }
@@ -35,7 +35,9 @@ export class PostsService {
 
   async incrementPostLikesByOne(postId: string): Promise<void> {
     // TODO: update user id after user management completed
-    await this.db.insert(postLikes).values({ postId, userId: 1 });
+    await this.db
+      .insert(postLikes)
+      .values({ postId, userId: 'kT8JHmBC5RzpbthqWh5xm' });
 
     // TODO: delete after api post likes completed
     await this.db
@@ -48,7 +50,12 @@ export class PostsService {
     // TODO: update user id after user management completed
     await this.db
       .delete(postLikes)
-      .where(and(eq(postLikes.postId, postId), eq(postLikes.userId, 1)));
+      .where(
+        and(
+          eq(postLikes.postId, postId),
+          eq(postLikes.userId, 'kT8JHmBC5RzpbthqWh5xm'),
+        ),
+      );
 
     // TODO: delete after api post likes completed
     await this.db
