@@ -6,7 +6,7 @@ import {
   varchar,
 } from 'drizzle-orm/pg-core';
 import { nanoid } from 'nanoid';
-import { users } from '../users/user.schema';
+import { User, users } from '../users/user.schema';
 
 export const posts = pgTable('posts', {
   id: varchar('id')
@@ -26,6 +26,10 @@ export const posts = pgTable('posts', {
     .notNull(),
 });
 
-export type Post = typeof posts.$inferSelect;
+export type Post =
+  | typeof posts.$inferSelect
+  | {
+      createdBy: Omit<User, 'createdAt' | 'updatedAt'>;
+    };
 
 export type NewPost = typeof posts.$inferInsert;

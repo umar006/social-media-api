@@ -1,12 +1,13 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { and, eq, sql } from 'drizzle-orm';
+import { users } from 'src/users/user.schema';
 import {
   DRIZZLE_PROVIDER,
   type DrizzlePostgres,
 } from '../database/providers/drizzle.provider';
-import { CreatePostDto } from './dto/create-post.dto';
-import { NewPost, Post, posts } from './post.schema';
+import { type CreatePostDto } from './dto/create-post.dto';
 import { postLikes } from './post-likes.schema';
+import { posts, type NewPost, type Post } from './post.schema';
 
 @Injectable()
 export class PostsService {
@@ -16,7 +17,21 @@ export class PostsService {
   ) {}
 
   async getAllPosts(): Promise<Post[]> {
-    const postList = await this.db.select().from(posts);
+    const postList = await this.db
+      .select({
+        id: posts.id,
+        createdAt: posts.createdAt,
+        updatedAt: posts.updatedAt,
+        content: posts.content,
+        likes: posts.likes,
+        createdBy: {
+          id: users.id,
+          username: users.username,
+          displayName: users.displayName,
+        },
+      })
+      .from(posts)
+      .innerJoin(users, eq(posts.createdBy, users.id));
 
     return postList;
   }
