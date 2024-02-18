@@ -29,6 +29,13 @@
       "when": 1707786745203,
       "tag": "0003_first_exodus",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1708251048426,
+      "tag": "0004_boring_lightspeed",
+      "breakpoints": true
     }
   ]
 }
