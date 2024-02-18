@@ -36,6 +36,13 @@
       "when": 1708251048426,
       "tag": "0004_boring_lightspeed",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1708267799471,
+      "tag": "0005_soft_mockingbird",
+      "breakpoints": true
     }
   ]
 }

@@ -1,4 +1,4 @@
-import { integer, pgTable, timestamp, varchar } from 'drizzle-orm/pg-core';
+import { pgTable, timestamp, varchar } from 'drizzle-orm/pg-core';
 import { nanoid } from 'nanoid';
 import { users } from 'src/users/user.schema';
 import { posts } from './post.schema';
@@ -16,7 +16,7 @@ export const postLikes = pgTable('post_likes', {
   postId: varchar('post_id')
     .references(() => posts.id)
     .notNull(),
-  userId: integer('user_id')
+  userId: varchar('user_id')
     .references(() => users.id)
     .notNull(),
 });

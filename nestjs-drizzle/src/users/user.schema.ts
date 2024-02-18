@@ -1,7 +1,10 @@
-import { pgTable, serial, timestamp, varchar } from 'drizzle-orm/pg-core';
+import { pgTable, timestamp, varchar } from 'drizzle-orm/pg-core';
+import { nanoid } from 'nanoid';
 
 export const users = pgTable('users', {
-  id: serial('id').primaryKey(),
+  id: varchar('id')
+    .$defaultFn(() => nanoid())
+    .primaryKey(),
   createdAt: timestamp('created_at', { withTimezone: true })
     .defaultNow()
     .notNull(),

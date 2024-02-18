@@ -21,7 +21,7 @@ export const posts = pgTable('posts', {
   content: text('content').notNull(),
   // TODO: delete after api post likes completed
   likes: integer('likes').default(0).notNull(),
-  createdBy: integer('created_by')
+  createdBy: varchar('created_by')
     .references(() => users.id)
     .notNull(),
 });
