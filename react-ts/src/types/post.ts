@@ -5,6 +5,7 @@ export interface Post {
   createdAt: Date;
   updatedAt: Date;
   content: string;
+  isLiked: boolean;
   likes: number;
   createdBy: User;
 }

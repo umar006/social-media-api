@@ -9,11 +9,15 @@ interface Props {
 
 function Post({ post }: Props) {
   const [likes, setLikes] = useState(post.likes);
+  const [isLiked, setIsLiked] = useState(post.isLiked);
 
   const mutationLikes = useMutation({
-    mutationFn: incrementLikes,
+    mutationFn: async () => {
+      if (!isLiked) await incrementLikes(post.id);
+    },
     onSuccess: () => {
       setLikes((prevLikes) => prevLikes + 1);
+      setIsLiked((prevIsLiked) => !prevIsLiked);
     },
   });
 
@@ -25,7 +29,9 @@ function Post({ post }: Props) {
       <p>{post.content}</p>
 
       <span>{likes}</span>
-      <button onClick={() => mutationLikes.mutate(post.id)}>likes</button>
+      <button onClick={() => mutationLikes.mutate()}>
+        {isLiked ? "unlike" : "like"}
+      </button>
 
       <p>{dateToUTC}</p>
     </article>
