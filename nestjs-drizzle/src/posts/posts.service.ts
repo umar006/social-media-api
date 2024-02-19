@@ -31,12 +31,14 @@ export class PostsService {
         },
       })
       .from(posts)
+      .orderBy(posts.updatedAt)
       .innerJoin(users, eq(posts.createdBy, users.id));
 
     return postList;
   }
 
   async createPost(body: CreatePostDto): Promise<void> {
+    // TODO: update created by after user management completed
     const newPost: NewPost = {
       ...body,
       createdBy: 'kT8JHmBC5RzpbthqWh5xm',
