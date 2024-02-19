@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
-import { incrementLikes } from "../../services/post";
+import { decrementLikesByOne, incrementLikesByOne } from "../../services/post";
 import type { Post } from "../../types/post";
 
 interface Props {
@@ -12,10 +12,21 @@ function Post({ post }: Props) {
   const [isLiked, setIsLiked] = useState(post.isLiked);
 
   const mutationLikes = useMutation({
-    mutationFn: async () => {
-      if (!isLiked) await incrementLikes(post.id);
+    mutationFn: async (postId: string) => {
+      if (isLiked) {
+        await decrementLikesByOne(postId);
+        return;
+      }
+
+      await incrementLikesByOne(postId);
     },
     onSuccess: () => {
+      if (isLiked) {
+        setLikes((prevLikes) => prevLikes - 1);
+        setIsLiked((prevIsLiked) => !prevIsLiked);
+        return;
+      }
+
       setLikes((prevLikes) => prevLikes + 1);
       setIsLiked((prevIsLiked) => !prevIsLiked);
     },
@@ -29,7 +40,7 @@ function Post({ post }: Props) {
       <p>{post.content}</p>
 
       <span>{likes}</span>
-      <button onClick={() => mutationLikes.mutate()}>
+      <button onClick={() => mutationLikes.mutate(post.id)}>
         {isLiked ? "unlike" : "like"}
       </button>
 
