@@ -29,6 +29,16 @@ export class PostsService {
           username: users.username,
           displayName: users.displayName,
         },
+        isLiked: sql<boolean>`exists(${this.db
+          .select()
+          .from(postLikes)
+          .where(
+            and(
+              eq(postLikes.postId, posts.id),
+              // TODO: update user id after user management completed
+              eq(postLikes.userId, 'kT8JHmBC5RzpbthqWh5xm'),
+            ),
+          )})`,
       })
       .from(posts)
       .orderBy(posts.updatedAt)
