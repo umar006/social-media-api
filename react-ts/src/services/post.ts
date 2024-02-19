@@ -12,4 +12,8 @@ const createPost = async (body: NewPost) => {
   await axios.post(baseUrl, body);
 };
 
-export { createPost, getAllPosts };
+const incrementLikes = async (postId: string) => {
+  await axios.put(`${baseUrl}/${postId}/likes/increment`);
+};
+
+export { createPost, getAllPosts, incrementLikes };
