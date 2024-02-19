@@ -7,7 +7,7 @@ function PostForm() {
 
   const mutation = useMutation({
     mutationFn: createPost,
-    onSettled: async () => {
+    onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ["posts"] });
     },
   });
