@@ -10,7 +10,7 @@ import {
   DrizzlePostgres,
 } from '../database/providers/drizzle.provider';
 import { CreateUserDto } from './dto/create-user.dto';
-import { User, users } from './user.schema';
+import { User, UserWithPassword, users } from './user.schema';
 
 @Injectable()
 export class UsersService {
@@ -32,6 +32,17 @@ export class UsersService {
       .select({ ...rest })
       .from(users)
       .where(eq(users.id, userId));
+
+    return user;
+  }
+
+  async getUserByUsernameWithPassword(
+    username: string,
+  ): Promise<UserWithPassword> {
+    const [user] = await this.db
+      .select()
+      .from(users)
+      .where(eq(users.username, username));
 
     return user;
   }
