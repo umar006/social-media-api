@@ -17,3 +17,4 @@ export const users = pgTable('users', {
 });
 
 export type User = Omit<typeof users.$inferSelect, 'password'>;
+export type UserWithPassword = typeof users.$inferSelect;
