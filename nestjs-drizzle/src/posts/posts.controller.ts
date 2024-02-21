@@ -7,6 +7,7 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
+import { Public } from 'src/auth/public.decorator';
 import { CreatePostDto } from './dto/create-post.dto';
 import { Post as PostSchema } from './post.schema';
 import { PostsService } from './posts.service';
@@ -15,6 +16,7 @@ import { PostsService } from './posts.service';
 export class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
+  @Public()
   @Get()
   async getAllPosts(): Promise<PostSchema[]> {
     return await this.postsService.getAllPosts();
