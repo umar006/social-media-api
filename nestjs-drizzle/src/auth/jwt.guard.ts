@@ -24,7 +24,7 @@ export class JwtGuard extends AuthGuard('jwt') {
     }
 
     if (err || !user) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException('Harus login dulu bro');
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
