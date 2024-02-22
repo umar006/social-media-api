@@ -1,6 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { REQUEST } from '@nestjs/core';
 import { and, eq, sql } from 'drizzle-orm';
-import { users } from 'src/users/user.schema';
+import { Request } from 'express';
+import { User, users } from 'src/users/user.schema';
 import {
   DRIZZLE_PROVIDER,
   type DrizzlePostgres,
@@ -14,9 +16,13 @@ export class PostsService {
   constructor(
     @Inject(DRIZZLE_PROVIDER)
     private readonly db: DrizzlePostgres,
+    @Inject(REQUEST)
+    private readonly request: Request,
   ) {}
 
   async getAllPosts(): Promise<Post[]> {
+    const user = this.request.user as User | null;
+
     const postList = await this.db
       .select({
         id: posts.id,
@@ -35,8 +41,7 @@ export class PostsService {
           .where(
             and(
               eq(postLikes.postId, posts.id),
-              // TODO: update user id after user management completed
-              eq(postLikes.userId, 'kT8JHmBC5RzpbthqWh5xm'),
+              eq(postLikes.userId, user ? user.id : ''),
             ),
           )})`,
       })
@@ -48,10 +53,11 @@ export class PostsService {
   }
 
   async createPost(body: CreatePostDto): Promise<void> {
-    // TODO: update created by after user management completed
+    const user = this.request.user as User;
+
     const newPost: NewPost = {
       ...body,
-      createdBy: 'kT8JHmBC5RzpbthqWh5xm',
+      createdBy: user.id,
     };
     await this.db.insert(posts).values(newPost);
   }
@@ -61,10 +67,9 @@ export class PostsService {
   }
 
   async incrementPostLikesByOne(postId: string): Promise<void> {
-    // TODO: update user id after user management completed
-    await this.db
-      .insert(postLikes)
-      .values({ postId, userId: 'kT8JHmBC5RzpbthqWh5xm' });
+    const user = this.request.user as User;
+
+    await this.db.insert(postLikes).values({ postId, userId: user.id });
 
     // TODO: delete after api post likes completed
     await this.db
@@ -74,15 +79,11 @@ export class PostsService {
   }
 
   async decrementPostLikesByOne(postId: string): Promise<void> {
-    // TODO: update user id after user management completed
+    const user = this.request.user as User;
+
     await this.db
       .delete(postLikes)
-      .where(
-        and(
-          eq(postLikes.postId, postId),
-          eq(postLikes.userId, 'kT8JHmBC5RzpbthqWh5xm'),
-        ),
-      );
+      .where(and(eq(postLikes.postId, postId), eq(postLikes.userId, user.id)));
 
     // TODO: delete after api post likes completed
     await this.db
