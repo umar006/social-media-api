@@ -1,15 +1,30 @@
 import { useForm } from "@tanstack/react-form";
+import axios from "axios";
 import { login } from "../../services/auth";
 import type { LoginDto } from "../../types/auth";
+import type { ErrorResponse } from "../../types/error";
 
-function LoginForm() {
+interface Props {
+  setToken: React.Dispatch<React.SetStateAction<string | undefined>>;
+}
+
+function LoginForm({ setToken }: Props) {
   const form = useForm<LoginDto>({
     defaultValues: {
       username: "",
       password: "",
     },
     onSubmit: async ({ value }) => {
-      await login(value);
+      try {
+        const { accessToken } = await login(value);
+        window.localStorage.setItem("accessToken", accessToken);
+        setToken(accessToken);
+      } catch (e) {
+        if (axios.isAxiosError<ErrorResponse>(e)) {
+          alert(e.response?.data.message);
+        }
+        console.log(e);
+      }
     },
   });
 
