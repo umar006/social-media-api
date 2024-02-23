@@ -1,6 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
 import { useState } from "react";
 import { decrementLikesByOne, incrementLikesByOne } from "../../services/post";
+import type { ErrorResponse } from "../../types/error";
 import type { Post } from "../../types/post";
 
 interface Props {
@@ -31,6 +33,13 @@ function Post({ post }: Props) {
       setIsLiked((prevIsLiked) => !prevIsLiked);
     },
   });
+
+  if (mutationLikes.isError) {
+    const err = mutationLikes.error;
+    if (axios.isAxiosError<ErrorResponse>(err)) {
+      alert(err.response?.data.message);
+    }
+  }
 
   const dateToUTC = new Date(post.createdAt).toUTCString();
 
