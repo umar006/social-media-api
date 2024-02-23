@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useState } from "react";
-import { decrementLikesByOne, incrementLikesByOne } from "../../services/post";
+import postService from "../../services/post";
 import type { ErrorResponse } from "../../types/error";
 import type { Post } from "../../types/post";
 
@@ -16,11 +16,11 @@ function Post({ post }: Props) {
   const mutationLikes = useMutation({
     mutationFn: async (postId: string) => {
       if (isLiked) {
-        await decrementLikesByOne(postId);
+        await postService.decrementLikesByOne(postId);
         return;
       }
 
-      await incrementLikesByOne(postId);
+      await postService.incrementLikesByOne(postId);
     },
     onSuccess: () => {
       if (isLiked) {

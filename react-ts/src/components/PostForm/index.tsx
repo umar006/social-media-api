@@ -1,12 +1,12 @@
 import { useForm } from "@tanstack/react-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createPost } from "../../services/post";
+import postService from "../../services/post";
 
 function PostForm() {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: createPost,
+    mutationFn: postService.createPost,
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ["posts"] });
     },
