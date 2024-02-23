@@ -14,12 +14,12 @@ export class AuthService {
     const user =
       await this.usersService.getUserByUsernameWithPassword(username);
     if (!user) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException('username or password is wrong, bro');
     }
 
     const isValidated = await bcrypt.compare(pass, user.password);
     if (!isValidated) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException('username or password is wrong, bro');
     }
 
     const payload = {
