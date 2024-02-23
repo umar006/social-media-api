@@ -26,12 +26,20 @@ function LoginForm() {
           <div>
             <form.Field
               name="username"
+              validators={{
+                onChange: ({ value }) => {
+                  if (value.length <= 0) return "username cannot be empty";
+
+                  return null;
+                },
+              }}
               children={(field) => (
                 <>
                   <input
                     value={field.state.value}
                     onChange={(e) => field.handleChange(e.target.value)}
                   />
+                  <span>{field.state.meta.errors.join(",")}</span>
                 </>
               )}
             />
@@ -40,6 +48,13 @@ function LoginForm() {
           <div>
             <form.Field
               name="password"
+              validators={{
+                onChange: ({ value }) => {
+                  if (value.length <= 0) return "password cannot be empty";
+
+                  return null;
+                },
+              }}
               children={(field) => (
                 <>
                   <input
@@ -47,6 +62,7 @@ function LoginForm() {
                     value={field.state.value}
                     onChange={(e) => field.handleChange(e.target.value)}
                   />
+                  <span>{field.state.meta.errors.join(",")}</span>
                 </>
               )}
             />
