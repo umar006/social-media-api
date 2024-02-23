@@ -1,6 +1,7 @@
 import { useForm } from "@tanstack/react-form";
 import axios from "axios";
 import { login } from "../../services/auth";
+import postService from "../../services/post";
 import type { LoginDto } from "../../types/auth";
 import type { ErrorResponse } from "../../types/error";
 
@@ -19,6 +20,7 @@ function LoginForm({ setToken }: Props) {
         const { accessToken } = await login(value);
         window.localStorage.setItem("accessToken", accessToken);
         setToken(accessToken);
+        postService.setBearerToken(accessToken);
       } catch (e) {
         if (axios.isAxiosError<ErrorResponse>(e)) {
           alert(e.response?.data.message);

@@ -3,22 +3,23 @@ import { useEffect, useState } from "react";
 import LoginForm from "./components/LoginForm";
 import PostForm from "./components/PostForm";
 import PostList from "./components/PostList";
-import { getAllPosts } from "./services/post";
+import postService from "./services/post";
 
 function App() {
   const [token, setToken] = useState<string>();
 
-  const { isPending, isError, data, error } = useQuery({
-    queryKey: ["posts"],
-    queryFn: getAllPosts,
-  });
-
   useEffect(() => {
     const token = window.localStorage.getItem("accessToken");
     if (token) {
+      postService.setBearerToken(token);
       setToken(token);
     }
   }, []);
+
+  const { isPending, isError, data, error } = useQuery({
+    queryKey: ["posts"],
+    queryFn: postService.getAllPosts,
+  });
 
   if (isPending) {
     return <span>Loading...</span>;
