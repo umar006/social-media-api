@@ -10,6 +10,7 @@ import { AuthService } from './auth.service';
 describe('AuthService', () => {
   let service: AuthService;
   let usersService: DeepMocked<UsersService>;
+  let authService: DeepMocked<AuthService>;
   let db: DeepMocked<DrizzlePostgres>;
 
   beforeEach(async () => {
@@ -24,11 +25,16 @@ describe('AuthService', () => {
           provide: UsersService,
           useValue: createMock<UsersService>(),
         },
+        {
+          provide: AuthService,
+          useValue: createMock<AuthService>(),
+        },
       ],
     }).compile();
 
     service = module.get<AuthService>(AuthService);
     usersService = module.get(UsersService);
+    authService = module.get(AuthService);
     db = module.get(DRIZZLE_PROVIDER);
   });
 
