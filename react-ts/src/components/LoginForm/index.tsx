@@ -7,7 +7,7 @@ import type { LoginDto } from "../../types/auth";
 import type { ErrorResponse } from "../../types/error";
 
 interface Props {
-  setToken: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setToken: React.Dispatch<React.SetStateAction<string | null | undefined>>;
 }
 
 function LoginForm({ setToken }: Props) {

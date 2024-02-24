@@ -5,7 +5,7 @@ const baseUrl = "http://localhost:3000/posts";
 
 let token: string | null = null;
 
-const setBearerToken = (newToken: string) => {
+const setBearerToken = (newToken: string | null) => {
   token = `Bearer ${newToken}`;
 };
 
