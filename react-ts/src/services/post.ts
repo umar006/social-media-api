@@ -27,7 +27,7 @@ const createPost = async (body: NewPost) => {
 };
 
 const incrementLikesByOne = async (postId: string) => {
-  await axios.put(`${baseUrl}/${postId}/likes/increment`, {
+  await axios.put(`${baseUrl}/${postId}/likes/increment`, null, {
     headers: {
       Authorization: token,
     },
@@ -35,7 +35,7 @@ const incrementLikesByOne = async (postId: string) => {
 };
 
 const decrementLikesByOne = async (postId: string) => {
-  await axios.put(`${baseUrl}/${postId}/likes/decrement`, {
+  await axios.put(`${baseUrl}/${postId}/likes/decrement`, null, {
     headers: {
       Authorization: token,
     },
