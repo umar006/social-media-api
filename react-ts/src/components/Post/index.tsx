@@ -36,15 +36,13 @@ function Post({ post }: Props) {
       setLikes((prevLikes) => prevLikes + 1);
       setIsLiked((prevIsLiked) => !prevIsLiked);
     },
+    onError: (err) => {
+      if (axios.isAxiosError<ErrorResponse>(err)) {
+        alert(err.response?.data.message);
+      }
+      console.log(err);
+    },
   });
-
-  if (mutationLikes.isError) {
-    const err = mutationLikes.error;
-    if (axios.isAxiosError<ErrorResponse>(err)) {
-      alert(err.response?.data.message);
-    }
-    console.log(mutationLikes.error);
-  }
 
   const dateToUTC = new Date(post.createdAt).toUTCString();
 
