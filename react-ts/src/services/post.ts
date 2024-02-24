@@ -1,7 +1,7 @@
 import axios from "axios";
 import type { NewPost, Post } from "../types/post";
 
-const baseUrl = "http://localhost:3000/posts";
+const baseUrl = "http://localhost:3000/api/posts";
 
 let token: string | null = null;
 
