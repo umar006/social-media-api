@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import postService from "../../services/post";
 import type { ErrorResponse } from "../../types/error";
 import type { Post } from "../../types/post";
@@ -12,6 +12,10 @@ interface Props {
 function Post({ post }: Props) {
   const [likes, setLikes] = useState(post.likes);
   const [isLiked, setIsLiked] = useState(post.isLiked);
+
+  useEffect(() => {
+    setIsLiked(post.isLiked);
+  }, [post.isLiked]);
 
   const mutationLikes = useMutation({
     mutationFn: async (postId: string) => {
@@ -39,6 +43,7 @@ function Post({ post }: Props) {
     if (axios.isAxiosError<ErrorResponse>(err)) {
       alert(err.response?.data.message);
     }
+    console.log(mutationLikes.error);
   }
 
   const dateToUTC = new Date(post.createdAt).toUTCString();
