@@ -15,7 +15,7 @@ function Post({ post }: Props) {
 
   useEffect(() => {
     setIsLiked(post.isLiked);
-  }, [post.isLiked]);
+  }, [post]);
 
   const mutationLikes = useMutation({
     mutationFn: async (postId: string) => {
