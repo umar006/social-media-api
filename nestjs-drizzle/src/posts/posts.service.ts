@@ -79,13 +79,20 @@ export class PostsService {
         const filename = `${nanoid()}.${fileExt}`;
         const dest = 'posts/' + filename;
 
-        await this.gcloudStorage
-          .bucket('private-social-media')
-          .file(dest)
-          .save(body.image.buffer, { resumable: false });
+        try {
+          await this.gcloudStorage
+            .bucket('private-social-media')
+            .file(dest)
+            .save(body.image.buffer, { resumable: false });
 
-        const url = `https://storage.googleapis.com/private-social-media/posts/${filename}`;
-        await tx.insert(postImages).values({ postId: result.postId, url });
+          const url = `https://storage.googleapis.com/private-social-media/posts/${filename}`;
+
+          await tx.insert(postImages).values({ postId: result.postId, url });
+        } catch (e) {
+          console.error(e);
+          tx.rollback();
+          return;
+        }
       }
     });
   }
