@@ -2,12 +2,18 @@ import { Inject, Injectable } from '@nestjs/common';
 import { REQUEST } from '@nestjs/core';
 import { and, eq, sql } from 'drizzle-orm';
 import { Request } from 'express';
+import { nanoid } from 'nanoid';
+import {
+  GCLOUD_STORAGE_PROVIDER,
+  GCloudStorage,
+} from 'src/google-cloud/cloud-storage.provider';
 import { User, users } from 'src/users/user.schema';
 import {
   DRIZZLE_PROVIDER,
   type DrizzlePostgres,
 } from '../database/providers/drizzle.provider';
 import { type CreatePostDto } from './dto/create-post.dto';
+import { postImages } from './post-images.schema';
 import { postLikes } from './post-likes.schema';
 import { posts, type NewPost, type Post } from './post.schema';
 
@@ -18,6 +24,8 @@ export class PostsService {
     private readonly db: DrizzlePostgres,
     @Inject(REQUEST)
     private readonly request: Request,
+    @Inject(GCLOUD_STORAGE_PROVIDER)
+    private readonly gcloudStorage: GCloudStorage,
   ) {}
 
   async getAllPosts(): Promise<Post[]> {
@@ -56,10 +64,30 @@ export class PostsService {
     const user = this.request.user as User;
 
     const newPost: NewPost = {
-      ...body,
+      content: body.content,
       createdBy: user.id,
     };
-    await this.db.insert(posts).values(newPost);
+
+    await this.db.transaction(async (tx) => {
+      const [result] = await tx
+        .insert(posts)
+        .values(newPost)
+        .returning({ postId: posts.id });
+
+      if (body.image) {
+        const fileExt = body.image.originalname.split('.').pop();
+        const filename = `${nanoid()}.${fileExt}`;
+        const dest = 'posts/' + filename;
+
+        await this.gcloudStorage
+          .bucket('private-social-media')
+          .file(dest)
+          .save(body.image.buffer, { resumable: false });
+
+        const url = `https://storage.googleapis.com/private-social-media/posts/${filename}`;
+        await tx.insert(postImages).values({ postId: result.postId, url });
+      }
+    });
   }
 
   async deletePostById(postId: string): Promise<void> {

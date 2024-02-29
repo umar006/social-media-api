@@ -6,8 +6,12 @@ import {
   Param,
   Post,
   Put,
+  UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { Public } from 'src/auth/public.decorator';
+import { FileUpload } from 'src/common/file-upload.interface';
 import { CreatePostDto } from './dto/create-post.dto';
 import { Post as PostSchema } from './post.schema';
 import { PostsService } from './posts.service';
@@ -23,8 +27,15 @@ export class PostsController {
   }
 
   @Post()
-  async createPost(@Body() newPost: CreatePostDto): Promise<void> {
-    await this.postsService.createPost(newPost);
+  @UseInterceptors(FileInterceptor('file'))
+  async createPost(
+    @Body() newPost: CreatePostDto,
+    @UploadedFile() file: FileUpload,
+  ): Promise<void> {
+    await this.postsService.createPost({
+      ...newPost,
+      image: file,
+    });
   }
 
   @Delete(':postId')
