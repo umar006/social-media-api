@@ -2,8 +2,10 @@ import {
   Body,
   Controller,
   Delete,
+  FileTypeValidator,
   Get,
   Param,
+  ParseFilePipe,
   Post,
   Put,
   UploadedFile,
@@ -30,7 +32,12 @@ export class PostsController {
   @UseInterceptors(FileInterceptor('file'))
   async createPost(
     @Body() newPost: CreatePostDto,
-    @UploadedFile() file: FileUpload,
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [new FileTypeValidator({ fileType: 'image' })],
+      }),
+    )
+    file: FileUpload,
   ): Promise<void> {
     await this.postsService.createPost({
       ...newPost,
