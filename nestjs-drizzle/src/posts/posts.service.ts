@@ -43,6 +43,10 @@ export class PostsService {
           username: users.username,
           displayName: users.displayName,
         },
+        image: {
+          id: postImages.id,
+          url: postImages.url,
+        },
         isLiked: sql<boolean>`exists(${this.db
           .select()
           .from(postLikes)
@@ -55,7 +59,8 @@ export class PostsService {
       })
       .from(posts)
       .orderBy(posts.updatedAt)
-      .innerJoin(users, eq(posts.createdBy, users.id));
+      .innerJoin(users, eq(posts.createdBy, users.id))
+      .leftJoin(postImages, eq(postImages.postId, posts.id));
 
     return postList;
   }
