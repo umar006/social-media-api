@@ -81,7 +81,7 @@ export class PostsService {
 
       if (body.image) {
         const fileExt = body.image.originalname.split('.').pop();
-        const filename = `${nanoid()}.${fileExt}`;
+        const filename = `${result.postId}${nanoid(3)}.${fileExt}`;
         const dest = 'posts/' + filename;
 
         try {
