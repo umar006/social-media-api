@@ -103,7 +103,14 @@ export class PostsService {
   }
 
   async deletePostById(postId: string): Promise<void> {
-    await this.db.delete(posts).where(eq(posts.id, postId));
+    try {
+      await this.db.transaction(async (tx) => {
+        await tx.delete(postImages).where(eq(postImages.postId, postId));
+        await tx.delete(posts).where(eq(posts.id, postId));
+      });
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   async incrementPostLikesByOne(postId: string): Promise<void> {
