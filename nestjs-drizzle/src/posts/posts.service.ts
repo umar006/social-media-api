@@ -107,6 +107,15 @@ export class PostsService {
       await this.db.transaction(async (tx) => {
         await tx.delete(postImages).where(eq(postImages.postId, postId));
         await tx.delete(posts).where(eq(posts.id, postId));
+
+        try {
+          await this.gcloudStorage
+            .bucket('private-social-media')
+            .deleteFiles({ prefix: `posts/${postId}` });
+        } catch (e) {
+          console.log(e);
+          tx.rollback();
+        }
       });
     } catch (e) {
       console.error(e);
