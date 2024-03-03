@@ -17,3 +17,5 @@ export const postImages = pgTable('post_images', {
     .references(() => posts.id)
     .notNull(),
 });
+
+export type PostImages = typeof postImages.$inferSelect;
