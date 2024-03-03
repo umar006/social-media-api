@@ -42,6 +42,7 @@
     "postgres": "^3.4.3",
     "reflect-metadata": "^0.1.14",
     "rxjs": "^7.8.1",
+    "sharp": "^0.33.2",
     "zod": "^3.22.4"
   },
   "devDependencies": {

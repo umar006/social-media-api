@@ -16,6 +16,7 @@ import { type CreatePostDto } from './dto/create-post.dto';
 import { postImages } from './post-images.schema';
 import { postLikes } from './post-likes.schema';
 import { posts, type NewPost, type Post } from './post.schema';
+import sharp from 'sharp';
 
 @Injectable()
 export class PostsService {
@@ -84,11 +85,18 @@ export class PostsService {
         const filename = `${result.postId}${nanoid(3)}.${fileExt}`;
         const dest = 'posts/' + filename;
 
+        const resizedImage = await sharp(body.image.buffer)
+          .resize({
+            height: 320,
+            width: 240,
+          })
+          .toBuffer();
+
         try {
           await this.gcloudStorage
             .bucket('private-social-media')
             .file(dest)
-            .save(body.image.buffer, { resumable: false });
+            .save(resizedImage, { resumable: false });
 
           const url = `https://storage.googleapis.com/private-social-media/posts/${filename}`;
 
