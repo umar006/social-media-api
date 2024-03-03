@@ -46,12 +46,23 @@ function Post({ post }: Props) {
 
   const dateToUTC = new Date(post.createdAt).toUTCString();
 
+  const postImage = () => {
+    if (!post.image) return null;
+
+    return <img src={post.image.url} />;
+  };
+
   return (
     <article>
       <span>{post.createdBy.username}</span>
-      <p>{post.content}</p>
+
+      <div>
+        <p>{post.content}</p>
+        {postImage()}
+      </div>
 
       <span>{likes}</span>
+
       <button onClick={() => mutationLikes.mutate(post.id)}>
         {isLiked ? "unlike" : "like"}
       </button>
