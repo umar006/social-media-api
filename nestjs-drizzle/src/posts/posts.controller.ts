@@ -34,6 +34,7 @@ export class PostsController {
     @Body() newPost: CreatePostDto,
     @UploadedFile(
       new ParseFilePipe({
+        fileIsRequired: false,
         validators: [new FileTypeValidator({ fileType: 'image' })],
       }),
     )
