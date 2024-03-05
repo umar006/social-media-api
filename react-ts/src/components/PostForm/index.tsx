@@ -67,6 +67,7 @@ function PostForm() {
                 return (
                   <input
                     type="file"
+                    accept="image/*"
                     name={field.name}
                     onChange={(e) =>
                       field.handleChange(
