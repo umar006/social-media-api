@@ -16,4 +16,6 @@ export interface Post {
   image?: PostImage;
 }
 
-export type NewPost = Pick<Post, "content">;
+export interface NewPost extends Pick<Post, "content"> {
+  file?: File;
+}

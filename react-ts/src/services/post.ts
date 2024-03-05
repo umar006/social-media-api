@@ -21,7 +21,7 @@ const getAllPosts = async () => {
 };
 
 const createPost = async (body: NewPost) => {
-  await axios.post(baseUrl, body, {
+  await axios.postForm(baseUrl, body, {
     headers: {
       Authorization: token,
     },

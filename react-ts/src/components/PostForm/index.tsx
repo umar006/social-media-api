@@ -1,6 +1,7 @@
 import { useForm } from "@tanstack/react-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import postService from "../../services/post";
+import { NewPost } from "../../types/post";
 
 function PostForm() {
   const queryClient = useQueryClient();
@@ -12,9 +13,10 @@ function PostForm() {
     },
   });
 
-  const form = useForm({
+  const form = useForm<NewPost>({
     defaultValues: {
       content: "",
+      file: undefined,
     },
     onSubmit: ({ value, formApi }) => {
       mutation.mutate(value);
@@ -57,6 +59,21 @@ function PostForm() {
                       <em>{formError.join(", ")}</em>
                     ) : null}
                   </>
+                );
+              }}
+            </form.Field>
+            <form.Field name="file">
+              {(field) => {
+                return (
+                  <input
+                    type="file"
+                    name={field.name}
+                    onChange={(e) =>
+                      field.handleChange(
+                        e.target.files ? e.target.files[0] : undefined,
+                      )
+                    }
+                  />
                 );
               }}
             </form.Field>
