@@ -1,7 +1,9 @@
 import { useForm } from "@tanstack/react-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { isAxiosError } from "axios";
 import postService from "../../services/post";
-import { NewPost } from "../../types/post";
+import type { ErrorResponse } from "../../types/error";
+import type { NewPost } from "../../types/post";
 
 function PostForm() {
   const queryClient = useQueryClient();
@@ -10,6 +12,12 @@ function PostForm() {
     mutationFn: postService.createPost,
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ["posts"] });
+    },
+    onError: (error) => {
+      if (isAxiosError<ErrorResponse>(error)) {
+        alert(error.response?.data.message);
+      }
+      console.log(error);
     },
   });
 
