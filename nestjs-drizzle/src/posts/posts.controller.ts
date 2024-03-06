@@ -46,6 +46,12 @@ export class PostsController {
     });
   }
 
+  @Public()
+  @Get(':postId')
+  async getPostById(@Param('postId') postId: string): Promise<PostSchema> {
+    return await this.postsService.getPostById(postId);
+  }
+
   @Delete(':postId')
   async deletePostById(@Param('postId') postId: string): Promise<void> {
     await this.postsService.deletePostById(postId);

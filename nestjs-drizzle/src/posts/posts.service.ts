@@ -110,6 +110,44 @@ export class PostsService {
     });
   }
 
+  async getPostById(postId: string): Promise<Post> {
+    const user = this.request.user as User | null;
+
+    const [post] = await this.db
+      .select({
+        id: posts.id,
+        createdAt: posts.createdAt,
+        updatedAt: posts.updatedAt,
+        content: posts.content,
+        likes: posts.likes,
+        createdBy: {
+          id: users.id,
+          username: users.username,
+          displayName: users.displayName,
+        },
+        image: {
+          id: postImages.id,
+          url: postImages.url,
+        },
+        isLiked: sql<boolean>`exists(${this.db
+          .select()
+          .from(postLikes)
+          .where(
+            and(
+              eq(postLikes.postId, posts.id),
+              eq(postLikes.userId, user ? user.id : ''),
+            ),
+          )})`,
+      })
+      .from(posts)
+      .orderBy(posts.updatedAt)
+      .innerJoin(users, eq(posts.createdBy, users.id))
+      .leftJoin(postImages, eq(postImages.postId, posts.id))
+      .where(eq(posts.id, postId));
+
+    return post;
+  }
+
   async deletePostById(postId: string): Promise<void> {
     try {
       await this.db.transaction(async (tx) => {
