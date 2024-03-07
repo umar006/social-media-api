@@ -1,5 +1,6 @@
 import { useForm } from "@tanstack/react-form";
 import { useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "@tanstack/react-router";
 import axios from "axios";
 import { login } from "../../services/auth";
 import postService from "../../services/post";
@@ -12,6 +13,7 @@ interface Props {
 
 function LoginForm({ setToken }: Props) {
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   const form = useForm<LoginDto>({
     defaultValues: {
@@ -22,9 +24,11 @@ function LoginForm({ setToken }: Props) {
       try {
         const { accessToken } = await login(value);
         window.localStorage.setItem("accessToken", accessToken);
-        setToken(accessToken);
+        // setToken(accessToken);
         postService.setBearerToken(accessToken);
         await queryClient.invalidateQueries({ queryKey: ["posts"] });
+
+        await navigate({ to: "/posts" });
       } catch (e) {
         if (axios.isAxiosError<ErrorResponse>(e)) {
           alert(e.response?.data.message);
