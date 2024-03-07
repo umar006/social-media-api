@@ -1,7 +1,7 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createLazyFileRoute } from "@tanstack/react-router";
-import { postListQueryOptions } from "../../components/PostList/postListQueryOptions";
 import PostList from "../../components/PostList";
+import { postListQueryOptions } from "../../components/PostList/postListQueryOptions";
 
 export const Route = createLazyFileRoute("/posts/")({
   component: PostListComponent,
@@ -24,5 +24,10 @@ function PostListComponent() {
     );
   }
 
-  return <PostList posts={data} />;
+  return (
+    <>
+      <h2>Post List</h2>
+      <PostList posts={data} />
+    </>
+  );
 }
