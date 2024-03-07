@@ -202,6 +202,21 @@ export class PostsService {
   async decrementPostLikesByOne(postId: string): Promise<void> {
     const user = this.request.user as User;
 
+    const [{ isLiked }] = await this.db
+      .select({
+        isLiked: sql<boolean>`exists(${this.db
+          .select()
+          .from(postLikes)
+          .where(
+            and(eq(postLikes.postId, postId), eq(postLikes.userId, user.id)),
+          )})`,
+      })
+      .from(postLikes);
+
+    if (!isLiked) {
+      throw new UnprocessableEntityException("You haven't give like, bro");
+    }
+
     await this.db
       .delete(postLikes)
       .where(and(eq(postLikes.postId, postId), eq(postLikes.userId, user.id)));
