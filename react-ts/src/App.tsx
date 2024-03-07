@@ -1,8 +1,7 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import LoginForm from "./components/LoginForm";
 import PostForm from "./components/PostForm";
-import PostList from "./components/PostList";
 import postService from "./services/post";
 
 function App() {
@@ -14,19 +13,6 @@ function App() {
     postService.setBearerToken(token);
     setToken(token);
   }, []);
-
-  const { isPending, isError, data, error } = useQuery({
-    queryKey: ["posts"],
-    queryFn: postService.getAllPosts,
-  });
-
-  if (isPending) {
-    return <span>Loading...</span>;
-  }
-
-  if (isError) {
-    return <span>Error: {error.message}</span>;
-  }
 
   const loginForm = () => (
     <>
@@ -64,7 +50,6 @@ function App() {
       )}
       {token ? postForm() : loginForm()}
       <h2>Posts</h2>
-      <PostList posts={data} />
     </>
   );
 }

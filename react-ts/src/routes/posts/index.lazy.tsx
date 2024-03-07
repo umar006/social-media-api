@@ -8,8 +8,21 @@ export const Route = createLazyFileRoute("/posts/")({
 });
 
 function PostListComponent() {
-  const postListQuery = useSuspenseQuery(postListQueryOptions);
-  const posts = postListQuery.data;
+  const { data, error, isPending, isError } =
+    useSuspenseQuery(postListQueryOptions);
 
-  return <PostList posts={posts} />;
+  if (isPending) {
+    return <span>Loading...</span>;
+  }
+
+  if (isError) {
+    return (
+      <span>
+        Error:{" "}
+        {error ? error.message : "unidentified error in post list component"}
+      </span>
+    );
+  }
+
+  return <PostList posts={data} />;
 }
