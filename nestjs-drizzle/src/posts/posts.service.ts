@@ -1,8 +1,13 @@
-import { Inject, Injectable } from '@nestjs/common';
+import {
+  Inject,
+  Injectable,
+  UnprocessableEntityException,
+} from '@nestjs/common';
 import { REQUEST } from '@nestjs/core';
 import { and, eq, sql } from 'drizzle-orm';
 import { Request } from 'express';
 import { nanoid } from 'nanoid';
+import sharp from 'sharp';
 import {
   GCLOUD_STORAGE_PROVIDER,
   GCloudStorage,
@@ -16,7 +21,6 @@ import { type CreatePostDto } from './dto/create-post.dto';
 import { postImages } from './post-images.schema';
 import { postLikes } from './post-likes.schema';
 import { posts, type NewPost, type Post } from './post.schema';
-import sharp from 'sharp';
 
 @Injectable()
 export class PostsService {
@@ -170,6 +174,21 @@ export class PostsService {
 
   async incrementPostLikesByOne(postId: string): Promise<void> {
     const user = this.request.user as User;
+
+    const [{ isLiked }] = await this.db
+      .select({
+        isLiked: sql<boolean>`exists(${this.db
+          .select()
+          .from(postLikes)
+          .where(
+            and(eq(postLikes.postId, postId), eq(postLikes.userId, user.id)),
+          )})`,
+      })
+      .from(postLikes);
+
+    if (isLiked) {
+      throw new UnprocessableEntityException('You already give like, bro');
+    }
 
     await this.db.insert(postLikes).values({ postId, userId: user.id });
 
