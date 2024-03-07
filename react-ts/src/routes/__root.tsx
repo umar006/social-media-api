@@ -12,14 +12,17 @@ interface Context {
 }
 
 export const Route = createRootRouteWithContext<Context>()({
+  beforeLoad: () => {
+    return {
+      accessToken: window.localStorage.getItem("accessToken"),
+    };
+  },
   component: RootComponent,
 });
 
 function RootComponent() {
   const navigate = useNavigate();
-
-  const token = window.localStorage.getItem("accessToken");
-  postService.setBearerToken(token);
+  const context = Route.useRouteContext();
 
   const handleLogout = async () => {
     window.localStorage.removeItem("accessToken");
@@ -29,8 +32,7 @@ function RootComponent() {
   };
 
   const loginOrLogout = () => {
-    if (token) {
-      console.log("HALO");
+    if (context.accessToken) {
       return (
         <button type="button" onClick={() => void handleLogout()}>
           Logout
