@@ -1,55 +1,37 @@
-import { useQueryClient } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
-import LoginForm from "./components/LoginForm";
-import PostForm from "./components/PostForm";
+import { Link, Outlet, useNavigate } from "@tanstack/react-router";
+import { Route } from "./routes/__root";
 import postService from "./services/post";
 
 function App() {
-  const [token, setToken] = useState<string | null>();
-  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+  const context = Route.useRouteContext();
 
-  useEffect(() => {
-    const token = window.localStorage.getItem("accessToken");
-    postService.setBearerToken(token);
-    setToken(token);
-  }, []);
-
-  const loginForm = () => (
-    <>
-      <h2>Login</h2>
-      <LoginForm setToken={setToken} />
-    </>
-  );
-
-  const logout = async () => {
+  const handleLogout = async () => {
     window.localStorage.removeItem("accessToken");
     postService.setBearerToken(null);
-    setToken(null);
-    await queryClient.invalidateQueries({ queryKey: ["posts"] });
+
+    await navigate({ to: "/" });
   };
 
-  const postForm = () => (
-    <>
-      <h2>Create post</h2>
-      <PostForm />
-    </>
-  );
+  const loginOrLogout = () => {
+    if (context.accessToken) {
+      return (
+        <button type="button" onClick={() => void handleLogout()}>
+          Logout
+        </button>
+      );
+    }
+
+    return <Link to="/login">Login</Link>;
+  };
 
   return (
     <>
-      {token && (
-        <a
-          href=""
-          onClick={(e) => {
-            e.preventDefault();
-            void logout();
-          }}
-        >
-          logout
-        </a>
-      )}
-      {token ? postForm() : loginForm()}
-      <h2>Posts</h2>
+      <div>
+        <Link to="/">Home</Link> {loginOrLogout()}
+      </div>
+      <hr />
+      <Outlet />
     </>
   );
 }

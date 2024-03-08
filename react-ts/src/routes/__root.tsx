@@ -1,11 +1,6 @@
 import { QueryClient } from "@tanstack/react-query";
-import {
-  Link,
-  Outlet,
-  createRootRouteWithContext,
-  useNavigate,
-} from "@tanstack/react-router";
-import postService from "../services/post";
+import { createRootRouteWithContext } from "@tanstack/react-router";
+import App from "../App";
 
 interface Context {
   queryClient: QueryClient;
@@ -17,39 +12,5 @@ export const Route = createRootRouteWithContext<Context>()({
       accessToken: window.localStorage.getItem("accessToken"),
     };
   },
-  component: RootComponent,
+  component: App,
 });
-
-function RootComponent() {
-  const navigate = useNavigate();
-  const context = Route.useRouteContext();
-
-  const handleLogout = async () => {
-    window.localStorage.removeItem("accessToken");
-    postService.setBearerToken(null);
-
-    await navigate({ to: "/" });
-  };
-
-  const loginOrLogout = () => {
-    if (context.accessToken) {
-      return (
-        <button type="button" onClick={() => void handleLogout()}>
-          Logout
-        </button>
-      );
-    }
-
-    return <Link to="/login">Login</Link>;
-  };
-
-  return (
-    <>
-      <div>
-        <Link to="/">Home</Link> {loginOrLogout()}
-      </div>
-      <hr />
-      <Outlet />
-    </>
-  );
-}
