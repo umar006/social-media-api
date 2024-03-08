@@ -28,7 +28,8 @@ function App() {
   return (
     <>
       <div>
-        <Link to="/">Home</Link> {loginOrLogout()}
+        <Link to="/">Home</Link> <Link to="/posts">Posts</Link>{" "}
+        {loginOrLogout()}
       </div>
       <hr />
       <Outlet />
