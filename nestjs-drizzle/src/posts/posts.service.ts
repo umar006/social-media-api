@@ -175,18 +175,16 @@ export class PostsService {
   async incrementPostLikesByOne(postId: string): Promise<void> {
     const user = this.request.user as User;
 
-    const [{ isLiked }] = await this.db
-      .select({
-        isLiked: sql<boolean>`exists(${this.db
-          .select()
-          .from(postLikes)
-          .where(
-            and(eq(postLikes.postId, postId), eq(postLikes.userId, user.id)),
-          )})`,
-      })
-      .from(postLikes);
+    const [{ exists }] = await this.db.execute(sql`
+      select exists(
+        select 1
+        from ${postLikes}
+        where ${postLikes.postId} = ${postId}
+          and ${postLikes.userId} = ${user.id}
+      )
+    `);
 
-    if (isLiked) {
+    if (exists) {
       throw new UnprocessableEntityException('You already give like, bro');
     }
 
@@ -202,18 +200,16 @@ export class PostsService {
   async decrementPostLikesByOne(postId: string): Promise<void> {
     const user = this.request.user as User;
 
-    const [{ isLiked }] = await this.db
-      .select({
-        isLiked: sql<boolean>`exists(${this.db
-          .select()
-          .from(postLikes)
-          .where(
-            and(eq(postLikes.postId, postId), eq(postLikes.userId, user.id)),
-          )})`,
-      })
-      .from(postLikes);
+    const [{ exists }] = await this.db.execute(sql`
+      select exists(
+        select 1
+        from ${postLikes}
+        where ${postLikes.postId} = ${postId}
+          and ${postLikes.userId} = ${user.id}
+      )
+    `);
 
-    if (!isLiked) {
+    if (!exists) {
       throw new UnprocessableEntityException("You haven't give like, bro");
     }
 
