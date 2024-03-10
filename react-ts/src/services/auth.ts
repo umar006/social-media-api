@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { LoginDto } from "../types/auth";
+import type { LoginDto, RegisterDto } from "../types/auth";
 
 const baseUrl = "/api/auth";
 
@@ -12,4 +12,8 @@ const login = async (loginDto: LoginDto) => {
   return data;
 };
 
-export { login };
+const register = async (registerDto: RegisterDto) => {
+  await axios.post(`${baseUrl}/register`, registerDto);
+};
+
+export { login, register };
