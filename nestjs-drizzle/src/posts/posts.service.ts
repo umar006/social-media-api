@@ -4,7 +4,7 @@ import {
   UnprocessableEntityException,
 } from '@nestjs/common';
 import { REQUEST } from '@nestjs/core';
-import { and, eq, sql } from 'drizzle-orm';
+import { and, desc, eq, sql } from 'drizzle-orm';
 import { Request } from 'express';
 import { nanoid } from 'nanoid';
 import sharp from 'sharp';
@@ -63,7 +63,7 @@ export class PostsService {
           )})`,
       })
       .from(posts)
-      .orderBy(posts.updatedAt)
+      .orderBy(desc(posts.updatedAt))
       .innerJoin(users, eq(posts.createdBy, users.id))
       .leftJoin(postImages, eq(postImages.postId, posts.id));
 
@@ -153,6 +153,7 @@ export class PostsService {
   }
 
   async deletePostById(postId: string): Promise<void> {
+    // TODO: delete record in post likes
     try {
       await this.db.transaction(async (tx) => {
         await tx.delete(postImages).where(eq(postImages.postId, postId));
