@@ -1,6 +1,7 @@
 import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import type { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { AuthService } from './auth.service';
-import { SignInDto } from './dto/sign-in.dto';
+import type { SignInDto } from './dto/sign-in.dto';
 import { Public } from './public.decorator';
 
 @Controller('auth')
@@ -15,5 +16,11 @@ export class AuthController {
       signInDto.username,
       signInDto.password,
     );
+  }
+
+  @Public()
+  @Post('register')
+  async signUp(@Body() signUpDto: CreateUserDto) {
+    return await this.authService.signUp(signUpDto);
   }
 }

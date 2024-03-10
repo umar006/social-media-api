@@ -47,7 +47,7 @@ export class UsersService {
     return user;
   }
 
-  async createUser(body: CreateUserDto): Promise<void> {
+  async createUser(body: CreateUserDto): Promise<User> {
     const getUserQuery = this.db
       .select()
       .from(users)
@@ -59,12 +59,14 @@ export class UsersService {
       throw new UnprocessableEntityException('Username already exists');
     }
 
-    const saltOrRounds = 10;
-    const hashedPassword = await bcrypt.hash(body.password, saltOrRounds);
-    const newUser = {
-      ...body,
-      password: hashedPassword,
-    };
-    await this.db.insert(users).values(newUser);
+    const [user] = await this.db.insert(users).values(body).returning({
+      id: users.id,
+      username: users.username,
+      displayName: users.displayName,
+      createdAt: users.createdAt,
+      updatedAt: users.updatedAt,
+    });
+
+    return user;
   }
 }
