@@ -25,11 +25,19 @@ function App() {
     return <Link to="/login">Login</Link>;
   };
 
+  const register = () => {
+    if (context.accessToken) {
+      return null;
+    }
+
+    return <Link to="/register">Register</Link>;
+  };
+
   return (
     <>
       <div>
         <Link to="/">Home</Link> <Link to="/posts">Posts</Link>{" "}
-        {loginOrLogout()}
+        {loginOrLogout()} {register()}
       </div>
       <hr />
       <Outlet />
