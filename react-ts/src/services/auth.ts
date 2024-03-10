@@ -13,7 +13,12 @@ const login = async (loginDto: LoginDto) => {
 };
 
 const register = async (registerDto: RegisterDto) => {
-  await axios.post(`${baseUrl}/register`, registerDto);
+  const { data } = await axios.post<{ accessToken: string }>(
+    `${baseUrl}/register`,
+    registerDto,
+  );
+
+  return data;
 };
 
 export { login, register };
