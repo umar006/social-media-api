@@ -153,9 +153,9 @@ export class PostsService {
   }
 
   async deletePostById(postId: string): Promise<void> {
-    // TODO: delete record in post likes
     try {
       await this.db.transaction(async (tx) => {
+        await tx.delete(postLikes).where(eq(postLikes.postId, postId));
         await tx.delete(postImages).where(eq(postImages.postId, postId));
         await tx.delete(posts).where(eq(posts.id, postId));
 
