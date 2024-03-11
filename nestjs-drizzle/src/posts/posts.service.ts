@@ -42,7 +42,7 @@ export class PostsService {
         createdAt: posts.createdAt,
         updatedAt: posts.updatedAt,
         content: posts.content,
-        likes: posts.likes,
+        likes: sql<number>`(select count(*) from ${postLikes} where ${postLikes.postId} = ${posts.id})`,
         createdBy: {
           id: users.id,
           username: users.username,
