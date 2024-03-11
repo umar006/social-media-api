@@ -4,7 +4,7 @@ import {
   UnprocessableEntityException,
 } from '@nestjs/common';
 import { REQUEST } from '@nestjs/core';
-import { and, desc, eq, sql } from 'drizzle-orm';
+import { and, count, desc, eq, sql } from 'drizzle-orm';
 import { Request } from 'express';
 import { nanoid } from 'nanoid';
 import sharp from 'sharp';
@@ -36,13 +36,27 @@ export class PostsService {
   async getAllPosts(): Promise<Post[]> {
     const user = this.request.user as User | null;
 
+    const likesNumber = sql<number>`(
+      select cast(count(*) as int)
+      from ${postLikes}
+      where ${postLikes.postId} = ${posts.id}
+    )`;
+    const isLiked = sql<boolean>`
+      exists(
+        select 1
+        from ${postLikes}
+        where ${postLikes.postId} = ${posts.id}
+          and ${postLikes.userId} = ${user ? user.id : ''}
+      )
+    `;
+
     const postList = await this.db
       .select({
         id: posts.id,
         createdAt: posts.createdAt,
         updatedAt: posts.updatedAt,
         content: posts.content,
-        likes: sql<number>`(select count(*) from ${postLikes} where ${postLikes.postId} = ${posts.id})`,
+        likes: likesNumber,
         createdBy: {
           id: users.id,
           username: users.username,
@@ -52,15 +66,7 @@ export class PostsService {
           id: postImages.id,
           url: postImages.url,
         },
-        isLiked: sql<boolean>`exists(${this.db
-          .select()
-          .from(postLikes)
-          .where(
-            and(
-              eq(postLikes.postId, posts.id),
-              eq(postLikes.userId, user ? user.id : ''),
-            ),
-          )})`,
+        isLiked: isLiked,
       })
       .from(posts)
       .orderBy(desc(posts.updatedAt))
@@ -117,13 +123,27 @@ export class PostsService {
   async getPostById(postId: string): Promise<Post> {
     const user = this.request.user as User | null;
 
+    const likesNumber = sql<number>`(
+      select cast(count(*) as int)
+      from ${postLikes}
+      where ${postLikes.postId} = ${posts.id}
+    )`;
+    const isLiked = sql<boolean>`
+      exists(
+        select 1
+        from ${postLikes}
+        where ${postLikes.postId} = ${posts.id}
+          and ${postLikes.userId} = ${user ? user.id : ''}
+      )
+    `;
+
     const [post] = await this.db
       .select({
         id: posts.id,
         createdAt: posts.createdAt,
         updatedAt: posts.updatedAt,
         content: posts.content,
-        likes: posts.likes,
+        likes: likesNumber,
         createdBy: {
           id: users.id,
           username: users.username,
@@ -133,15 +153,7 @@ export class PostsService {
           id: postImages.id,
           url: postImages.url,
         },
-        isLiked: sql<boolean>`exists(${this.db
-          .select()
-          .from(postLikes)
-          .where(
-            and(
-              eq(postLikes.postId, posts.id),
-              eq(postLikes.userId, user ? user.id : ''),
-            ),
-          )})`,
+        isLiked: isLiked,
       })
       .from(posts)
       .orderBy(posts.updatedAt)
