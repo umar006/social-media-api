@@ -1,10 +1,4 @@
-import {
-  integer,
-  pgTable,
-  text,
-  timestamp,
-  varchar,
-} from 'drizzle-orm/pg-core';
+import { pgTable, text, timestamp, varchar } from 'drizzle-orm/pg-core';
 import { nanoid } from 'nanoid';
 import { User, users } from '../users/user.schema';
 import { PostImages } from './post-images.schema';
@@ -20,8 +14,6 @@ export const posts = pgTable('posts', {
     .defaultNow()
     .notNull(),
   content: text('content').notNull(),
-  // TODO: delete after api post likes completed
-  likes: integer('likes').default(0).notNull(),
   createdBy: varchar('created_by')
     .references(() => users.id)
     .notNull(),

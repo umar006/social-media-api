@@ -4,7 +4,7 @@ import {
   UnprocessableEntityException,
 } from '@nestjs/common';
 import { REQUEST } from '@nestjs/core';
-import { and, count, desc, eq, sql } from 'drizzle-orm';
+import { and, desc, eq, sql } from 'drizzle-orm';
 import { Request } from 'express';
 import { nanoid } from 'nanoid';
 import sharp from 'sharp';
@@ -202,12 +202,6 @@ export class PostsService {
     }
 
     await this.db.insert(postLikes).values({ postId, userId: user.id });
-
-    // TODO: delete after api post likes completed
-    await this.db
-      .update(posts)
-      .set({ likes: sql`${posts.likes} + 1` })
-      .where(eq(posts.id, postId));
   }
 
   async decrementPostLikesByOne(postId: string): Promise<void> {
@@ -229,11 +223,5 @@ export class PostsService {
     await this.db
       .delete(postLikes)
       .where(and(eq(postLikes.postId, postId), eq(postLikes.userId, user.id)));
-
-    // TODO: delete after api post likes completed
-    await this.db
-      .update(posts)
-      .set({ likes: sql`${posts.likes} - 1` })
-      .where(eq(posts.id, postId));
   }
 }
