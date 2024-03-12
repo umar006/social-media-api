@@ -11,6 +11,7 @@ function App() {
     postService.setBearerToken(null);
 
     await navigate({ to: "/" });
+    window.location.reload();
   };
 
   const loginOrLogout = () => {
