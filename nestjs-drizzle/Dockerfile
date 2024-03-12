@@ -12,8 +12,9 @@ FROM base AS build
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 RUN pnpm run build
 
-FROM base
+FROM node:20-alpine as prod
+WORKDIR /app
 COPY --from=prod-deps /app/node_modules /app/node_modules
 COPY --from=build /app/dist /app/dist
 
-CMD [ "pnpm", "start:prod" ]
+CMD [ "node", "dist/main" ]
