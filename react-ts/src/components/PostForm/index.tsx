@@ -44,7 +44,7 @@ function PostForm() {
   });
 
   return (
-    <div>
+    <>
       <form.Provider>
         <form
           onSubmit={(e) => {
@@ -53,44 +53,55 @@ function PostForm() {
             void form.handleSubmit();
           }}
         >
-          <div>
+          <div className="flex max-w-xl flex-col border-2">
             <form.Field name="content">
               {(field) => {
                 return (
                   <>
                     <textarea
+                      className="w-full border-b-2 p-2 focus:outline-sky-300"
+                      rows={4}
+                      placeholder="Write a post..."
                       name={field.name}
                       value={field.state.value}
                       onChange={(e) => field.handleChange(e.target.value)}
                     ></textarea>
                     {formError.length > 0 ? (
-                      <em>{formError.join(", ")}</em>
+                      <em className="m-2 text-red-600">
+                        {formError.join(", ")}
+                      </em>
                     ) : null}
                   </>
                 );
               }}
             </form.Field>
-            <form.Field name="file">
-              {(field) => {
-                return (
-                  <input
-                    type="file"
-                    accept="image/*"
-                    name={field.name}
-                    onChange={(e) =>
-                      field.handleChange(
-                        e.target.files ? e.target.files[0] : undefined,
-                      )
-                    }
-                  />
-                );
-              }}
-            </form.Field>
+
+            <div className="flex flex-row items-center justify-between p-2">
+              <form.Field name="file">
+                {(field) => {
+                  return (
+                    <input
+                      type="file"
+                      accept="image/*"
+                      name={field.name}
+                      onChange={(e) =>
+                        field.handleChange(
+                          e.target.files ? e.target.files[0] : undefined,
+                        )
+                      }
+                    />
+                  );
+                }}
+              </form.Field>
+
+              <button type="submit" className="bg-sky-600 px-4 py-2 text-white">
+                Add
+              </button>
+            </div>
           </div>
-          <button type="submit">Add</button>
         </form>
       </form.Provider>
-    </div>
+    </>
   );
 }
 

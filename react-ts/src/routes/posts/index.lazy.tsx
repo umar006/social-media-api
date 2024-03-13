@@ -30,10 +30,10 @@ function PostListComponent() {
     if (!context.accessToken) return null;
 
     return (
-      <>
-        <h2> Create new post</h2>
+      <div className="m-4">
+        <h2 className="my-4 text-3xl font-bold">Write new post</h2>
         <PostForm />
-      </>
+      </div>
     );
   };
 
