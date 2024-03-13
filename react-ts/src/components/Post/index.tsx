@@ -54,7 +54,8 @@ function Post({ post }: Props) {
 
   return (
     <article>
-      <span>{post.createdBy.username}</span>
+      <div>{post.createdBy.displayName}</div>
+      <div>@{post.createdBy.username}</div>
 
       <div>
         <p>{post.content}</p>
