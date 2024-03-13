@@ -40,7 +40,7 @@ function PostListComponent() {
   return (
     <>
       {postForm()}
-      <h2>Post List</h2>
+      <h2 className="m-4 text-3xl font-bold">Post List</h2>
       <PostList posts={data} />
     </>
   );

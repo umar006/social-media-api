@@ -33,7 +33,6 @@ function App() {
 
     return <Link to="/register">Register</Link>;
   };
-  console.log(context.location);
 
   const navActive = (path: string) => {
     return context.location.pathname === path
