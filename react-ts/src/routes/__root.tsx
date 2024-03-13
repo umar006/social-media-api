@@ -7,8 +7,9 @@ interface Context {
 }
 
 export const Route = createRootRouteWithContext<Context>()({
-  beforeLoad: () => {
+  beforeLoad: ({ location }) => {
     return {
+      location,
       accessToken: window.localStorage.getItem("accessToken"),
     };
   },

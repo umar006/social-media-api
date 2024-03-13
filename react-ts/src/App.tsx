@@ -33,12 +33,25 @@ function App() {
 
     return <Link to="/register">Register</Link>;
   };
+  console.log(context.location);
+
+  const navActive = (path: string) => {
+    return context.location.pathname === path
+      ? "p-2 bg-white text-sky-600"
+      : "p-2 hover:bg-white hover:text-sky-600";
+  };
 
   return (
     <>
-      <div>
-        <Link to="/">Home</Link> <Link to="/posts">Posts</Link>{" "}
-        {loginOrLogout()} {register()}
+      <div className="flex justify-center gap-2 bg-sky-600 p-2 text-white">
+        <div className={navActive("/")}>
+          <Link to="/">Home</Link>
+        </div>
+        <div className={navActive("/posts")}>
+          <Link to="/posts">Posts</Link>
+        </div>
+        <div className={navActive("/login")}>{loginOrLogout()}</div>
+        <div className={navActive("/register")}>{register()}</div>
       </div>
       <hr />
       <Outlet />
