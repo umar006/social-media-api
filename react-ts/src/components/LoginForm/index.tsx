@@ -39,52 +39,67 @@ function LoginForm() {
             void form.handleSubmit();
           }}
         >
-          <div>
-            <form.Field
-              name="username"
-              validators={{
-                onChange: ({ value }) => {
-                  if (value.length <= 0) return "username cannot be empty";
+          <div className="mt-8 flex flex-col items-center justify-center gap-2">
+            <div>
+              <form.Field
+                name="username"
+                validators={{
+                  onChange: ({ value }) => {
+                    if (value.length <= 0) return "username cannot be empty";
 
-                  return null;
-                },
-              }}
-              children={(field) => (
-                <>
-                  <input
-                    value={field.state.value}
-                    onChange={(e) => field.handleChange(e.target.value)}
-                  />
-                  <span>{field.state.meta.errors.join(",")}</span>
-                </>
-              )}
-            />
+                    return null;
+                  },
+                }}
+                children={(field) => (
+                  <>
+                    <input
+                      className="border-2 border-slate-300 p-2 focus:outline-sky-600"
+                      placeholder="username"
+                      value={field.state.value}
+                      onChange={(e) => field.handleChange(e.target.value)}
+                    />
+                    <div className="text-sm text-red-600">
+                      {field.state.meta.errors.join(",")}
+                    </div>
+                  </>
+                )}
+              />
+            </div>
+
+            <div>
+              <form.Field
+                name="password"
+                validators={{
+                  onChange: ({ value }) => {
+                    if (value.length <= 0) return "password cannot be empty";
+
+                    return null;
+                  },
+                }}
+                children={(field) => (
+                  <>
+                    <input
+                      className="border-2 border-slate-300 p-2 focus:outline-sky-600"
+                      placeholder="password"
+                      type="password"
+                      value={field.state.value}
+                      onChange={(e) => field.handleChange(e.target.value)}
+                    />
+                    <div className="text-sm text-red-600">
+                      {field.state.meta.errors.join(",")}
+                    </div>
+                  </>
+                )}
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="mt-4 bg-sky-600 px-4 py-2 text-white"
+            >
+              login
+            </button>
           </div>
-
-          <div>
-            <form.Field
-              name="password"
-              validators={{
-                onChange: ({ value }) => {
-                  if (value.length <= 0) return "password cannot be empty";
-
-                  return null;
-                },
-              }}
-              children={(field) => (
-                <>
-                  <input
-                    type="password"
-                    value={field.state.value}
-                    onChange={(e) => field.handleChange(e.target.value)}
-                  />
-                  <span>{field.state.meta.errors.join(",")}</span>
-                </>
-              )}
-            />
-          </div>
-
-          <button type="submit">login</button>
         </form>
       </form.Provider>
     </>
