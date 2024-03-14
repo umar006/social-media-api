@@ -9,7 +9,7 @@ function PostList({ posts }: Props) {
   const postList = posts.map((post) => {
     return (
       <li key={post.id}>
-        <div className="m-4 border-2 border-sky-300 bg-sky-50 p-4">
+        <div className="m-4 max-w-2xl border-2 border-sky-300 bg-sky-50 p-4">
           <Post post={post} />
         </div>
       </li>
