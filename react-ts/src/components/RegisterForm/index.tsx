@@ -40,75 +40,91 @@ function RegisterForm() {
             void form.handleSubmit();
           }}
         >
-          <div>
-            <form.Field
-              name="username"
-              validators={{
-                onChange: ({ value }) => {
-                  if (value.length <= 0) return "username is required";
+          <div className="mt-8 flex flex-col items-center justify-center gap-2">
+            <div>
+              <form.Field
+                name="username"
+                validators={{
+                  onChange: ({ value }) => {
+                    if (value.length <= 0) return "username is required";
 
-                  return null;
-                },
-              }}
-              children={(field) => (
-                <>
-                  <input
-                    placeholder="username"
-                    value={field.state.value}
-                    onChange={(e) => field.handleChange(e.target.value)}
-                  />
-                  <span>{field.state.meta.errors.join(",")}</span>
-                </>
-              )}
-            ></form.Field>
+                    return null;
+                  },
+                }}
+                children={(field) => (
+                  <>
+                    <input
+                      className="border-2 border-slate-300 p-2 focus:outline-sky-600"
+                      placeholder="username"
+                      value={field.state.value}
+                      onChange={(e) => field.handleChange(e.target.value)}
+                    />
+                    <div className="text-sm text-red-600">
+                      {field.state.meta.errors.join(",")}
+                    </div>
+                  </>
+                )}
+              ></form.Field>
+            </div>
+            <div>
+              <form.Field
+                name="displayName"
+                validators={{
+                  onChange: ({ value }) => {
+                    if (value.length <= 0) return "display name is required";
+
+                    return null;
+                  },
+                }}
+                children={(field) => (
+                  <>
+                    <input
+                      className="border-2 border-slate-300 p-2 focus:outline-sky-600"
+                      placeholder="display name"
+                      value={field.state.value}
+                      onChange={(e) => field.handleChange(e.target.value)}
+                    />
+                    <div className="text-sm text-red-600">
+                      {field.state.meta.errors.join(",")}
+                    </div>
+                  </>
+                )}
+              ></form.Field>
+            </div>
+            <div>
+              <form.Field
+                name="password"
+                validators={{
+                  onChange: ({ value }) => {
+                    if (value.length <= 0) return "password is required";
+
+                    return null;
+                  },
+                }}
+                children={(field) => (
+                  <>
+                    <input
+                      className="border-2 border-slate-300 p-2 focus:outline-sky-600"
+                      placeholder="password"
+                      type="password"
+                      value={field.state.value}
+                      onChange={(e) => field.handleChange(e.target.value)}
+                    />
+                    <div className="text-sm text-red-600">
+                      {field.state.meta.errors.join(",")}
+                    </div>
+                  </>
+                )}
+              ></form.Field>
+            </div>
+
+            <button
+              type="submit"
+              className="mt-4 bg-sky-600 px-4 py-2 text-white"
+            >
+              register
+            </button>
           </div>
-          <div>
-            <form.Field
-              name="displayName"
-              validators={{
-                onChange: ({ value }) => {
-                  if (value.length <= 0) return "display name is required";
-
-                  return null;
-                },
-              }}
-              children={(field) => (
-                <>
-                  <input
-                    placeholder="display name"
-                    value={field.state.value}
-                    onChange={(e) => field.handleChange(e.target.value)}
-                  />
-                  <span>{field.state.meta.errors.join(",")}</span>
-                </>
-              )}
-            ></form.Field>
-          </div>
-          <div>
-            <form.Field
-              name="password"
-              validators={{
-                onChange: ({ value }) => {
-                  if (value.length <= 0) return "password is required";
-
-                  return null;
-                },
-              }}
-              children={(field) => (
-                <>
-                  <input
-                    placeholder="password"
-                    type="password"
-                    value={field.state.value}
-                    onChange={(e) => field.handleChange(e.target.value)}
-                  />
-                  <span>{field.state.meta.errors.join(",")}</span>
-                </>
-              )}
-            ></form.Field>
-          </div>
-
-          <button type="submit">register</button>
         </form>
       </form.Provider>
     </>
