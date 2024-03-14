@@ -18,6 +18,16 @@ const getAllPosts = async () => {
   return data;
 };
 
+const getOnePostById = async (postId: string) => {
+  const { data } = await axios.get<Post>(`${baseUrl}/${postId}`, {
+    headers: {
+      Authorization: token,
+    },
+  });
+
+  return data;
+};
+
 const createPost = async (body: NewPost) => {
   await axios.postForm(baseUrl, body, {
     headers: {
@@ -46,6 +56,7 @@ export default {
   createPost,
   decrementLikesByOne,
   getAllPosts,
+  getOnePostById,
   incrementLikesByOne,
   setBearerToken,
 };
