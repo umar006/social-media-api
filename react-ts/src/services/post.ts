@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { NewPost, Post } from "../types/post";
+import type { NewPost, Post, PostComment } from "../types/post";
 
 const baseUrl = "/api/posts";
 
@@ -24,6 +24,19 @@ const getOnePostById = async (postId: string) => {
       Authorization: token,
     },
   });
+
+  return data;
+};
+
+const getAllCommentsByPostId = async (postId: string) => {
+  const { data } = await axios.get<PostComment[]>(
+    `${baseUrl}/${postId}/comments`,
+    {
+      headers: {
+        Authorization: token,
+      },
+    },
+  );
 
   return data;
 };
@@ -56,6 +69,7 @@ export default {
   createPost,
   decrementLikesByOne,
   getAllPosts,
+  getAllCommentsByPostId,
   getOnePostById,
   incrementLikesByOne,
   setBearerToken,
