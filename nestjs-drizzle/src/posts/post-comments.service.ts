@@ -4,15 +4,20 @@ import {
   DRIZZLE_PROVIDER,
   DrizzlePostgres,
 } from 'src/database/providers/drizzle.provider';
-import type { PostComment } from './post-comments.schema';
+import type { NewComment, PostComment } from './post-comments.schema';
 import { postComments } from './post-comments.schema';
-import { users } from 'src/users/user.schema';
+import { User, users } from 'src/users/user.schema';
+import { CreateCommentDto } from './dto/create-comment.dto';
+import { REQUEST } from '@nestjs/core';
+import { Request } from 'express';
 
 @Injectable()
 export class PostCommentsService {
   constructor(
     @Inject(DRIZZLE_PROVIDER)
     private readonly db: DrizzlePostgres,
+    @Inject(REQUEST)
+    private readonly request: Request,
   ) {}
 
   async getAllCommentsByPostId(postId: string): Promise<PostComment[]> {
@@ -30,5 +35,17 @@ export class PostCommentsService {
       .innerJoin(users, eq(users.id, postComments.createdBy));
 
     return comments;
+  }
+
+  async createComment(postId: string, body: CreateCommentDto): Promise<void> {
+    const user = this.request.user as User;
+
+    const newComment = {
+      createdBy: user.id,
+      comment: body.comment,
+      postId: postId,
+    } as NewComment;
+
+    await this.db.insert(postComments).values(newComment);
   }
 }

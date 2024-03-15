@@ -14,6 +14,7 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Public } from 'src/auth/public.decorator';
 import type { FileUpload } from 'src/common/file-upload.interface';
+import { CreateCommentDto } from './dto/create-comment.dto';
 import type { CreatePostDto } from './dto/create-post.dto';
 import type { PostComment } from './post-comments.schema';
 import { PostCommentsService } from './post-comments.service';
@@ -66,6 +67,14 @@ export class PostsController {
       await this.postCommentsService.getAllCommentsByPostId(postId);
 
     return comments;
+  }
+
+  @Post(':postId/comments')
+  async createComment(
+    @Param('postId') postId: string,
+    @Body() newComment: CreateCommentDto,
+  ): Promise<void> {
+    await this.postCommentsService.createComment(postId, newComment);
   }
 
   @Delete(':postId')

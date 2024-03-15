@@ -26,3 +26,5 @@ export interface PostComment
   extends Omit<typeof postComments.$inferSelect, 'postId' | 'createdBy'> {
   createdBy: string | Omit<User, 'createdAt' | 'updatedAt' | 'password'>;
 }
+
+export type NewComment = typeof postComments.$inferInsert;
