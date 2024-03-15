@@ -1,20 +1,15 @@
-import { queryOptions } from "@tanstack/react-query";
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import Error from "../../components/Error";
-import postService from "../../services/post";
 import NotFound from "../../components/NotFound";
+import { postDetailQueryOptions } from "../../components/Post/postDetailQueryOptions";
+import postService from "../../services/post";
 
 export const Route = createFileRoute("/posts/$postId")({
   loader: async ({ context, params: { postId } }) => {
     postService.setBearerToken(context.accessToken);
 
-    const postDetailQueryOptions = queryOptions({
-      queryKey: ["posts", "detail", postId],
-      queryFn: async () => await postService.getOnePostById(postId),
-    });
-
     const post = await context.queryClient.ensureQueryData(
-      postDetailQueryOptions,
+      postDetailQueryOptions(postId),
     );
     if (!post) throw notFound();
 
