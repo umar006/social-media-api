@@ -1,4 +1,5 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
+import { commentListQueryOptions } from "../../components/CommentList/commentListQueryOptions";
 import Error from "../../components/Error";
 import NotFound from "../../components/NotFound";
 import { postDetailQueryOptions } from "../../components/Post/postDetailQueryOptions";
@@ -13,10 +14,9 @@ export const Route = createFileRoute("/posts/$postId")({
     );
     if (!post) throw notFound();
 
-    const comments = await context.queryClient.ensureQueryData({
-      queryKey: ["posts", "detail", postId, "comments"],
-      queryFn: async () => await postService.getAllCommentsByPostId(postId),
-    });
+    const comments = await context.queryClient.ensureQueryData(
+      commentListQueryOptions(postId),
+    );
 
     return { post, comments };
   },
