@@ -1,6 +1,6 @@
 import { pgTable, timestamp, varchar } from 'drizzle-orm/pg-core';
 import { nanoid } from 'nanoid';
-import { users } from 'src/users/user.schema';
+import { User, users } from 'src/users/user.schema';
 import { posts } from './post.schema';
 
 export const postComments = pgTable('post_comments', {
@@ -22,4 +22,7 @@ export const postComments = pgTable('post_comments', {
     .notNull(),
 });
 
-export type PostComment = typeof postComments.$inferSelect;
+export interface PostComment
+  extends Omit<typeof postComments.$inferSelect, 'postId' | 'createdBy'> {
+  createdBy: string | Omit<User, 'createdAt' | 'updatedAt' | 'password'>;
+}

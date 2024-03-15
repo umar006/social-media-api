@@ -1,3 +1,4 @@
+import { InferSelectModel } from 'drizzle-orm';
 import { pgTable, text, timestamp, varchar } from 'drizzle-orm/pg-core';
 import { nanoid } from 'nanoid';
 import { User, users } from '../users/user.schema';
@@ -19,13 +20,10 @@ export const posts = pgTable('posts', {
     .notNull(),
 });
 
-export type Post =
-  | typeof posts.$inferSelect
-  | {
-      createdBy: Omit<User, 'createdAt' | 'updatedAt'>;
-    }
-  | {
-      image: Pick<PostImages, 'id' | 'url'>;
-    };
+export interface Post
+  extends Omit<InferSelectModel<typeof posts>, 'createdBy'> {
+  createdBy: string | Omit<User, 'createdAt' | 'updatedAt'>;
+  image: Pick<PostImages, 'id' | 'url'> | null;
+}
 
 export type NewPost = typeof posts.$inferInsert;
