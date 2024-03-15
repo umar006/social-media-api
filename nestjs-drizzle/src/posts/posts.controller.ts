@@ -13,14 +13,19 @@ import {
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Public } from 'src/auth/public.decorator';
-import { FileUpload } from 'src/common/file-upload.interface';
-import { CreatePostDto } from './dto/create-post.dto';
-import { Post as PostSchema } from './post.schema';
+import type { FileUpload } from 'src/common/file-upload.interface';
+import type { CreatePostDto } from './dto/create-post.dto';
+import type { PostComment } from './post-comments.schema';
+import { PostCommentsService } from './post-comments.service';
+import type { Post as PostSchema } from './post.schema';
 import { PostsService } from './posts.service';
 
 @Controller('posts')
 export class PostsController {
-  constructor(private readonly postsService: PostsService) {}
+  constructor(
+    private readonly postsService: PostsService,
+    private readonly postCommentsService: PostCommentsService,
+  ) {}
 
   @Public()
   @Get()
@@ -50,6 +55,17 @@ export class PostsController {
   @Get(':postId')
   async getPostById(@Param('postId') postId: string): Promise<PostSchema> {
     return await this.postsService.getPostById(postId);
+  }
+
+  @Public()
+  @Get(':postId/comments')
+  async getPostCommentsByPostId(
+    @Param('postId') postId: string,
+  ): Promise<PostComment[]> {
+    const comments =
+      await this.postCommentsService.getAllCommentsByPostId(postId);
+
+    return comments;
   }
 
   @Delete(':postId')
