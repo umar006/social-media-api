@@ -13,7 +13,12 @@ export const Route = createFileRoute("/posts/$postId")({
     );
     if (!post) throw notFound();
 
-    return post;
+    const comments = await context.queryClient.ensureQueryData({
+      queryKey: ["posts", "detail", postId, "comments"],
+      queryFn: async () => await postService.getAllCommentsByPostId(postId),
+    });
+
+    return { post, comments };
   },
   pendingComponent: () => <div>Loading...</div>,
   notFoundComponent: () => <NotFound message="Post not found" />,
