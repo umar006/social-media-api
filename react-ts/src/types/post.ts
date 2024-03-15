@@ -5,6 +5,14 @@ interface PostImage {
   url: string;
 }
 
+export interface PostComment {
+  id: string;
+  createdAt: Date;
+  updatedAt: Date;
+  comment: string;
+  createdBy: User;
+}
+
 export interface Post {
   id: string;
   createdAt: Date;
