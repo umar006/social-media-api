@@ -17,7 +17,7 @@ export const postComments = pgTable('post_comments', {
   postId: varchar('post_id')
     .references(() => posts.id)
     .notNull(),
-  userId: varchar('user_id')
+  createdBy: varchar('createdBy')
     .references(() => users.id)
     .notNull(),
 });
