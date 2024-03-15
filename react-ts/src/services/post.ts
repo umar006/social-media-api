@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { NewPost, Post, PostComment } from "../types/post";
+import type { NewComment, NewPost, Post, PostComment } from "../types/post";
 
 const baseUrl = "/api/posts";
 
@@ -49,6 +49,19 @@ const createPost = async (body: NewPost) => {
   });
 };
 
+interface CreateComment {
+  postId: string;
+  comment: NewComment;
+}
+
+const createComment = async (body: CreateComment) => {
+  await axios.post(`${baseUrl}/${body.postId}/comments`, body.comment, {
+    headers: {
+      Authorization: token,
+    },
+  });
+};
+
 const incrementLikesByOne = async (postId: string) => {
   await axios.put(`${baseUrl}/${postId}/likes/increment`, null, {
     headers: {
@@ -67,6 +80,7 @@ const decrementLikesByOne = async (postId: string) => {
 
 export default {
   createPost,
+  createComment,
   decrementLikesByOne,
   getAllPosts,
   getAllCommentsByPostId,

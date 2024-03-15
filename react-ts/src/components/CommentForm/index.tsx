@@ -1,10 +1,36 @@
 import { useForm } from "@tanstack/react-form";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { isAxiosError } from "axios";
+import { Route as PostDetailRoute } from "../../routes/posts/$postId";
+import postService from "../../services/post";
+import { ErrorResponse } from "../../types/error";
 import { NewComment } from "../../types/post";
+import { commentListQueryOptions } from "../CommentList/commentListQueryOptions";
 
 function CommentForm() {
+  const queryClient = useQueryClient();
+  const { postId } = PostDetailRoute.useParams();
+
+  const mutation = useMutation({
+    mutationFn: postService.createComment,
+    onSuccess: async () =>
+      await queryClient.invalidateQueries(commentListQueryOptions(postId)),
+    onError: (error) => {
+      if (isAxiosError<ErrorResponse>(error)) {
+        alert(error.response?.data.message);
+      }
+
+      console.log(error);
+    },
+  });
+
   const form = useForm<NewComment>({
     defaultValues: {
       comment: "",
+    },
+    onSubmit: ({ value: comment, formApi }) => {
+      mutation.mutate({ comment, postId });
+      formApi.reset();
     },
   });
 

@@ -27,3 +27,5 @@ export interface Post {
 export interface NewPost extends Pick<Post, "content"> {
   file?: File;
 }
+
+export type NewComment = Pick<PostComment, "comment">;
