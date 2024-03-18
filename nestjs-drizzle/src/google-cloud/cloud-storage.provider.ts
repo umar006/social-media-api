@@ -10,7 +10,7 @@ export const gCloudStorageProvider: FactoryProvider = {
   provide: GCLOUD_STORAGE_PROVIDER,
   inject: [googleCloudConfig.KEY],
   useFactory: (gCloudCfg: ConfigType<typeof googleCloudConfig>) => {
-    const keyFilename = gCloudCfg.CLOUD_STORAGE_KEYFILE_PATH;
+    const keyFilename = gCloudCfg.CLOUD_STORAGE_SERVICE_ACCOUNT_KEYFILE_PATH;
     const storage = new Storage({
       keyFilename: keyFilename,
     });
