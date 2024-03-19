@@ -15,16 +15,29 @@ import { UsersModule } from './users/users.module';
 @Module({
   imports: [
     LoggerModule.forRootAsync({
-      inject: [baseConfig.KEY],
-      useFactory: (baseCfg: ConfigType<typeof baseConfig>) => {
+      inject: [loggerConfig.KEY, baseConfig.KEY],
+      useFactory: (
+        logCfg: ConfigType<typeof loggerConfig>,
+        baseCfg: ConfigType<typeof baseConfig>,
+      ) => {
         return {
           pinoHttp: {
             transport: {
-              target: 'pino-pretty',
-              options: {
-                singleLine: true,
-                colorize: baseCfg.NODE_ENV === 'development',
-              },
+              targets: [
+                {
+                  target: 'pino-pretty',
+                  options: {
+                    singleLine: true,
+                    colorize: baseCfg.NODE_ENV === 'development',
+                  },
+                },
+                {
+                  target: 'pino-loki',
+                  options: {
+                    host: logCfg.LOKI_URL,
+                  },
+                },
+              ],
             },
           },
         };
@@ -32,7 +45,13 @@ import { UsersModule } from './users/users.module';
     }),
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [databaseConfig, authConfig, googleCloudConfig, baseConfig],
+      load: [
+        databaseConfig,
+        authConfig,
+        googleCloudConfig,
+        loggerConfig,
+        baseConfig,
+      ],
     }),
     DatabaseModule,
     UsersModule,
