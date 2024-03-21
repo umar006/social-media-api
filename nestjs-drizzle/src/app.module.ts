@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigType } from '@nestjs/config';
+import { randomUUID } from 'crypto';
 import { LoggerModule } from 'nestjs-pino';
 import { AuthModule } from './auth/auth.module';
 import authConfig from './config/auth.config';
@@ -38,6 +39,9 @@ import { UsersModule } from './users/users.module';
                   },
                 },
               ],
+            },
+            genReqId: (req) => {
+              return req.headers['x-correlation-id'] || randomUUID();
             },
           },
         };
