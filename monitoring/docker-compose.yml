@@ -1,8 +1,5 @@
 version: "3"
 
-networks:
-  monitoring:
-
 services:
   loki:
     image: grafana/loki:latest
@@ -34,3 +31,7 @@ services:
       - "5000:3000"
     networks:
       - monitoring
+
+networks:
+  monitoring:
+    external: true

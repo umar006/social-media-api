@@ -12,6 +12,8 @@ services:
       - backend
       - frontend
     restart: always
+    networks:
+      - monitoring
 
   frontend:
     image: psm-ui:react-ts
@@ -22,6 +24,8 @@ services:
     volumes:
       - ./nginx.fe.conf:/etc/nginx/conf.d/default.conf:ro
     restart: always
+    networks:
+      - monitoring
 
   backend:
     image: psm-api:nestjs-drizzle
@@ -32,3 +36,9 @@ services:
     env_file:
       - ./nestjs-drizzle/.env
     restart: always
+    networks:
+      - monitoring
+
+networks:
+  monitoring:
+    external: true
