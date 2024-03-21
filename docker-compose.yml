@@ -16,7 +16,7 @@ services:
       - monitoring
 
   frontend:
-    image: psm-ui:react-ts
+    image: umar006/psm-ui:react-ts
     container_name: psm-ui
     build:
       context: ./react-ts
@@ -28,7 +28,7 @@ services:
       - monitoring
 
   backend:
-    image: psm-api:nestjs-drizzle
+    image: umar006/psm-api:nestjs-drizzle
     container_name: psm-api
     build:
       context: ./nestjs-drizzle
