@@ -1,4 +1,3 @@
-import { Link } from "@tanstack/react-router";
 import type { Post as PostType } from "../../types/post";
 import Post from "../Post";
 
@@ -13,9 +12,7 @@ function PostList({ posts }: Props) {
         key={post.id}
         className="m-4 max-w-2xl border-2 border-sky-300 bg-sky-50 p-4"
       >
-        <Link from="/posts" to="/posts/$postId" params={{ postId: post.id }}>
-          <Post post={post} />
-        </Link>
+        <Post post={post} />
       </div>
     );
   });

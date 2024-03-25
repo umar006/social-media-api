@@ -1,4 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
+import { Link } from "@tanstack/react-router";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import postService from "../../services/post";
@@ -86,7 +87,9 @@ function Post({ post }: Props) {
       <div className="text-sm font-thin">@{post.createdBy.username}</div>
 
       <div className="my-4">
-        <p>{post.content}</p>
+        <Link from="/posts" to="/posts/$postId" params={{ postId: post.id }}>
+          <p>{post.content}</p>
+        </Link>
         {postImage()}
       </div>
 
