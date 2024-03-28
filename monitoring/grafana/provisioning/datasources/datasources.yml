@@ -19,3 +19,11 @@ datasources:
       authenticationType: jwt
       defaultProject: latian-415403
       privateKeyPath: /etc/secrets/psm-monitoring-sa.key
+
+  - name: Prometheus
+    type: prometheus
+    access: proxy
+    orgId: 1
+    url: http://prometheus:9090
+    basicAuth: false
+    editable: true
