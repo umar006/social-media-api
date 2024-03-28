@@ -36,6 +36,7 @@ services:
       - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
     volumes:
       - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
+      - ./secrets:/etc/secrets
     image: grafana/grafana:latest
     ports:
       - "5000:3000"

@@ -9,3 +9,13 @@ datasources:
     basicAuth: false
     isDefault: true
     editable: true
+
+  - name: Google Cloud Monitoring
+    type: stackdriver
+    access: proxy
+    jsonData:
+      tokenUri: https://oauth2.googleapis.com/token
+      clientEmail: psm-monitoring@latian-415403.iam.gserviceaccount.com
+      authenticationType: jwt
+      defaultProject: latian-415403
+      privateKeyPath: /etc/secrets/psm-monitoring-sa.key
